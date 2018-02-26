@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Apply A Changeset To A Database</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Apply A Changeset To A Database</h2><blockquote><pre>int sqlite3changeset_apply(
+  sqlite3 *db,                    /* Apply change to "main" db of this handle */
+  int nChangeset,                 /* Size of changeset in bytes */
+  void *pChangeset,               /* Changeset blob */
+  int(*xFilter)(
+    void *pCtx,                   /* Copy of sixth arg to _apply() */
+    const char *zTab              /* Table name */
+  ),
+  int(*xConflict)(
+    void *pCtx,                   /* Copy of sixth arg to _apply() */
+    int eConflict,                /* DATA, MISSING, CONFLICT, CONSTRAINT */
+    sqlite3_changeset_iter *p     /* Handle describing change and conflict */
+  ),
+  void *pCtx                      /* First argument passed to xConflict */
+);
+</pre></blockquote><p>
+Apply a changeset to a database. This function attempts to update the
+"main" database attached to handle db with the changes found in the
+changeset passed via the second and third arguments.</p>
+
+<p>The fourth argument (xFilter) passed to this function is the "filter
+callback". If it is not NULL, then for each table affected by at least one
+change in the changeset, the filter callback is invoked with
+the table name as the second argument, and a copy of the context pointer
+passed as the sixth argument to this function as the first. If the "filter
+callback" returns zero, then no attempt is made to apply any changes to
+the table. Otherwise, if the return value is non-zero or the xFilter
+argument to this function is NULL, all changes related to the table are
+attempted.</p>
+
+<p>For each table that is not excluded by the filter callback, this function
+tests that the target database contains a compatible table. A table is
+considered compatible if all of the following are true:</p>
+
+<p><ul>
+<li> The table has the same name as the name recorded in the
+changeset, and
+<li> The table has the same number of columns as recorded in the
+changeset, and
+<li> The table has primary key columns in the same position as
+recorded in the changeset.
+</ul></p>
+
+<p>If there is no compatible table, it is not an error, but none of the
+changes associated with the table are applied. A warning message is issued
+via the sqlite3_log() mechanism with the error code SQLITE_SCHEMA. At most
+one such warning is issued for each table in the changeset.</p>
+
+<p>For each change for which there is a compatible table, an attempt is made
+to modify the table contents according to the UPDATE, INSERT or DELETE
+change. If a change cannot be applied cleanly, the conflict handler
+function passed as the fifth argument to sqlite3changeset_apply() may be
+invoked. A description of exactly when the conflict handler is invoked for
+each type of change is below.</p>
+
+<p>Unlike the xFilter argument, xConflict may not be passed NULL. The results
+of passing anything other than a valid function pointer as the xConflict
+argument are undefined.</p>
+
+<p>Each time the conflict handler function is invoked, it must return one
+of <a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_OMIT</a>, <a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_ABORT</a> or
+<a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_REPLACE</a>. SQLITE_CHANGESET_REPLACE may only be returned
+if the second argument passed to the conflict handler is either
+SQLITE_CHANGESET_DATA or SQLITE_CHANGESET_CONFLICT. If the conflict-handler
+returns an illegal value, any changes already made are rolled back and
+the call to sqlite3changeset_apply() returns SQLITE_MISUSE. Different
+actions are taken by sqlite3changeset_apply() depending on the value
+returned by each invocation of the conflict-handler function. Refer to
+the documentation for the three
+<a href="../session/c_changeset_abort.html">available return values</a> for details.</p>
+
+<p><dl>
+<dt>DELETE Changes<dd>
+For each DELETE change, this function checks if the target database
+contains a row with the same primary key value (or values) as the
+original row values stored in the changeset. If it does, and the values
+stored in all non-primary key columns also match the values stored in
+the changeset the row is deleted from the target database.</p>
+
+<p>If a row with matching primary key values is found, but one or more of
+the non-primary key fields contains a value different from the original
+row value stored in the changeset, the conflict-handler function is
+invoked with <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_DATA</a> as the second argument.</p>
+
+<p>If no row with matching primary key values is found in the database,
+the conflict-handler function is invoked with <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_NOTFOUND</a>
+passed as the second argument.</p>
+
+<p>If the DELETE operation is attempted, but SQLite returns SQLITE_CONSTRAINT
+(which can only happen if a foreign key constraint is violated), the
+conflict-handler function is invoked with <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_CONSTRAINT</a>
+passed as the second argument. This includes the case where the DELETE
+operation is attempted because an earlier call to the conflict handler
+function returned <a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_REPLACE</a>.</p>
+
+<p><dt>INSERT Changes<dd>
+For each INSERT change, an attempt is made to insert the new row into
+the database.</p>
+
+<p>If the attempt to insert the row fails because the database already
+contains a row with the same primary key values, the conflict handler
+function is invoked with the second argument set to
+<a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_CONFLICT</a>.</p>
+
+<p>If the attempt to insert the row fails because of some other constraint
+violation (e.g. NOT NULL or UNIQUE), the conflict handler function is
+invoked with the second argument set to <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_CONSTRAINT</a>.
+This includes the case where the INSERT operation is re-attempted because
+an earlier call to the conflict handler function returned
+<a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_REPLACE</a>.</p>
+
+<p><dt>UPDATE Changes<dd>
+For each UPDATE change, this function checks if the target database
+contains a row with the same primary key value (or values) as the
+original row values stored in the changeset. If it does, and the values
+stored in all non-primary key columns also match the values stored in
+the changeset the row is updated within the target database.</p>
+
+<p>If a row with matching primary key values is found, but one or more of
+the non-primary key fields contains a value different from an original
+row value stored in the changeset, the conflict-handler function is
+invoked with <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_DATA</a> as the second argument. Since
+UPDATE changes only contain values for non-primary key fields that are
+to be modified, only those fields need to match the original values to
+avoid the SQLITE_CHANGESET_DATA conflict-handler callback.</p>
+
+<p>If no row with matching primary key values is found in the database,
+the conflict-handler function is invoked with <a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_NOTFOUND</a>
+passed as the second argument.</p>
+
+<p>If the UPDATE operation is attempted, but SQLite returns
+SQLITE_CONSTRAINT, the conflict-handler function is invoked with
+<a href="../session/c_changeset_conflict.html">SQLITE_CHANGESET_CONSTRAINT</a> passed as the second argument.
+This includes the case where the UPDATE operation is attempted after
+an earlier call to the conflict handler function returned
+<a href="../session/c_changeset_abort.html">SQLITE_CHANGESET_REPLACE</a>.
+</dl></p>
+
+<p>It is safe to execute SQL statements, including those that write to the
+table that the callback related to, from within the xConflict callback.
+This can be used to further customize the applications conflict
+resolution strategy.</p>
+
+<p>All changes made by this function are enclosed in a savepoint transaction.
+If any other error (aside from a constraint failure when attempting to
+write to the target database) occurs, then the savepoint transaction is
+rolled back, restoring the target database to its original state, and an
+SQLite error code returned.
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

@@ -1,0 +1,795 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>ESP Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#espApp">EspApp</a></li>
+                <li><a href="#espCompile">EspCompile</a></li>
+                <li><a href="#espDb">EspDb</a></li>
+                <li><a href="#espDir">EspDir</a></li>
+                <li><a href="#espEnv">EspEnv</a></li>
+                <li><a href="#espKeepSource">EspKeepSource</a></li>
+                <li><a href="#espLink">EspLink</a></li>
+                <li><a href="#espLoad">EspLoad</a></li>
+                <li><a href="#espPermResource">EspPermResource</a></li>
+                <li><a href="#espResource">EspResource</a></li>
+                <li><a href="#espResourceGroup">EspResourceGroup</a></li>
+                <li><a href="#espRoute">EspRoute</a></li>
+                <li><a href="#espRouteSet">EspRouteSet</a></li>
+                <li><a href="#espShowErrors">EspShowErrors</a></li>
+                <li><a href="#espUpdate">EspUpdate</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>ESP Directives</h1>
+            <p>The ESP directives control the ESP Web Framework and configure and control ESP web applications.</p>
+            <a id="espApp"></a>
+            <h2>EspApp</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define an ESP web application</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspApp <br/>
+                            &nbsp; &rarr; name=NAME <br/>
+                            &nbsp; &rarr; prefix=URI <br/>
+                            &nbsp; &rarr; [dir=PATH] <br/>
+                            &nbsp; &rarr; [routes=ROUTES] <br/>
+                            &nbsp; &rarr; [database=DATABASE]<br/>
+                            &nbsp; &rarr; [flat=false|true]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>EspApp prefix="/myapp"" dir="/var/www/myapp" routes="restful" <br/>
+                        &nbsp; &rarr; database="mdb://myapp.mdb"</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspApp directive defines an ESP application at the given directory that
+                            will receive all requests that begin with specified URI prefix. 
+                            This one-line directive is often all you need to do to define an ESP application. It is
+                            loosely equivalent to the following directive sequence:</p>
+                            <pre class="dir">
+&lt;Route UriPrefix&gt;
+    <a href="route.html#name">Name</a> UriPrefix
+    <a href="route.html#prefix">Prefix</a> UriPrefix
+    <a href="route.html#documentRoot">DocumentRoot</a> Directory
+    <a href="route.html#addHandler">AddHandler</a> espHandler
+    <a href="#espDir">EspDir</a> mvc
+    <a href="#espRouteSet">EspRouteSet</a> Routes
+    <a href="#espDb">EspDb</a> Database
+&lt;/Route&gt;
+</pre>
+                            <p>If the URI prefix for the EspApp directive is the same as the the prefix for the outer
+                            route, EspApp will use the existing route. Otherwise, it will create a new route for 
+                            the URI prefix. Sub-routes are created for the Routes argument.</p>
+                            <p>The Prefix argument is mandatory, all others are optional and will take default values
+                            if omitted.
+                            The Directory argument is used to define the Documents directory for the application. It 
+                            defaults to ".".</p>
+                            <p>The Routes argument specifies a set of routes to add for the applications. Permissable
+                                values for the Routes are: 
+                                <ul>
+                                    <li>simple &mdash; Adds a route for the home page URI ("/").</li>
+                                    <li>restful &mdash; Adds a home route, a static route and resource group routes 
+                                    mapping URIs. See <a href="#espResourceGroup">EspResourceGroup</a> for details.</li>
+                                </ul>
+                            <p>It is convenient to define applications using this directive in a separate configuration
+                            file for each application. If the application config file is stored under the Appweb
+                            "conf/apps" directory, then Appweb will read it automatically when it starts. This makes it
+                            very easy to install or remove applications by simply adding or removing an application
+                            configuration file to or from this directory.</p>
+                            <p>The EspApp directive does the following actions:</p>
+                            <ul>
+                                <li>Creates a new Route block for the URI prefix if required.</li>
+                                <li>Adds the <b>esp</b> handler as the handler for the URI prefix. Note that
+                                    previously defined handlers such as the fileHandler will still match by extensions
+                                    such as <em>.html</em>.</li>
+                                <li>Defines the directories to use for the applications via 
+                                    <a href="#espDir">espDir</a>.</li>
+                                <li>Optionally creates a route set</li>
+                                <li>Optionally opens a database</li>
+                            </ul>
+                            <p>Note: use a trailing "/" on the prefix to prevent matching URIs that have the prefix
+                            as part of the first (non-directory) portion of their URI.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espCompile"></a>
+            <h2>EspCompile</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the command to compile ESP controllers and template pages</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspCompile commandline</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspCompile cc -shared ${DEBUG} -Wall -Wno-unused-result \
+  -DPIC -fPIC -I${INC} -L${LIB} -Wl,--enable-new-dtags \
+  -Wl,-rpath,$ORIGIN/ -Wl,-rpath,$ORIGIN/../lib ${LIBS} \
+  -o ${OUT}${SHOBJ} ${SRC}</pre></td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspCompile directive specifies the command line to use to compile controllers
+                            and parsed ESP template pages. The command can used embedded tokens of the form 
+                            <em>${TOKEN}</em>. These are expanded at run-time based on the platform.</p>
+                            <p>The set of supported tokens is:</p>
+                            <ul>
+                                <li>ARCH &mdash; Build architecture (x86_64)</li>
+                                <li>CC &mdash; Compiler (cc)</li>
+                                <li>DEBUG &mdash; Debug compilation options</li>
+                                <li>INC &mdash; Include directory out/inc</li>
+                                <li>LIB &mdash; Library directory (out/lib, xcode/VS: out/bin)</li>
+                                <li>LIBS &mdash; Libraries required to link with ESP</li>
+                                <li>OBJ &mdash; Name of compiled source (out/lib/view-MD5.o)</li>
+                                <li>OUT &mdash; Output module (view_MD5.dylib)</li>
+                                <li>SHLIB &mdash; Shared library (.lib, .so)</li>
+                                <li>SHOBJ &mdash; Shared Object (.dll, .so)</li>
+                                <li>SRC &mdash; Source code for view or controller (already templated)</li>
+                                <li>TMP &mdash; Temp directory</li>
+                                <li>VS &mdash; Visual Studio directory</li>
+                                <li>WINSDK &mdash; Windows SDK directory</li>
+                            </ul>
+                            <p>A default EspCompile directive is supplied via the 
+                            <em>/usr/lib/appweb/lib/esp.conf</em> configuration file. On windows this is installed by 
+                            default at: <em>/Program Files/Embedthis Appweb/lib/esp.conf</em>. This file defines
+                            standard compilation and link commands for Windows, Linux, MacOSX and VXWORKS. To override
+                            the default EspCompile command line, ensure you place an EspCompile directive after the 
+                            include for <em>esp.conf</em>.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espDb"></a>
+            <h2>EspDb</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the database to use for an ESP applications</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspDb database-spec</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspDb mdb://test.mdb
+EspDb sdb://test.sdb</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspDb directive specifies the default database to use by an ESP application.
+                            The database is opened when Appweb starts and is made available to all ESP requests using
+                            the current Route.</p>
+                            <p>The database spec argument is of the form:
+<pre>provider://path</pre>
+                            <p>Where <em>provider</em> is the database provider name. ESP currently supports two providers:
+                            <ul>
+                                <li>mdb &mdash; The MDB is the Memory Database and it provides a high-performance,
+                                non-SQL,  in-memory data store.
+                                See ... <!-- TODO --> for more details.</li>
+                                <li>sdb &mdash; This requests the SQLite database</li>
+                            </ul>
+                            <p>The database path can be a relative or absolute path. If relative, it will be relative to
+                            the ESP <em>db</em> directory. See <a href="#espDir">espDir</a> for how to define the
+                            <em>db</em>
+                            directory.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espDir"></a>
+            <h2>EspDir</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the directories to use for an ESP applications</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspDir mvc<br/>
+                            EspDir [cache|client|controllers|db|layouts|views] Directory
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspDir mvc
+EspDir client ./client</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspDir directive configures the directories used by ESP.</p>
+                            <p>There are two forms for the EspDir directive. The first takes a single argument set to 
+                                "<em>mvc</em>". This form sets each of the standard directories to their default values.
+                            The second form defines a single ESP directory to the given path value.</p>
+                            <p>The standard directories are:
+                            <ul>
+                                <li>cache &mdash; This is the directory where ESP puts compiled modules. Defaults to
+                                    <em>cache</em>.</li>
+                                    <li>client &mdash; This is the directory for static client web files in an MVC application. 
+                                        Defaults to <em>client</em>.</li>
+                                    <li>controllers &mdash; This is the directory for MVC controller source code.
+                                        Defaults to <em>controllers.</em></li>
+                                    <li>db &mdash; This is the directory for database files. Defaults to <em>db</em>.</li>
+                                    <li>layouts &mdash; This is the directory for ESP template layouts. 
+                                        Defaults to <em>layouts</em>.</li>
+                                    <li>views &mdash; This is the directory for ESP view pages. Defaults to <em>views</em>.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espEnv"></a>
+            <h2>EspEnv</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define an environment variable to set before invoking the compile or link command lines.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspEnv String</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspEnv LIB "${WINSDK}\LIB;${VS}\VC\lib"</pre>
+<pre>EspEnv VisualStudio</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspEnv directive specifies an environment variable that will be defined before running
+                            the <a href="#espCompile">EspCompile</a> or <a href="#espLink">EspLink</a> commands. Some
+                            platforms, such as Windows with Visual Studio, require certain environment variables to be 
+                            defined for the compiler and linker to execute. Visual Studio requires that the INCLUDE,
+                            LIB, PATH and TMP environment variables be defined correctly.</p>
+                            <p> The EspEnv argument can also be set to "VisualStudio" to define the required Visual
+                            Studio environment. This will define the INCLUDE, LIB and PATH variables if the current
+                            user's environment does not contain the Visual Studio settings. User's can run 
+                            the Visual Studio vsvarsall.bat script (supplied with Visual Studio) to define 
+                            the environment.</p> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espKeepSource"></a>
+            <h2>EspKeepSource</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control whether to preserve intermediate source for template pages and views</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspKeepSource on|off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspKeepSource on</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspKeepSource directive controls whether the parsed, intermediate "C" source code
+                            for ESP templates and views should be preserved in the cache directory. This is useful 
+                            when debugging the view in an IDE or debugger.
+                            <p>Set the argument to "<em>on</em>" to preserve intermediate source and set to 
+                            "<em>off</em>" to remove intermediate source.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espLink"></a>
+            <h2>EspLink</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the command to link ESP controllers and template pages</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspLink commandline</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspLink cc -dynamiclib ${DEBUG} -arch ${ARCH} -L${LIB} \
+  -Wl,-rpath,@executable_path/../lib \
+  -Wl,-rpath,@executable_path/ -Wl,-rpath,@loader_path/ \
+  ${LIBS} -o ${OUT}${SHOBJ} ${OBJ} </pre></td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspLink directive specifies the command line to use to link controllers
+                            and parsed ESP template pages. The command can used embedded tokens of the form 
+                            <em>${TOKEN}</em>. These are expanded at run-time based on the platform.</p>
+                            <p>The set of supported tokens is:</p>
+                            <ul>
+                                <li>ARCH &mdash; Build architecture (x86_64)</li>
+                                <li>CC &mdash; Compiler (cc)</li>
+                                <li>DEBUG &mdash; Debug compilation options</li>
+                                <li>INC &mdash; Include directory out/inc</li>
+                                <li>LIB &mdash; Library directory (out/lib, xcode/VS: out/bin)</li>
+                                <li>LIBS &mdash; Libraries required to link with ESP</li>
+                                <li>OBJ &mdash; Name of compiled source (out/lib/view-MD5.o)</li>
+                                <li>OUT &mdash; Output module (view_MD5.dylib)</li>
+                                <li>SHLIB &mdash; Shared library (.lib, .so)</li>
+                                <li>SHOBJ &mdash; Shared Object (.dll, .so)</li>
+                                <li>SRC &mdash; Source code for view or controller</li>
+                                <li>TMP &mdash; Temp directory</li>
+                                <li>VS &mdash; Visual Studio directory</li>
+                                <li>WINSDK &mdash; Windows SDK directory</li>
+                            </ul>
+                            <p>A default EspLink directive is supplied via the 
+                            <em>/usr/lib/appweb/lib/esp.conf</em> configuration file. On windows this is installed by 
+                            default at: <em>/Program Files/Embedthis Appweb/lib/esp.conf</em>. This file defines
+                            standard compilation and link commands for Windows, Linux, MacOSX and VXWORKS. To override
+                            the default EspLink command line, ensure you place an EspLink directive after the 
+                            include for <em>esp.conf</em>.
+                            <p>Some platforms can do the compile and link phases in one command. Others require a 
+                            separate link.</p>
+                            <p>If appweb is built with static linking or if the esp command is invoked with the --static 
+                            switch, the EspLink command should perform static linking. The default esp.conf configuration
+                            file has separate commands for dynamic and static linking.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espLoad"></a>
+            <h2>EspLoad</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Load an ESP application that has been compiled <em>flat</em> using the
+                            <em>esp</em> command.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspLoad Name Path</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspLoad blog cache/app
+EspLoad blog cache/app.dylib
+</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspLoad directive will pre-load an ESP application that has been compiled
+                            <em>flat</em>
+                            via the <em>esp compile flat</em> command. A flat application is one where all controllers, 
+                            views and ESP template pages have been compiled into a single module. Pre-loading a flat
+                            application provides the ultimate in performance and eliminates any per-request overhead
+                            in checking for changed modules or source code.</p>
+                            <p>The Name argument to the directive should be a unique, descriptive name for the application.
+                            By default, when esp compiles an application, this name is the folder name of the application, 
+                            though this can be overridden by the esp --name switch.</p>
+                            <p>
+                            The second argument is a path to the compiled, flat application. This by default is called
+                            <em>cache/app.so</em> where <em>.so</em> may vary depending on the O/S platform. The path
+                            may be specified with or without an extension. Omitting the extension will allow a common
+                            configuration file to be used across multiple platforms.</p>
+                            <p>See the <a href="../../../esp/users/generator.html">ESP Generator</a> documentation for more
+                            details.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espPermResource"></a>
+            <h2>EspPermResource</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Create a set of routes for a permanent resource</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspPermResource name [, name] ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspPermResource system profile status</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspPermResource directive creates a set of routes suitable for a permanent resource.
+                            The routes created are <a href="http://en.wikipedia.org/wiki/Representational_state_transfer#RESTful_web_services">RESTful</a> routes that are designed to mesh well with ESP MVC applications. They provide clean URIs
+                            that allow the basic operations on a resource.</p>
+                            For example, this command will generate the following routes:
+<pre>EspPermResource system
+LogRoutes
+# Prints ...
+<b>
+Name            Method   Pattern                         Target
+/system/get     GET      ^/{controller=system}(/)*$      system-get    
+/system/update  POST     ^/{controller=system}(/)*$      system-update 
+/system/default GET,POST ^/{controller=system}/{action}$ system-$2 
+</b>
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espResource"></a>
+            <h2>EspResource</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Create a set of routes for a singleton resource</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspResource name [, name] ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspResource system profile status</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspResource directive creates a set of routes suitable for a singleton resource.
+                            The routes created are <a href="http://en.wikipedia.org/wiki/Representational_state_transfer#RESTful_web_services">RESTful</a> routes that are designed to mesh well with ESP MVC applications. They provide clean URIs
+                            that allow the basic Create/Read/Update/Destroy (CRUD) operations on a resource.</p>
+                            For example, this command will generate the following routes:
+<pre>EspResource system
+LogRoutes
+# Prints ...
+<b>
+Name            Method   Pattern                         Target
+/system/create  POST     ^/{controller=system}(/)*$      system-create 
+/system/edit    GET      ^/{controller=system}/edit$     system-edit   
+/system/get     GET      ^/{controller=system}(/)*$      system-get    
+/system/init    GET      ^/{controller=system}/init$     system-init   
+/system/update  POST     ^/{controller=system}(/)*$      system-update 
+/system/remove  DELETE   ^/{controller=system}(/)*$      system-remove 
+/system/default GET,POST ^/{controller=system}/{action}$ system-$2 
+</b>
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espResourceGroup"></a>
+            <h2>EspResourceGroup</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Create a set of routes for a group of resources</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspResourceGroup name [, name] ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspResourceGroup customer prospect</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspResourceGroup directive creates a set of routes suitable for a group of resources.
+                            The routes created are <a href="http://en.wikipedia.org/wiki/Representational_state_transfer#RESTful_web_services">RESTful</a> routes that are designed to mesh well with ESP MVC applications. They provide clean URIs
+                            that allow the basic Create/Read/Update/Destroy (CRUD) operations on a group of 
+                            resources. Use this directive if there are more than one instance of a resource. Use
+                            the <a href="#espResource">EspResource</a> directive if there is only once instance of the
+                            resource.</p>
+                            <p>By convention, the resource group name should be singular and not plural. To avoid 
+                            confusion as to whether controller and/or view names should be singular or plural &mdash;
+                            ESP always uses singular names for controllers, views, template pages and database tables.</p>
+                            <p>For example, this command will generate the following routes:
+<pre>EspResourceGroup user
+LogRoutes
+# Prints ...
+<b>
+Name          Method   Pattern                                   Target
+/user/create  POST     ^/{controller=user}(/)*$                  user-create   
+/user/edit    GET      ^/{controller=user}/{id=[0-9]+}/edit$     user-edit     
+/user/get     GET      ^/{controller=user}/{id=[0-9]+}$          user-get      
+/user/init    GET      ^/{controller=user}/init$                 user-init     
+/user/list    GET      ^/{controller=user}/list$                 user-list     
+/user/remove  DELETE   ^/{controller=user}/{id=[0-9]+}$          user-remove   
+/user/update  POST     ^/{controller=user}/{id=[0-9]+}$          user-update   
+/user/action  GET,POST ^/{controller=user}/{id=[0-9]+}/{action}$ user-$3       
+/user/default GET,POST ^/{controller=user}/{action}$             user-cmd-$2 
+</b>
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espRoute"></a>
+            <h2>EspRoute</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define and configure a route for use by ESP</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspRoute <br/>
+                            &nbsp; &rarr; name=NAME <br/>
+                            &nbsp; &rarr; prefix=URI <br/>
+                            &nbsp; &rarr; [target=TARGET] <br/>
+                            &nbsp; &rarr; [methods=METHODS] <br/>
+                            &nbsp; &rarr; [source=source]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspRoute name="/app/user" methods="POST" prefix="^/app/user/{action}" 
+ &nbsp; &rarr; target="user-${action}" source="user.c"</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspRoute directive creates a single route and configures it according to the
+                            given parameters. This is a one-line convenience directive that is 
+                            equivalent to the following directive sequence:</p>
+                            <pre>
+&lt;<a href="route.html">Route</a> PREFIX&gt;
+  <a href="route.html#name">Name</a> NAME
+  <a href="route.html#source">Source</a> SOURCE
+  <a href="route.html#target">Target</a> run "TARGET"
+&lt;/Route&gt;
+</pre>
+                            <p>If the target is not specified, it defaults to "$&amp;" which represents the entire URI prefix.
+                            If the methods are not specified, they default to all HTTP methods. If the source is not, it
+                            is assumed that the controller and action are statically linked into the application.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espRouteSet"></a>
+            <h2>EspRouteSet</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define a set of routes</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspRouteSet simple|restful</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspRouteSet restful</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspRouteSet directive defines a pre-prepared set of routes according to the 
+                            route set argument. Valid sets are: </p>
+                            <ul>
+                                <li>simple &mdash; This defines a route to the application home URI at "/" that
+                                    serves an "<em>index.esp</em> page.</li>
+                                <li>restful &mdash; This defines a route to the application home URI at "/" that
+                                serves an "<em>index.esp</em> page. It also defines a route for URIs beginning with
+                                "<em>/client</em>" that serves static content from the <em>client</em> directory. Lastly, it
+                                defines a RESTFul group of routes for resources for arbitrary controllers.</li>
+                            </ul>
+                            <p>Here is the list of defined routes for "restful":</p>
+<pre>
+Name               Method   Pattern
+/service/*/create  POST     ^/service/{controller}(/)*$
+/service/*/edit    GET      ^/service/{controller}/{id=[0-9]+}/edit$
+/service/*/get     GET      ^/service/{controller}/{id=[0-9]+}$
+/service/*/init    GET      ^/service/{controller}/init$
+/service/*/list    GET      ^/service/{controller}/list$
+/service/*/remove  DELETE   ^/service/{controller}/{id=[0-9]+}$
+/service/*/update  POST     ^/service/{controller}/{id=[0-9]+}$
+/service/*/action  GET,POST ^/service/{controller}/{id=[0-9]+}/{action}$
+/service/*/default GET,POST ^/service/{controller}/{action}$
+/client            GET      ^/(.*)
+/APP_NAME          GET,POST ^/
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espShowErrors"></a>
+            <h2>EspShowErrors</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control whether to display ESP server-side errors to the client.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspShowErrors on|off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+<pre>EspShowErrors on</pre>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspShowErrors directive controls whether ESP errors are sent to the client 
+                            and displayed in the browser. If EspShowErrors is off, then ESP errors will be sent to the
+                            Appweb log file. If EspShowErrors is on, then the errors will also be sent back to the
+                            client. This is useful in development mode to quickly diagnose errors.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="espUpdate"></a>
+            <h2>EspUpdate</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control whether to reload updated modules and compile controllers and template pages</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EspUpdate on|off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+                            <pre>EspUpdate on</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EspUpdate directive controls whether to reload updated content. If EspUpdate is 
+                            <em>on</em>, then ESP will reload any updated module. It will also recompile updated
+                            controller source files, web pages and views.</p>
+                            <p>If EspUpdate is <em>off</em>, ESP will load content from cache once but will not reload
+                            or compile ESP source.</p>
+                            <p>When reloading, ESP first waits for all active ESP requests to complete before unloading
+                            old versions of the module being updated. When all is quiet, it reloads the new module
+                            &mdash; recompiling if required.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

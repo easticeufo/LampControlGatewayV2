@@ -1,0 +1,237 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Programming Guide</a> &gt; <b>Pipeline Stages</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#createHandler">Creating a Handler</a></li>
+            </ul>
+<!-- BeginDsi "dsi/progGuideSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/programmers/index.html">Programmers Guide</a></li>
+                <li><a href="../../../guide/appweb/programmers/embedding.html">Embedding Appweb</a></li>
+                <li><a href="../../../guide/appweb/programmers/modules.html">Custom Modules</a></li>
+                <li><a href="../../../guide/appweb/programmers/handlers.html">Custom Handlers</a></li>
+                <li><a href="../../../guide/appweb/programmers/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/programmers/migrating.html">Migrating to Appweb 4</a></li>
+                <li><a href="../../../guide/appweb/programmers/rom.html">ROM Content</a></li>
+                <li><a href="../../../guide/appweb/programmers/man.html">Manual Pages</a></li>
+                <li><a href="../../../ref/appweb/index.html">Programmers Reference</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+                <li><a href="../../../api/native.html">Native APIs</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">Users Guide</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Extending via Pipeline Stages</h1>
+            <p>The Appweb request processing scheme can be extended by creating custom pipeline <b>stages</b>. Stages
+            come in three varieties: Handlers, Filters and Network Connectors.</p>Handlers respond to requests and
+            generate response content, filters permute incoming or outgoing data and connectors transmit responses to
+            the client.
+            <p>This document describes the pipeline stage interface and how to create Appweb handlers, filters and
+            connectors. See the <a href="../users/stages.html">Configuring Pipeline Stages</a> document for
+            background.</p><img src="../../../images/pipeline.jpg" alt="pipeline" />
+            <h2 class="section">Handlers</h2>
+            <p>The core Appweb HTTP server cannot serve any requests or generate responses by itself. It relies on
+            request handlers to generate response content for HTTP requests. The standard distribution of Appweb is
+            itself comprised of seven different handlers which serve all the content provided by an Appweb
+            server.</p><a id="createHandler"></a>
+            <h2 class="section">Creating a Handler</h2>
+            <p>To create an Appweb handler, you need to call <b>maCreateHandler</b> and supply a unique handler name
+            and flags that modify the behavior of the handler.</p>
+            <p>The following demonstrates the creation of a "sample" handler.</p>
+            <pre>
+int maSimpleHandlerInit(Http *http, MprModule *module)
+{
+    HttpStage   *handler;
+    <b>handler = httpCreateHandler(http, "simpleHandler", 0, module);</b>
+    if (handler == 0) {
+        return MPR_ERR_CANT_CREATE;
+    }
+    /* Define function callbacks */
+    handler-&gt;match = matchSimple;
+    handler-&gt;open = openSimple;
+    handler-&gt;close = closeSimple;
+    handler-&gt;start = startSimple;
+    handler-&gt;writable = writableSimple;
+    handler-&gt;incoming = incomingSimple;
+    handler-&gt;outgoing = outgoingSimple;
+    handler-&gt;incomingService = incomingServiceSimple;
+    handler-&gt;outgoingService = outgoingServiceSimple;
+    /* Set handler private data */
+    handler-&gt;stageData = mprAllocObj(SimpleData, 0);
+    return 0;
+}
+</pre><a id="createFilter"></a>
+            <h2 class="section">Creating a Filter</h2>
+            <p>Creating a filter is very similar to creating a handler. An MaStage object is created and
+            initialized.</p>
+            <p>To create an Appweb filter, you need to call <b>maCreateFilter</b> and supply a unique filter name and
+            flags that modify the behavior of the filter.</p>
+            <p>The following demonstrates the creation of a "compress" filter.</p>
+            <pre>
+int maCompressFilterInit(Http *http, MprModule *module)
+{
+    HttpStage   *filter;
+    <b>filter = httpCreateFilter(http, "compressFilter", 0, module);</b>
+    if (filter == 0) {
+        return MPR_ERR_CANT_CREATE;
+    }
+    /* Define function callbacks */
+    filter-&gt;outgoing = outgoing;
+    filter-&gt;incoming = incoming;
+    return 0;
+}
+</pre><a id="createConnector"></a>
+            <h2 class="section">Creating a Connector</h2>
+            <p>Creating a connector is similar to creating a handler. An MaStage object is created and initialized.</p>
+            <p>To create an Appweb connector, you need to call <b>maCreateConnector</b> and supply a unique connector
+            name and flags that modify the behavior of the connector.</p>
+            <p>The following demonstrates the creation of a "turbo" connector.</p>
+            <pre>
+int maTurboConnectorInit(Http *http, MprModule *module)
+{
+    HttpStage   *connector;
+    <b>connector = httpCreateConnector(http, "turboConnector", 0, module);</b>
+    if (connector == 0) {
+        return MPR_ERR_CANT_CREATE;
+    }
+    /* Define function callbacks */
+    connector-&gt;outgoing = outgoing;
+    connector-&gt;incoming = incoming;
+    return 0;
+}
+</pre>
+            <h2 class="section">Pipeline Stages Callbacks</h2>
+            <p>Pipeline stages can optionally provide callback functions which are run at various stages of the HTTP
+            request processing. If they are not provided, a default implementation is used.</p>
+            <h3>match</h3>
+            <p>This callback is invoked to test if the current request should be serviced by the stage. It is invoked
+            after the request headers are parsed by the Appweb core and before running the request pipeline. If the
+            callback returns false, the stage is removed from the pipeline.</p>
+            <h3>open</h3>
+            <p>This callback is invoked to give the stage a chance to initialize for a given request and potentially
+            allocate any request specific data or state. It is called at the start of request processing after the
+            <em>match</em> callback.</p>
+            <h3>close</h3>
+            <p>The <em>close</em> callback is invoked to give stages an opportunity to release any request specific data. It
+            is invoked just prior to dismantling the request pipeline.</p>
+            <h3>start</h3>
+            <p>The <em>start</em> callback is invoked to start processing the response for the client. 
+            If the request is a form with Content-Type of "application/x-www-form-urlencoded",
+            the start callback is called after processing all input client data. Otherwise, it is called before 
+            any input data.</p>
+            <h3>ready</h3>
+            <p>The <em>ready</em> callback is invoked once all the request body data has been received.</p>
+            <h3>writable</h3>
+            <p>The <em>writable</em> callback is invoked after receiving all body data and whenever the output pipeline
+            can absorb more data.</p>
+            <h3>incoming</h3>
+            <p>The <em>incoming</em> callback is invoked to receive any incoming client data (typically POST or PUT
+            data). It is called after the <em>open</em> callback and before the <em>start</em> callback.</p>
+            <h3>outgoing</h3>
+            <p>The <em>outgoing</em> callback is never called for handlers. Handlers generate data and send it downstream.
+            Filters and connectors will have their outgoing callback invoked to receive data from upstream. The
+            outgoing callback will be invoked after the <em>start</em> callback has been called for the handler.</p>
+            <h3>Stage Data</h3>
+            <p>Stages can allocate stage data and store it in the <em>stage-&gt;data</em> field. If the stage needs to
+            store per-request data, it can store it in the stage's <em>queue-&gt;data</em> field which is unique for each
+            request.</p>
+            
+            <a id="flags"></a>
+            <h3>Stage flags</h3>
+            <p>The create handler, filter and connector APIs take a flags word which modified the behavior of the
+            stage. The flags can take the following values OR'd together</p>
+            <table title="Stage Flags" class="full">
+                <thead>
+                    <tr>
+                        <th>Flag</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTTP_STAGE_ALL</td>
+                        <td>All the HTTP methods are supported.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_DELETE</td>
+                        <td>The stage supports the HTTP DELETE method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_PARAMS</td>
+                        <td>The handler requires query and form data to be stored in the request params.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_GET</td>
+                        <td>The stage supports the HTTP GET method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_HEAD</td>
+                        <td>The stage supports the HTTP HEAD method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_OPTIONS</td>
+                        <td>The stage supports the HTTP OPTIONS method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_POST</td>
+                        <td>The stage supports the HTTP POST method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_PUT</td>
+                        <td>The stage supports the HTTP PUT method.</td>
+                    </tr>
+                    <tr>
+                        <td>HTTP_STAGE_TRACE</td>
+                        <td>The stage supports the HTTP TRACE method.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="section">Packaging as a Module</h2>
+            <p>Stages are usually delivered as loadable modules. In this manner, users can decide for themselves if the
+            functionality provided by the stage is needed or not. Stages can also be statically linked. See the
+            <a href="modules.html">Creating Modules</a> section for more information about how to create a module.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

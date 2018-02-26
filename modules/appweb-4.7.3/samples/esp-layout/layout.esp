@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <% securityToken(); %>
+    <% icon(0, 0); %>
+    <title>ESP Layout Sample</title>
+</head>
+
+<body>
+    <div class="top">
+        <h1><% label("ESP Layout Sample", "{data-click: '~'}"); %></h1>
+    </div>
+    <div id="logo">Appweb&trade;</div>
+    <% renderFlash("all"); %>
+    <div class="content">
+        <%@ content %>
+    </div>
+    <div class="bottom">
+        <p class="footnote">Powered by Appweb ESP&trade;</p>
+    </div>
+</body>
+</html>

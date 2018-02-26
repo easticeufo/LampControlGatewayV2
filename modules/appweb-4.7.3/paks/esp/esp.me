@@ -1,0 +1,87 @@
+/*
+    esp.me -- MakeMe file to build the ESP library
+ */
+
+Me.load({
+    blend: [ 'http', '?sqlite' ],
+
+    targets: {
+        esp: {
+            configurable: true,
+            depends:      [ 'libmod_esp', 'mdb' ],
+            uses:         [ 'sqlite' ],
+        },
+
+        mdb: {
+            configurable: true,
+            description: 'Embedthis MDB Database',
+        },
+
+        'esp.h': {
+            type: 'header',
+            headers: [ '*.h' ],
+        },
+
+        libmod_esp: {
+            type: 'lib',
+            depends: [ 'libappweb', 'mdb' ],
+            uses:    [ 'sqlite' ],
+            sources: [ '*.c' ],
+            exclude: /esp\.c/,
+            headers: [ '*.h' ],
+            ifdef:   [ 'esp' ],
+        },
+
+        espcmd: {
+            pname: 'esp',
+            path: '${BIN}/esp${EXE}',
+            type: 'exe',
+            depends: [ 'libmod_esp' ],
+            sources: [ 'esp.c' ]
+            platforms: [ 'local' ],
+            ifdef:   [ 'esp' ],
+        },
+
+        'esp.conf': {
+            type: 'file',
+            files: [ 'esp.conf' ],
+            ifdef: [ 'esp' ],
+        },
+
+        'esp-paks': {
+            home: '${TOP}',
+            path: '${OUT}/esp/',
+            files: [ 'src/esp-*/**' ],
+            platforms: [ 'local' ],
+            ifdef: [ 'esp' ],
+            'generate-capture': true,
+            build: `
+                trace('Copy', me.dir.out.join('esp'))
+                /* Force all esp paks to be the same version as appweb */
+                let version = me.dir.top.join('package.json').readJSON().version || '0.0.0'
+                for each (pak in Path('.').files(['paks/esp-*', 'src/esp-*'])) {
+                    let package = pak.join('package.json');
+                    let json = package.readJSON();
+                    json.version = version
+                    package.write(serialize(json, {pretty:true}) + '\n')
+                }
+                for each (pak in Path('.').files(['paks/esp-*'])) {
+                    makeDir(OUT.join('esp', pak, version))
+                    for each (path in pak.files('**')) {
+                        let stem = path.components.slice(2).join(path.separator)
+                        let dest = OUT.join('esp', pak, version, stem)
+                        if (path.isDir) {
+                            makeDir(dest)
+                        } else {
+                            copyFile(path, dest)
+                        }
+                    }
+                }
+                /* UNUSED with new pak
+                if (Cmd.locate('pak') && !me.generating) {
+                    run('pak -f -q cache ' + Path('.').files('esp-*').join(' '), {noshow: true}) 
+                } */
+            `
+        },
+    },
+})

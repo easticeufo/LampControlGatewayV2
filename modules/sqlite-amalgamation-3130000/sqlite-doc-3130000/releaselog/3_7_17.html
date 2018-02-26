@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.7.17 On 2013-05-20</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.7.17 On 2013-05-20</h2><p><ul>
+<li>Add support for <a href="../mmap.html">memory-mapped I/O</a>.
+<li>Add the <a href="../c3ref/strglob.html">sqlite3_strglob()</a> convenience interface.
+<li>Assigned the integer at offset 68 in the <a href="../fileformat2.html#database_header">database header</a> as the
+    <a href="../fileformat2.html#appid">Application ID</a> for when SQLite is used as an <a href="../appfileformat.html">application file-format</a>.
+    Added the <a href="../pragma.html#pragma_application_id">PRAGMA application_id</a> command to query and set the Application ID.
+<li>Report rollback recovery in the <a href="../errlog.html">error log</a> as SQLITE_NOTICE_RECOVER_ROLLBACK.
+    Change the error log code for WAL recover from 
+    SQLITE_OK to SQLITE_NOTICE_RECOVER_WAL.
+<li>Report the risky uses of <a href="../howtocorrupt.html#unlink">unlinked database files</a> and 
+   <a href="../howtocorrupt.html#alias">database filename aliasing</a> as SQLITE_WARNING messages in the <a href="../errlog.html">error log</a>.
+<li>Added the <a href="../compile.html#trace_size_limit">SQLITE_TRACE_SIZE_LIMIT</a> compile-time option.
+<li>Increase the default value of <a href="../compile.html#max_schema_retry">SQLITE_MAX_SCHEMA_RETRY</a> to 50 and make sure
+    that it is honored in every place that a schema change might force a statement
+    retry.
+<li>Add a new test harness called "mptester" used to verify correct operation
+    when multiple processes are using the same database file at the same time.
+<li>Enhance the <a href="../loadext.html">extension loading</a> mechanism to be more flexible (while
+    still maintaining backwards compatibility) in two ways:
+    <ol>
+    <li>If the default entry point "sqlite3_extension_init" is not present in
+        the loadable extension, also try an entry point "sqlite3_X_init" where
+        "X" is based on the shared library filename.  This allows every extension
+        to have a different entry point, which allows them to be statically linked
+        with no code changes.
+    <li>The shared library filename passed to <a href="../c3ref/load_extension.html">sqlite3_load_extension()</a> may
+        omit the filename suffix, and an appropriate architecture-dependent
+        suffix (".so", ".dylib", or ".dll") will be added automatically.
+    </ol>
+<li>Added many new loadable extensions to the source tree, including
+    amatch, closure, fuzzer, ieee754, nextchar, regexp, spellfix,
+    and wholenumber.  See header comments on each extension source file 
+    for further information about what that extension does.
+<li>Enhance <a href="../fts3.html">FTS3</a> to avoid using excess stack space when there are a huge
+    number of terms on the right-hand side of the MATCH operator.  A side-effect
+    of this change is that the MATCH operator can only accommodate 12 NEAR
+    operators at a time.
+<li>Enhance the <a href="../fts3.html#fts4aux">fts4aux</a> virtual table so that it can be a TEMP table.
+<li>Added the <a href="../fts3.html#fts3tok">fts3tokenize virtual table</a> to the <a href="../fts3.html">full-text search</a> logic.
+<li>Query planner enhancement: Use the transitive property of constraints
+    to move constraints into the outer loops of a join whenever possible,
+    thereby reducing the amount of work that needs to occur in inner loops.
+<li>Discontinue the use of posix_fallocate() on unix, as it does not work on all
+    filesystems.
+<li>Improved tracing and debugging facilities in the Windows <a href="../vfs.html">VFS</a>.
+<li>Bug fix: Fix a potential <b>database corruption bug</b>
+    in <a href="../sharedcache.html">shared cache mode</a> when one
+    <a href="../c3ref/sqlite3.html">database connection</a> is closed while another is in the middle of a write
+    transaction.
+    Ticket <a href="http://www.sqlite.org/src/info/e636a050b7">e636a050b7</a>
+<li>Bug fix:
+    Only consider AS names from the result set as candidates for resolving
+    identifiers in the WHERE clause if there are no other matches. In the 
+    ORDER BY clause, AS names take priority over any column names.
+    Ticket <a href="http://www.sqlite.org/src/info/2500cdb9be05">2500cdb9be05</a>
+<li>Bug fix: Do not allow a virtual table to cancel the ORDER BY clause unless 
+    all outer loops are guaranteed to return no more than one row result.
+    Ticket <a href="http://www.sqlite.org/src/info/ba82a4a41eac1">ba82a4a41eac1</a>.
+<li>Bug fix: Do not suppress the ORDER BY clause on a virtual table query if
+    an IN constraint is used.
+    Ticket <a href="http://www.sqlite.org/src/info/f69b96e3076e">f69b96e3076e</a>.
+<li>Bug fix: The <a href="../cli.html">command-line shell</a> gives an exit code of 0 when terminated
+    using the ".quit" command.
+<li>Bug fix: Make sure <a href="../pragma.html#syntax">PRAGMA</a> statements appear in <a href="../c3ref/profile.html">sqlite3_trace()</a> output.
+<li>Bug fix: When a <a href="../lang_select.html#compound">compound query</a> that uses an ORDER BY clause
+    with a <a href="../lang_expr.html#collateop">COLLATE operator</a>, make sure that the sorting occurs
+    according to the specified collation and that the comparisons associate with
+    the compound query use the native collation.  Ticket
+    <a href="http://www.sqlite.org/src/info/6709574d2a8d8">6709574d2a8d8</a>.
+<li>Bug fix: Makes sure the <a href="../c3ref/set_authorizer.html">authorizer</a> callback gets
+    a valid pointer to the string "ROWID" for the column-name parameter when
+    doing an <a href="../lang_update.html">UPDATE</a> that changes the rowid.  Ticket
+    <a href="http://www.sqlite.org/src/info/0eb70d77cb05bb2272">0eb70d77cb05bb2272</a>
+<li>Bug fix: Do not move WHERE clause terms inside OR expressions that are
+    contained within an ON clause of a LEFT JOIN.  Ticket 
+    <a href="http://www.sqlite.org/src/info/f2369304e4">f2369304e4</a>
+<li>Bug fix: Make sure an error is always reported when attempting to preform
+    an operation that requires a <a href="../datatype3.html#collation">collating sequence</a> that is missing.
+    Ticket <a href="http://www.sqlite.org/src/info/0fc59f908b">0fc59f908b</a>
+
+<li>SQLITE_SOURCE_ID: 
+    "2013-05-20 00:56:22 118a3b35693b134d56ebd780123b7fd6f1497668"
+<li>SHA1 for sqlite3.c: 246987605d0503c700a08b9ee99a6b5d67454aab
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

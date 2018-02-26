@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Database Connection Handle</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Database Connection Handle</h2><blockquote><pre>typedef struct sqlite3 sqlite3;
+</pre></blockquote><p>
+Each open SQLite database is represented by a pointer to an instance of
+the opaque structure named "sqlite3".  It is useful to think of an sqlite3
+pointer as an object.  The <a href="../c3ref/open.html">sqlite3_open()</a>, <a href="../c3ref/open.html">sqlite3_open16()</a>, and
+<a href="../c3ref/open.html">sqlite3_open_v2()</a> interfaces are its constructors, and <a href="../c3ref/close.html">sqlite3_close()</a>
+and <a href="../c3ref/close.html">sqlite3_close_v2()</a> are its destructors.  There are many other
+interfaces (such as
+<a href="../c3ref/prepare.html">sqlite3_prepare_v2()</a>, <a href="../c3ref/create_function.html">sqlite3_create_function()</a>, and
+<a href="../c3ref/busy_timeout.html">sqlite3_busy_timeout()</a> to name but three) that are methods on an
+sqlite3 object.
+</p><p>Constructors:
+ <a href="../c3ref/open.html">sqlite3_open()</a>,
+<a href="../c3ref/open.html">sqlite3_open16()</a>,
+<a href="../c3ref/open.html">sqlite3_open_v2()</a></p>
+<p>Destructors:
+ <a href="../c3ref/close.html">sqlite3_close()</a>,
+<a href="../c3ref/close.html">sqlite3_close_v2()</a></p>
+<table width="100%" cellpadding="0"><tr>
+<td colspan=3>Methods:</td></tr><tr>
+<td valign="top"><ul><li><a href="../c3ref/blob_open.html">sqlite3_blob_open</a></li>
+<li><a href="../c3ref/busy_handler.html">sqlite3_busy_handler</a></li>
+<li><a href="../c3ref/busy_timeout.html">sqlite3_busy_timeout</a></li>
+<li><a href="../c3ref/changes.html">sqlite3_changes</a></li>
+<li><a href="../c3ref/collation_needed.html">sqlite3_collation_needed</a></li>
+<li><a href="../c3ref/collation_needed.html">sqlite3_collation_needed16</a></li>
+<li><a href="../c3ref/commit_hook.html">sqlite3_commit_hook</a></li>
+<li><a href="../c3ref/create_collation.html">sqlite3_create_collation</a></li>
+<li><a href="../c3ref/create_collation.html">sqlite3_create_collation16</a></li>
+<li><a href="../c3ref/create_collation.html">sqlite3_create_collation_v2</a></li>
+<li><a href="../c3ref/create_function.html">sqlite3_create_function</a></li>
+<li><a href="../c3ref/create_function.html">sqlite3_create_function16</a></li>
+<li><a href="../c3ref/create_function.html">sqlite3_create_function_v2</a></li>
+<li><a href="../c3ref/create_module.html">sqlite3_create_module</a></li>
+<li><a href="../c3ref/create_module.html">sqlite3_create_module_v2</a></li>
+<li><a href="../c3ref/db_config.html">sqlite3_db_config</a></li>
+<li><a href="../c3ref/db_filename.html">sqlite3_db_filename</a></li>
+<li><a href="../c3ref/db_mutex.html">sqlite3_db_mutex</a></li>
+<li><a href="../c3ref/db_readonly.html">sqlite3_db_readonly</a></li>
+</ul></td>
+<td valign="top"><ul><li><a href="../c3ref/db_release_memory.html">sqlite3_db_release_memory</a></li>
+<li><a href="../c3ref/db_status.html">sqlite3_db_status</a></li>
+<li><a href="../c3ref/enable_load_extension.html">sqlite3_enable_load_extension</a></li>
+<li><a href="../c3ref/errcode.html">sqlite3_errcode</a></li>
+<li><a href="../c3ref/errcode.html">sqlite3_errmsg</a></li>
+<li><a href="../c3ref/errcode.html">sqlite3_errmsg16</a></li>
+<li><a href="../c3ref/errcode.html">sqlite3_errstr</a></li>
+<li><a href="../c3ref/exec.html">sqlite3_exec</a></li>
+<li><a href="../c3ref/errcode.html">sqlite3_extended_errcode</a></li>
+<li><a href="../c3ref/extended_result_codes.html">sqlite3_extended_result_codes</a></li>
+<li><a href="../c3ref/file_control.html">sqlite3_file_control</a></li>
+<li><a href="../c3ref/free_table.html">sqlite3_free_table</a></li>
+<li><a href="../c3ref/get_autocommit.html">sqlite3_get_autocommit</a></li>
+<li><a href="../c3ref/free_table.html">sqlite3_get_table</a></li>
+<li><a href="../c3ref/interrupt.html">sqlite3_interrupt</a></li>
+<li><a href="../c3ref/last_insert_rowid.html">sqlite3_last_insert_rowid</a></li>
+<li><a href="../c3ref/limit.html">sqlite3_limit</a></li>
+<li><a href="../c3ref/load_extension.html">sqlite3_load_extension</a></li>
+<li><a href="../c3ref/next_stmt.html">sqlite3_next_stmt</a></li>
+</ul></td>
+<td valign="top"><ul><li><a href="../c3ref/overload_function.html">sqlite3_overload_function</a></li>
+<li><a href="../c3ref/prepare.html">sqlite3_prepare</a></li>
+<li><a href="../c3ref/prepare.html">sqlite3_prepare16</a></li>
+<li><a href="../c3ref/prepare.html">sqlite3_prepare16_v2</a></li>
+<li><a href="../c3ref/prepare.html">sqlite3_prepare_v2</a></li>
+<li><a href="../c3ref/profile.html">sqlite3_profile</a></li>
+<li><a href="../c3ref/progress_handler.html">sqlite3_progress_handler</a></li>
+<li><a href="../c3ref/commit_hook.html">sqlite3_rollback_hook</a></li>
+<li><a href="../c3ref/set_authorizer.html">sqlite3_set_authorizer</a></li>
+<li><a href="../c3ref/table_column_metadata.html">sqlite3_table_column_metadata</a></li>
+<li><a href="../c3ref/total_changes.html">sqlite3_total_changes</a></li>
+<li><a href="../c3ref/profile.html">sqlite3_trace</a></li>
+<li><a href="../c3ref/unlock_notify.html">sqlite3_unlock_notify</a></li>
+<li><a href="../c3ref/update_hook.html">sqlite3_update_hook</a></li>
+<li><a href="../c3ref/wal_autocheckpoint.html">sqlite3_wal_autocheckpoint</a></li>
+<li><a href="../c3ref/wal_checkpoint.html">sqlite3_wal_checkpoint</a></li>
+<li><a href="../c3ref/wal_checkpoint_v2.html">sqlite3_wal_checkpoint_v2</a></li>
+<li><a href="../c3ref/wal_hook.html">sqlite3_wal_hook</a></li>
+</ul></td>
+</tr></table>
+</p>
+<p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

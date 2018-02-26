@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>8+3 Filenames</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h1 align="center">SQLite And 8+3 Filenames</h1>
+
+<p>
+The default configuration of SQLite assumes the underlying filesystem
+supports long filenames.
+</p>
+
+<p>
+SQLite does not impose any naming requirements on database files.
+SQLite will happily work with a database file that has any filename extension
+or with no extension at all.
+When auxiliary files are needed for a <a href="lockingv3.html#rollback">rollback journal</a> or
+a <a href="wal.html">write-ahead log</a> or for one of the other kinds of
+<a href="tempfiles.html">temporary disk files</a>, then the name for the auxiliary file is normally
+constructed by appending a suffix onto the end of the database file name.
+For example, if the original database is call "<tt>app.db</tt>" then
+the <a href="lockingv3.html#rollback">rollback journal</a> will be called "<tt>app.db-journal</tt>"
+and the <a href="wal.html">write-ahead log</a> will be called "<tt>app.db-wal</tt>".
+This approach to auxiliary file naming works great on systems that
+support long filenames.  But on systems that impose 8+3 filename
+constraints, the auxiliary files do not fit the 8+3 format even though
+the original database file does.
+</p>
+
+
+<h2>Changing Filesystems</h2>
+
+<p>
+The recommended fix for this problem is to select a different
+filesystem.  These days, there is a huge selection of high-performance, 
+reliable, patent-free filesystems that support long filenames.  
+Where possible, it is recommended that embedded devices use one
+of these other filesystems.  This will avoid compatibility issues
+and the danger of
+<a href="shortnames.html#db83corrupt">database corruption caused by inconsistent use of 8+3 filenames</a>.
+</p>
+
+<h2>Adjusting SQLite To Use 8+3 Filenames</h2>
+
+<p>
+Some devices are compelled to use an older filesystem with 8+3
+filename restrictions for backwards compatibility, or due
+to other non-technical factors.  In such situations, SQLite can be
+coerced into using auxiliary files that fit the 8+3 pattern as follows:
+</p>
+
+<ol>
+<li><p>Compile the SQLite library with the either the compile-time
+       options <a href="compile.html#enable_8_3_names">SQLITE_ENABLE_8_3_NAMES=1</a> or
+       <a href="compile.html#enable_8_3_names">SQLITE_ENABLE_8_3_NAMES=2</a>.
+       Support for 8+3 filenames is not included in SQLite by default
+       because it does introduce some overhead.  The overhead is tiny,
+       but even so, we do not want to burden the billions of SQLite
+       applications that do not need 8+3 filename support.</p>
+
+<li><p>If the <a href="compile.html#enable_8_3_names">SQLITE_ENABLE_8_3_NAMES=1</a> option
+       is used, then SQLite is capable of using 8+3 filenames but that
+       capabilities is disabled and must be enabled separately for each
+       database connection by using
+       using <a href="uri.html">URI filenames</a> when <a href="c3ref/open.html">opening</a> or
+       <a href="lang_attach.html">ATTACH-ing</a> the database files and include the
+       "<tt>8_3_names=1</tt>" query parameter in the URI.  If SQLite
+       is compiled with
+       <a href="compile.html#enable_8_3_names">SQLITE_ENABLE_8_3_NAMES=2</a> then
+       8+3 filenames are enabled by default and this step can be
+       skipped.</p>
+
+<li><p>Make sure that database filenames follow the 8+3 filename
+       format and that they do not have an empty name or extension.
+       In other words, the database filename must contain between
+       1 and 8 characters in the base name and between 1 and 3 characters
+       in the extension.  Blank extensions are not allowed.</p>
+</ol>
+
+<p>
+When the steps above are used, SQLite will shorten filename extensions
+by only using the last 3 characters of
+the extension.  Thus, for example, a file that would normally be called
+"<tt>app.db-journal</tt>" is shortened to just "<tt>app.nal</tt>".
+Similarly, "<tt>app.db-wal</tt>" will become "<tt>app.wal</tt>" and
+"<tt>app.db-shm</tt>" becomes "<tt>app.shm</tt>".
+</p>
+
+<p>
+Note that it is very important that the database filename have some kind
+of extension.  If there is no extension, then SQLite creates auxiliary
+filenames by appending to the base name of the file.  Thus, a database
+named "<tt>db01</tt>" would have a <a href="lockingv3.html#rollback">rollback journal</a> file named
+"<tt>db01-journal</tt>".  And as this filename has no extension to shorten
+to 3 characters, it will be used as-is, and will violate 8+3 naming rules.
+</p>
+
+<a name="db83corrupt"></a>
+
+<h2>Database Corruption Warning</h2>
+
+<p>
+If a database file is accessed using 8+3 naming rather than the default
+long filename, then it must be consistently accessed 
+using 8+3 naming by every database
+connection every time it is opened, or else there is a risk of database
+corruption.
+The auxiliary <a href="lockingv3.html#rollback">rollback journal</a> and <a href="wal.html">write-ahead log</a> files are essential
+to SQLite for being about to recover from a crash.  If an application is
+using 8+3 names and crashes, then the information needed to safely recover
+from the crash is stored in files with the "<tt>.nal</tt>" or
+"<tt>.wal</tt>" extension.  If the next application to open the database
+does not specify the "<tt>8_3_names=1</tt>" URI parameter, then SQLite
+will use the long filenames to try to locate the rollback journal or
+write-ahead log files.  It will not find them, since they were saved using
+8+3 names by the application that crashed, and hence the database will not
+be properly recovered and will likely go corrupt.
+</p>
+
+<p>
+Using a database file with 8+3 filenames in some cases while in 
+other cases using long filenames is equivalent to
+<a href="howtocorrupt.html#delhotjrnl">deleting a hot journal</a>.
+</p>
+

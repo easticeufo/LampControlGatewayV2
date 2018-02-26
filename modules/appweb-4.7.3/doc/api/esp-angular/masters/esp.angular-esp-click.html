@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>esp-click Directive</title>
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+   <link rel="stylesheet" type="text/css" href="api.css" />
+</head>
+
+<body>
+<div class='body'>
+	<div class="content">
+		<a name='top'></a>
+		<h1 class='className'>Directive: esp-click</h1>
+		<div class='api'>
+			<div class='prototype'>
+				&lt;tag esp-click="" ...&gt;
+			</div>
+			<div class='apiDetail'>
+				<dl>
+					<dt>Synopsis</dt>
+				    <dd>&lt;esp-click="URL"&gt;</dd>
+				</dl>
+				<dl>
+					<dt>Description</dt>
+					<dd><p>Similar to the href attribute, the esp-click attribute redirects the client to a new URL.
+					However, it only redirects if the authorized user has the required abilities to access the route. 
+					The abilities are registered when the controller routes are declared. If the user does not have 
+					the required abilities, the message "Insufficient Privilege" is displayed in the feedback area. 
+					Otherwise the user is redirected to the requested URL.</p>
+					</dd>
+				</dl>
+				<dl>
+					<dt>Attribute Values</dt>
+					<dd>
+						<table class='parameters' summary ='parameters'>
+					    	<tr class='param'><td class='param'>url: String </td><td>Target URL.</td></tr>
+					    </table>
+				    </dd>
+				</dl>
+				<dl>
+					<dt>Example</dt>
+					<dd>&lt;span esp-click="/remove.html"&gt;&lt;/span&gt;</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="terms">
+		   <p class="terms">
+		       <a href="http://embedthis.com/">Embedthis Software LLC, 2003-2014. 
+		       	All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+		   </p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

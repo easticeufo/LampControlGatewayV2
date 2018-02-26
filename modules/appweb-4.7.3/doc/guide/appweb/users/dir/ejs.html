@@ -1,0 +1,196 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>Ejscript Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#ejsAlias">EjsAlias</a></li>
+                <li><a href="#ejsStartup">EjsStartup</a></li>
+                <li><a href="#ejsWorkers">EjsWorkers</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>Ejscript Directives</h1>
+            <p>The Ejscript directives control the Ejscript Web Framework and configure Ejscript web
+            applications.</p>
+            
+            <a id="ejsAlias"></a>
+            <h2>EjsAlias</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define an Ejscript web application</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EjsAlias UriPrefix [Directory] [Script] [Workers]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>EjsAlias /myapp/ &nbsp;/var/www/myapp/ start.es 10</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EjsAlias directive defines an Ejscript application at the given directory which
+                            will receive all requests that begin with specified URI prefix. This one-line directive 
+                            is typically all you need to do to define an Ejscript application.</p>
+                            <p>The UriPrefix argument is mandatory, all others are optional.
+                            The Directory argument is used to define the ejs HttpServer home and documents properties that
+                            describe the base directory for the ejs application and the static documents directory. 
+                            This may be overridden by modifying the home and documents properties of the HttpServer instance.
+                            <p>The Script argument specifies the application startup script.
+                            If not startup script is specified, the following default script is used by default:</p>
+                            <pre>require ejs.web
+let server: HttpServer = new HttpServer
+var router = new Router(Router.Top)
+server.on("readable", function (event, request) {
+    server.serve(request, router)
+})
+server.listen()
+</pre>
+                            <p>The Workers arguments directive specifies the maximum number of worker threads to use 
+                            when serving requests for this ejs application. Worker threads are retained in a pool for 
+                            rapid reuse once requests complete. Set to zero for single-threaded operation. Defaults to 
+                            any previously defined worker limit via EjsWorkers or the number of Appweb threads set via 
+                            Threads (defaults to 10).</p>
+                            <p>It is convenient to define applications using this directive in a separate configuration
+                            file for each application. If the application config file is stored under the Appweb
+                            "conf/apps" directory, then Appweb will read it automatically when it starts. This makes it
+                            very easy to install or remove applications by simply adding or removing an application
+                            configuration file to or from this directory.</p>
+                            <p>The EjsAlias directive does the following actions:</p>
+                            <ul>
+                                <li>Creates a new Route block for the URL prefix</li>
+                                <li>Creates a new directory block if required for the directory</li>
+                                <li>Creates an alias for the URL prefix to the directory</li>
+                                <li>Defines the <b>ejs</b> handler as the handler for the URL prefix</li>
+                            </ul>
+                            <p>Note: use a trailing "/" on the prefix to prevent matching URIs that have the prefix
+                            as part of the first (non-directory) portion of their URI.</p>.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="ejsStartup"></a>
+            <h2>EjsStartup</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the Ejscript startup script</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EjsScript filename</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>EjsStartup start.es </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The EjsStartup directive specifies the script filename used to start the application.
+                            <p>If the script filename is relative, it is found in the ejs application directory specified
+                            by EjsAlias (or Alias). Virtual hosts and location blocks will inherit an outer EjsStartup
+                            definition. If not startup script is specified, the following default script is used:</p>
+                            <pre>require ejs.web
+let server: HttpServer = new HttpServer
+var router = new Router(Router.Top)
+server.on("readable", function (event, request) {
+    server.serve(request, router)
+})
+server.listen()
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="ejsWorkers"></a>
+            <h2>EjsWorkers</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control if Ejscript automatically creates session objects</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>EjsWorkers number</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>EjsWorkers 10</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive specifies the maximum number of worker threads to use when serving
+                            requests for the ejs handler. Worker threads are retained in a pool for rapid reuse once
+                            requests complete. Set to zero for single-threaded operation. Defaults to the number
+                            of Appweb threads set via the Threads directive (defaults to 10).</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

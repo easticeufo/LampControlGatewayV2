@@ -1,0 +1,29 @@
+{
+    "name": "angular",
+    "description": "Angular client-side framework",
+    "version": "1.2.6",
+    "keywords": [
+        "esp",
+    ],
+    "export": [
+        {
+            overwrite: true,
+            from: [
+                "angular.js",
+                "angular-animate.js",
+                "angular-route.js",
+            ],
+            to: '${LIB}/angular',
+        }
+    ],
+    "app": {
+        "client": {
+            "scripts": [
+                "${LIB}/angular/angular.js",
+                "${LIB}/angular/angular-animate.js",
+                "${LIB}/angular/angular-route.js",
+            ],
+        }
+    ],
+    "frozen": true,
+}

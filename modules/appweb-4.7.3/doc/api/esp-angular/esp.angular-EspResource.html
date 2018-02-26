@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Class EspResource</title>
+
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+</head>
+
+<body>
+<div class='body'>
+
+<div class="content">
+
+<a name='top'></a>
+<h1 class='className'>EspResource</h1>
+<div class='classBlock'>
+<table class='classHead' summary='EspResource'>
+   <tr><td><strong>Module</strong></td><td>esp.angular</td></tr>
+   <tr><td><strong>Definition</strong></td><td> class EspResource</td></tr>
+   <tr><td><strong>Inheritance</strong></td><td>EspResource <img src='images/inherit.gif' alt='inherit'/> <a href='Object.html'>Object</a><tr><td><strong>Stability</strong></td><td>Prototype.</td></tr>
+       </td></tr>
+</table>
+
+<p class='classBrief'>The EspResource supports RESTful HTTP requests to ESP applications.</p>
+
+<p class='classDescription'>The EspResource factory is used to create resource objects that interact with the server via
+RESTful HTTP requests. EspResource is typically used to create a resource object for each data model. 
+Consider the example below that creates a resource group for users. This creates routes for the standard restful 
+routes of: create, edit, init, list, remove and update, as well as creating custom routes for forgot, login and logout.
+Each of these routes is represented by a function that can be called to issue the corresponding HTTP RESTful request.
+<pre>
+angular.module('app').factory('User', function (EspResource) {
+&nbsp;    return <b>EspResource.group</b>("user", {}, {
+&nbsp;        forgot: { method: 'POST', url: '/:prefix/:controller/forgot' },
+&nbsp;        login:  { method: 'POST', url: '/:prefix/:controller/login' },
+&nbsp;        logout: { method: 'POST', url: '/:prefix/:controller/logout' },
+&nbsp;    }); 
+});
+</pre>
+Once EspResource.group creates the resource object and it is registered as an Angular service via factory() above, then 
+controllers may use the service to issue RESTful HTTP requests on the server. For example, to issue a HTTP request 
+to list the users on the server:
+<pre>User.list(null, <a href='#scope);</pre>
+'>scope);</pre>
+</a> or to logout:
+<pre>User.logout(null, <a href='#scope);</pre>
+'>scope);</pre>
+</a> 
+This simple function call does more than you might expect.
+The resource route function formats request data using JSON from the supplied scope. It issues the request, and 
+then processes the response extracting results and error messages. This makes communication with ESP simple,
+efficient, and reduces the number of lines of code required to interact with the server. <br/><br/>The server-side ESP framework accepts parameters in JSON format and generates responses back to the client 
+that include out-of-band feedback that describes error messages and informational feedback. The feedback
+is stored in the rootScope.feedback object which is typically databound for display.<br/><br/>The routes created for group and for singleton resources are listed below.
+For each route, a service method of the same name is created to call the server. The routes for a group are: 
+<pre>
+create: POST,   /:prefix/:controller,
+edit:   GET,    /:prefix/:controller/:id/edit,
+get:    GET,    /:prefix/:controller/:id,
+init:   GET,    /:prefix/:controller/init,
+list:   GET,    /:prefix/:controller/list,
+remove: DELETE, /:prefix/:controller/:id,
+update: POST,   /:prefix/:controller/:id,
+</pre><br/><br/>The routes for a singleton resource are:
+<pre>
+create: POST,   /:prefix/:controller,
+edit:   GET,    /:prefix/:controller/edit,
+get:    GET,    /:prefix/:controller,
+init:   GET,    /:prefix/:controller/init,
+remove: DELETE, /:prefix/:controller,
+update: POST,   /:prefix/:controller,
+</pre>
+The prefix is determined automatically by ESP and may be overridden by the request params. The controller is
+provided as the first parameter to the group/solo function. The "id" if required should be supplied to the
+resource function.<br/><br/>The calling sequence for resource functions is:
+<pre>Resource.action(params, [scope], [mappings], [successCallback], [failureCallback]</pre><br/><br/>The request params provide POST data for the request and may be used to override the the URL "prefix", 
+"controller" and "id". The params are also passed to the underlying <a href='#
+'>
+</a> 
+The scope is an optional output object to receive the response data. The mappings parameter is an object hash
+of mappings to rename response items to a more convenient local name. The success and failure callbacks are invoked
+as appropriate when the request completes.</p>
+
+</div>
+
+
+<hr />
+<a name='Properties'></a>
+<h2 class='classSection'>Properties</h2>
+   <p>(No own properties defined)</p><p class='inheritedLink'><a href='Object.html#Properties'><i>Inherited Properties</i></a></p>
+
+<hr />
+<a name='ClassMethods'></a>
+<h2 class='classSection'>EspResource Class Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#group'><b>group</b></a>(controller: <a href='Object.html'>Object</a>, params: <a href='Object.html'>Object</a>, options: <a href='Object.html'>Object</a>): <a href='esp.angular-EspResource.html'>EspResource</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Create a set of routes for a resource group.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#solo'><b>solo</b></a>(controller: <a href='Object.html'>Object</a>, params: <a href='Object.html'>Object</a>, options: <a href='Object.html'>Object</a>): <a href='esp.angular-EspResource.html'>EspResource</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Create a set of routes for a single resource.</td></tr>
+</table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<a name='InstanceMethods'></a>
+<h2 class='classSection'>EspResource Instance Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <p>(No own instance methods defined)</p></table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<h2>Method Detail</h2>
+<a name='group'></a>
+<div class='api'>
+<div class='apiSig'>static     group(controller: <a href='Object.html'>Object</a>, params: <a href='Object.html'>Object</a>, options: <a href='Object.html'>Object</a>): <a href='esp.angular-EspResource.html'>EspResource</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Create a set of routes for a resource group. This should be used when there are more than one instance
+of a resource. For example: a Users resource group has one or more users.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>controller: <a href='Object.html'>Object</a> </td><td>String Name of the controller field in the route URL.</td></tr><tr class='param'><td class='param'>params: <a href='Object.html'>Object</a> </td><td>Object Request parameters to supply as POST data. This is JSON encoded before transmission.</td></tr><tr class='param'><td class='param'>options: <a href='Object.html'>Object</a> </td><td>Hash of options to qualify request. These are passed to the underlying  Angular <a href='#http'>http</a> service object and permit setting HTTP headers, timeouts and HTTP credentials. Some of the key options are:.</td></tr></table></dd>
+</dl><dl><dt>Options</dt>
+<dd><table class='parameters' summary ='options'>
+<td class='param'>method</td><td>HTTP method to use.</td></tr>
+<td class='param'>params</td><td>Additional request parameters to pass via POST data.</td></tr>
+<td class='param'>timeout</td><td>Timeout in milliseconds.</td></tr>
+<td class='param'>rest</td><td>All other options are passed through to the <a href='#http'>http</a> service.</td></tr>
+</table></dd>
+</dl><dl><dt>Returns</dt>
+<dd>An EspResource object which may be used to issue requests on the server.  The object contains methods for create, edit, init, list, remove and update. x.</dd></dl>
+</div>
+</div>
+<hr />
+<a name='solo'></a>
+<div class='api'>
+<div class='apiSig'>static     solo(controller: <a href='Object.html'>Object</a>, params: <a href='Object.html'>Object</a>, options: <a href='Object.html'>Object</a>): <a href='esp.angular-EspResource.html'>EspResource</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Create a set of routes for a single resource. This should be used when there is only one instance
+of a resource. For example: an Administrator resource has only one administrator.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>controller: <a href='Object.html'>Object</a> </td><td>String Name of the controller field in the route URL.</td></tr><tr class='param'><td class='param'>params: <a href='Object.html'>Object</a> </td><td>Object Request parameters to supply as POST data. This is JSON encoded before transmission.</td></tr><tr class='param'><td class='param'>options: <a href='Object.html'>Object</a> </td><td>Hash of options to qualify request. These are passed to the underlying  Angular <a href='#http'>http</a> service object and permit setting HTTP headers, timeouts and HTTP credentials. Some of the key options are:.</td></tr></table></dd>
+</dl><dl><dt>Options</dt>
+<dd><table class='parameters' summary ='options'>
+<td class='param'>method</td><td>HTTP method to use.</td></tr>
+<td class='param'>params</td><td>Additional request parameters to pass via POST data.</td></tr>
+<td class='param'>timeout</td><td>Timeout in milliseconds.</td></tr>
+</table></dd>
+</dl><dl><dt>Returns</dt>
+<dd>The a EspResource object which may be used to issue requests on the server.  The object contains methods for create, edit, init, remove and update.</dd></dl>
+<dl><dt>Example</dt>
+<dd><pre>Port.get({id: $scope.id}, $scope, {}, function(response) {
+    // Complete
+});
+
+//  Get a list of ports and map the response data to the "ports" property.
+Port.list(null, $scope, {ports: "data"});</pre></dd></dl>
+</div>
+</div>
+<hr />
+<div class="terms">
+   <p class="terms">
+       <a href="http://embedthis.com/">       Embedthis Software LLC, 2003-2014. All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+   </p>
+</div></div>
+</div>
+</body>
+</html>

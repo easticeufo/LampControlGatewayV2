@@ -1,0 +1,163 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>Directory Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#directoryIndex">DirectoryIndex</a></li>
+                <li><a href="#indexOptions">IndexOptions</a></li>
+                <li><a href="#indexOrder">IndexOrder</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../../../../guide/appweb/users/configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+                <li><a href="route.html">Route Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>Directory Directives</h1>
+            <a id="directoryIndex"></a>
+            <h2>DirectoryIndex</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the default index file to serve for directory requests</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>DirectoryIndex document</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>DirectoryIndex index.php</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The DirectoryIndex directive specifies a document that may be served when a HTTP
+                            request is made for a directory. Multiple directory index files may be specified and they
+                            will be tested in order. The first index that exists will be served.</p>
+                            <p>The DirectoryIndex argument must be a simple filename without any directory portion.</p>
+                            <p>If a client requests a directory, but without a trailing "/" in the URI, the 
+                            client will be redirected to the URI with a trailing "/". When the client then uses that URI,
+                            the directory index file will be used for the response.</p>
+                            <p>For example: if a DirectoryIndex of "index.php" is specified and a user requests
+                            http://www.acme.com/products/. Then the document /products/index.php will be returned to
+                            the user.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="indexOptions"></a>
+            <h2>IndexOptions</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define directory indexing options</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>IndexOptions [[+|-] options] ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>IndexOptions FancyIndexing</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The available options are:</p>
+                            <ul>
+                                <li><b>FancyIndexing</b> &mdash; Enable fancy indexing</li>
+                                <li><b>FoldersFirst</b> &mdash; List folders first</li>
+                                <li><b>HtmlTable</b> &mdash; Display listings in a HTML table</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="indexOrder"></a>
+            <h2>IndexOrder</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Set the default ordering of the directory listing</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>IndexOrder [Ascending|Descending] [Name|Date|Size|Description]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>IndexOrder Ascending Name</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive controls the order of listings. By default, listings are displayed in
+                            filename ascending order. This directive only applies if IndexOptions is set to display
+                            listings in fancy format.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

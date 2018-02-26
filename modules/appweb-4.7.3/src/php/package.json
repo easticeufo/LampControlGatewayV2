@@ -1,0 +1,29 @@
+{
+    "name": "php",
+    "description": "PHP MakeMe Probe",
+    "title": "PHP Library",
+    "version": "0.8.0",
+    "keywords": [
+        "php",
+        "me",
+    ],
+    "author": {
+        "name": "Embedthis Software",
+        "email": "dev@embedthis.com",
+        "url": "https://embedthis.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/php.git"
+    },
+    "bugs": {
+        "url": "http://github.com/embedthis/php/issues"
+    },
+    "licenses": [
+        {
+            "type": "PUBLIC",
+            "url": "https://github.com/embedthis/php/blob/master/LICENSE.md"
+        }
+    ],
+    "frozen": true,
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Streaming Versions of API functions.</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Streaming Versions of API functions.</h2><blockquote><pre>int sqlite3changeset_apply_strm(
+  sqlite3 *db,                    /* Apply change to "main" db of this handle */
+  int (*xInput)(void *pIn, void *pData, int *pnData), /* Input function */
+  void *pIn,                                          /* First arg for xInput */
+  int(*xFilter)(
+    void *pCtx,                   /* Copy of sixth arg to _apply() */
+    const char *zTab              /* Table name */
+  ),
+  int(*xConflict)(
+    void *pCtx,                   /* Copy of sixth arg to _apply() */
+    int eConflict,                /* DATA, MISSING, CONFLICT, CONSTRAINT */
+    sqlite3_changeset_iter *p     /* Handle describing change and conflict */
+  ),
+  void *pCtx                      /* First argument passed to xConflict */
+);
+int sqlite3changeset_concat_strm(
+  int (*xInputA)(void *pIn, void *pData, int *pnData),
+  void *pInA,
+  int (*xInputB)(void *pIn, void *pData, int *pnData),
+  void *pInB,
+  int (*xOutput)(void *pOut, const void *pData, int nData),
+  void *pOut
+);
+int sqlite3changeset_invert_strm(
+  int (*xInput)(void *pIn, void *pData, int *pnData),
+  void *pIn,
+  int (*xOutput)(void *pOut, const void *pData, int nData),
+  void *pOut
+);
+int sqlite3changeset_start_strm(
+  sqlite3_changeset_iter **pp,
+  int (*xInput)(void *pIn, void *pData, int *pnData),
+  void *pIn
+);
+int sqlite3session_changeset_strm(
+  sqlite3_session *pSession,
+  int (*xOutput)(void *pOut, const void *pData, int nData),
+  void *pOut
+);
+int sqlite3session_patchset_strm(
+  sqlite3_session *pSession,
+  int (*xOutput)(void *pOut, const void *pData, int nData),
+  void *pOut
+);
+int sqlite3changegroup_add_strm(sqlite3_changegroup*, 
+    int (*xInput)(void *pIn, void *pData, int *pnData),
+    void *pIn
+);
+int sqlite3changegroup_output_strm(sqlite3_changegroup*,
+    int (*xOutput)(void *pOut, const void *pData, int nData), 
+    void *pOut
+);
+</pre></blockquote><p>
+The six streaming API xxx_strm() functions serve similar purposes to the
+corresponding non-streaming API functions:</p>
+
+<p><table border=1 style="margin-left:8ex;margin-right:8ex">
+<tr><th>Streaming function<th>Non-streaming equivalent</th>
+<tr><td>sqlite3changeset_apply_str<td><a href="../session/sqlite3changeset_apply.html">sqlite3changeset_apply</a>
+<tr><td>sqlite3changeset_concat_str<td><a href="../session/sqlite3changeset_concat.html">sqlite3changeset_concat</a>
+<tr><td>sqlite3changeset_invert_str<td><a href="../session/sqlite3changeset_invert.html">sqlite3changeset_invert</a>
+<tr><td>sqlite3changeset_start_str<td><a href="../session/sqlite3changeset_start.html">sqlite3changeset_start</a>
+<tr><td>sqlite3session_changeset_str<td><a href="../session/sqlite3session_changeset.html">sqlite3session_changeset</a>
+<tr><td>sqlite3session_patchset_str<td><a href="../session/sqlite3session_patchset.html">sqlite3session_patchset</a>
+</table></p>
+
+<p>Non-streaming functions that accept changesets (or patchsets) as input
+require that the entire changeset be stored in a single buffer in memory.
+Similarly, those that return a changeset or patchset do so by returning
+a pointer to a single large buffer allocated using sqlite3_malloc().
+Normally this is convenient. However, if an application running in a
+low-memory environment is required to handle very large changesets, the
+large contiguous memory allocations required can become onerous.</p>
+
+<p>In order to avoid this problem, instead of a single large buffer, input
+is passed to a streaming API functions by way of a callback function that
+the sessions module invokes to incrementally request input data as it is
+required. In all cases, a pair of API function parameters such as</p>
+
+<p><pre>
+&nbsp;     int nChangeset,
+&nbsp;     void *pChangeset,
+</pre></p>
+
+<p>Is replaced by:</p>
+
+<p><pre>
+&nbsp;     int (*xInput)(void *pIn, void *pData, int *pnData),
+&nbsp;     void *pIn,
+</pre></p>
+
+<p>Each time the xInput callback is invoked by the sessions module, the first
+argument passed is a copy of the supplied pIn context pointer. The second
+argument, pData, points to a buffer (*pnData) bytes in size. Assuming no
+error occurs the xInput method should copy up to (*pnData) bytes of data
+into the buffer and set (*pnData) to the actual number of bytes copied
+before returning SQLITE_OK. If the input is completely exhausted, (*pnData)
+should be set to zero to indicate this. Or, if an error occurs, an SQLite
+error code should be returned. In all cases, if an xInput callback returns
+an error, all processing is abandoned and the streaming API function
+returns a copy of the error code to the caller.</p>
+
+<p>In the case of sqlite3changeset_start_strm(), the xInput callback may be
+invoked by the sessions module at any point during the lifetime of the
+iterator. If such an xInput callback returns an error, the iterator enters
+an error state, whereby all subsequent calls to iterator functions
+immediately fail with the same error code as returned by xInput.</p>
+
+<p>Similarly, streaming API functions that return changesets (or patchsets)
+return them in chunks by way of a callback function instead of via a
+pointer to a single large buffer. In this case, a pair of parameters such
+as:</p>
+
+<p><pre>
+&nbsp;     int *pnChangeset,
+&nbsp;     void **ppChangeset,
+</pre></p>
+
+<p>Is replaced by:</p>
+
+<p><pre>
+&nbsp;     int (*xOutput)(void *pOut, const void *pData, int nData),
+&nbsp;     void *pOut
+</pre></p>
+
+<p>The xOutput callback is invoked zero or more times to return data to
+the application. The first parameter passed to each call is a copy of the
+pOut pointer supplied by the application. The second parameter, pData,
+points to a buffer nData bytes in size containing the chunk of output
+data being returned. If the xOutput callback successfully processes the
+supplied data, it should return SQLITE_OK to indicate success. Otherwise,
+it should return some other SQLite error code. In this case processing
+is immediately abandoned and the streaming API function returns a copy
+of the xOutput error code to the application.</p>
+
+<p>The sessions module never invokes an xOutput callback with the third
+parameter set to a value less than or equal to zero. Other than this,
+no guarantees are made as to the size of the chunks of data returned.
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

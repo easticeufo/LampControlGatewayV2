@@ -1,0 +1,83 @@
+/*
+    Initialize for Appweb unit tests
+ */
+require ejs.unix
+
+let conf         = Path("appweb.conf").readString()
+//const HOST       = (test.hostOs == "VXWORKS") ? "192.168.200.1" : "127.0.0.1"
+//const HOSTV6     = (test.hostOs == "VXWORKS") ? "192.168.200.1" : "[::1]"
+const HTTP       = "http://"  + conf.replace(/.*Listen *([\.:0-9]+) *# <HTTPv4>.*/ms, "$1")
+const HTTPV6     = "http://"  + conf.replace(/.*Listen *([\[\]:0-9]+) *# <HTTPv6>.*/ms, "$1")
+
+const SSL        = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <HTTPSv4>.*/ms, "$1")
+const SELFCERT   = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <SELFCERT>.*/ms, "$1")
+const CLIENTCERT = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <CLIENTCERT>.*/ms, "$1")
+const OPENSSL    = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <OPENSSL>.*/ms, "$1")
+const MATRIXSSL  = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <MATRIXSSL>.*/ms, "$1")
+const NANOSSL    = "https://" + conf.replace(/.*ListenSecure *([\.:0-9]+) *# <NANOSSL>.*/ms, "$1")
+const NAMED      = "http://"  + conf.replace(/.*Listen *([\.:0-9]+) *# <NAMED>.*/ms, "$1")
+const VIP        = "http://"  + conf.replace(/.*Listen *([\.:0-9]+) *# <IPHOST>.*/ms, "$1")
+
+const PIDFILE   = ".pidfile"
+
+/*
+    Provide definitions via App.config.uris[]
+ */
+shareUri("http", HTTP)
+shareUri("httpv6", HTTPV6)
+shareUri("ssl", SSL)
+shareUri("selfcert", SELFCERT)
+shareUri("clientcert", CLIENTCERT)
+shareUri("openssl", OPENSSL)
+shareUri("matrixssl", MATRIXSSL)
+shareUri("nanossl", NANOSSL)
+shareUri("named", NAMED)
+shareUri("virt", VIP)
+
+let service
+if (test.hostOs == "VXWORKS") {
+    /* Configuration for VxWorks simulator */
+    if (!test.env["WIND_BASE"]) {
+        test.skip("WIND_BASE is not defined")
+    } else if (!test.env["WIND_HOST_TYPE"]) {
+        test.skip("WIND_HOST_TYPE is not defined")
+    } else {
+        let base: Path = test.env["WIND_BASE"]
+        let vxsim: Path = base.join("host", test.env["WIND_HOST_TYPE"], "bin/vxsim")
+        let image: Path = test.top.join("out", test.hostSystem, "bin", "appweb.out")
+        service = vxsim + " -f " + base.join("target/proj/linux_diab/default/vxWorks") + 
+            " -d simnet -tn vxsim0 -e 127.0.0.1 -size 134217728 -s vxargs"
+        Path("vxargs").write('ld < ' + image + '\n' + 'taskSpawn "appweb",100,0,200000,appweb\n')
+        if (!App.getenv("NOSERVER")) {
+            Cmd.killall("vxsim")
+        }
+    }
+} else {
+    let path = test.bin.join("appweb").portable.toString().toLower()
+    let tree = App.dir.parent.portable.toString().toLower()
+    if (!path.startsWith(tree) && !path.startsWith(tree.trimStart('/private'))) {
+        let tree = App.dir.parent.portable
+        throw 'Appweb is located outside of the build tree:\nappweb: ' + path + '\nTREE: ' + tree
+    }
+    service = path + " --log trace.txt:4 --name forAppwebTest --config appweb.conf"
+}
+
+if (test.phase == "init") {
+    if (test.cross) {
+        stdout.write("precompiling esp pages .. ")
+        Cmd("esp compile")
+    }
+    if (!App.getenv("SECOND")) {
+        rm(find(".", "*.mod"))
+        rm(find(".", "*.tdat"))
+        rm(find("cache", "*"))
+        rm(find("app/cache", "*"))
+        cleanDir("web/tmp")
+    }
+    stdout.write("connecting to web server .. ")
+    startService(service, {address: HTTP})
+} else {
+    stopService()
+}
+rm(find(".", "*.tdat"))
+Path("vxargs").remove()

@@ -1,0 +1,802 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Library Footprint</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+
+<h2 align="center">Size Of The SQLite Library</h2>
+
+<p>
+The code space used by the SQLite library depends heavily on 
+the target platform, what
+compiler and optimization options are used to generate object code,
+and which optional features of SQLite are included or omitted from
+the build.
+This page provides examples of what to expect.
+</p>
+
+<p>
+SQLite version 3.7.8 is less than 350KiB in size on x86 with -Os and
+less than 400KiB (409KB) on x64.
+The -O2 and -O3 builds are larger, presumably due to loop 
+unrolling and function inlining.
+</p>
+
+<hr>
+<h3>Case 1</h3>
+
+<p><ul>
+<li> SuSE Linux 10.1
+<li> GCC 4.1.0
+<li> SQLite version 3.7.8
+<li> x86 (32-bit)
+</ul></p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+<tr>
+<th>Optimization<br>Setting<th>Size<br>(bytes)<th>Run-time<br>(Relative to -O0)
+
+<tr>
+<td align="center"> -O0
+<td align="right">529765
+<td align="center">1.00
+
+<tr>
+<td align="center"> -O1
+<td align="right">397204
+<td align="center">0.71
+
+<tr>
+<td align="center"> -Os
+<td align="right">333059
+<td align="center">0.73
+
+<tr>
+<td align="center"> -O2
+<td align="right">418161
+<td align="center">0.68
+
+<tr>
+<td align="center"> -O3
+<td align="right">828602
+<td align="center">0.66
+
+</table>
+
+<hr>
+<h3>Case 2</h3>
+
+<p><ul>
+<li> Ubuntu
+<li> GCC 4.5.2
+<li> SQLite version 3.7.8
+<li> x86_64 (64-bit)
+</ul></p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+<tr>
+<th>Optimization<br>Setting<th>Size<br>(bytes)<th>Run-time<br>(Relative to -O0)
+
+<tr>
+<td align="center"> -O0
+<td align="right">625841
+<td align="center">1.00
+
+<tr>
+<td align="center"> -O1
+<td align="right">455072
+<td align="center">0.62
+
+<tr>
+<td align="center"> -Os
+<td align="right">404201
+<td align="center">0.59
+
+<tr>
+<td align="center"> -O2
+<td align="right">499543
+<td align="center">0.53
+
+<tr>
+<td align="center"> -O3
+<td align="right">678465
+<td align="center">0.54
+
+</table>
+
+
+<hr>
+<h3>Case 3</h3>
+
+<p><ul>
+<li> Mac OS 10.7.1 (Lion)
+<li> GCC 4.2.1 + LLVM
+<li> SQLite version 3.7.8
+<li> x86_64 (64-bit)
+</ul></p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+<tr>
+<th>Optimization<br>Setting<th>Size<br>(bytes)<th>Run-time<br>(Relative to -O0)
+
+<tr>
+<td align="center"> -O0
+<td align="right">806598
+<td align="center">1.00
+
+<tr>
+<td align="center"> -O1
+<td align="right">508500
+<td align="center">0.61
+
+<tr>
+<td align="center"> -Os
+<td align="right">481816
+<td align="center">0.57
+
+<tr>
+<td align="center"> -O2
+<td align="right">614346
+<td align="center">0.55
+
+<tr>
+<td align="center"> -O3
+<td align="right">661622
+<td align="center">0.55
+
+</table>
+
+<hr>
+<a name="relfootprint"></a>
+
+
+
+<h2 align="center">The Effect Of Compile-Time Options On Library Size</h2>
+
+<p>The next study shows the effect that various <a href="compile.html">compile-time options</a> for
+SQLite have on the size of the resulting library file.  The following 
+size figures are computed with an early beta of SQLite version 3.7.9
+using GCC version 4.6.1 for X86_64 running on Ubuntu with the -Os option.
+Actual sizes and size differences may vary by compiler and system.</p>
+
+<table border="1" cellpadding=4 cellspacing=0>
+<tr>
+<th valign="bottom"><a href="compile.html">Compile-Time Option</a></th>
+<th valign="bottom">Library<br>Footprint</th>
+<th valign="bottom">Difference<br>From<br>Baseline</th>
+<th valign="bottom">Percentage<br>Difference</th>
+</tr>
+
+<tr>
+<td>All OMIT options</td>
+<td align="right">248363</td>
+<td align="right">-155714</td>
+<td align="right">-38.536%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_trigger">SQLITE_OMIT_TRIGGER</a></td>
+<td align="right">382038</td>
+<td align="right">-22039</td>
+<td align="right"> -5.454%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_wal">SQLITE_OMIT_WAL</a></td>
+<td align="right">388281</td>
+<td align="right">-15796</td>
+<td align="right"> -3.909%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_floating_point">SQLITE_OMIT_FLOATING_POINT</a></td>
+<td align="right">390469</td>
+<td align="right">-13608</td>
+<td align="right"> -3.368%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_virtualtable">SQLITE_OMIT_VIRTUALTABLE</a></td>
+<td align="right">391156</td>
+<td align="right">-12921</td>
+<td align="right"> -3.198%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_pragma">SQLITE_OMIT_PRAGMA</a></td>
+<td align="right">391292</td>
+<td align="right">-12785</td>
+<td align="right"> -3.164%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_foreign_key">SQLITE_OMIT_FOREIGN_KEY</a></td>
+<td align="right">393555</td>
+<td align="right">-10522</td>
+<td align="right"> -2.604%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_autovacuum">SQLITE_OMIT_AUTOVACUUM</a></td>
+<td align="right">395589</td>
+<td align="right">-8488</td>
+<td align="right"> -2.101%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_subquery">SQLITE_OMIT_SUBQUERY</a></td>
+<td align="right">396313</td>
+<td align="right">-7764</td>
+<td align="right"> -1.921%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_compound_select">SQLITE_OMIT_COMPOUND_SELECT</a></td>
+<td align="right">396810</td>
+<td align="right">-7267</td>
+<td align="right"> -1.798%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_explain">SQLITE_OMIT_EXPLAIN</a></td>
+<td align="right">397011</td>
+<td align="right">-7066</td>
+<td align="right"> -1.749%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_datetime_funcs">SQLITE_OMIT_DATETIME_FUNCS</a></td>
+<td align="right">397179</td>
+<td align="right">-6898</td>
+<td align="right"> -1.707%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_integrity_check">SQLITE_OMIT_INTEGRITY_CHECK</a></td>
+<td align="right">397438</td>
+<td align="right">-6639</td>
+<td align="right"> -1.643%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_attach">SQLITE_OMIT_ATTACH</a></td>
+<td align="right">397951</td>
+<td align="right">-6126</td>
+<td align="right"> -1.516%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_altertable">SQLITE_OMIT_ALTERTABLE</a></td>
+<td align="right">398344</td>
+<td align="right">-5733</td>
+<td align="right"> -1.419%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_utf16">SQLITE_OMIT_UTF16</a></td>
+<td align="right">399069</td>
+<td align="right">-5008</td>
+<td align="right"> -1.239%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_shared_cache">SQLITE_OMIT_SHARED_CACHE</a></td>
+<td align="right">399249</td>
+<td align="right">-4828</td>
+<td align="right"> -1.195%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_incrblob">SQLITE_OMIT_INCRBLOB</a></td>
+<td align="right">399889</td>
+<td align="right">-4188</td>
+<td align="right"> -1.036%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_analyze">SQLITE_OMIT_ANALYZE</a></td>
+<td align="right">400207</td>
+<td align="right">-3870</td>
+<td align="right"> -0.958%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_authorization">SQLITE_OMIT_AUTHORIZATION</a></td>
+<td align="right">401002</td>
+<td align="right">-3075</td>
+<td align="right"> -0.761%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_vacuum">SQLITE_OMIT_VACUUM</a></td>
+<td align="right">401026</td>
+<td align="right">-3051</td>
+<td align="right"> -0.755%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_pager_pragmas">SQLITE_OMIT_PAGER_PRAGMAS</a></td>
+<td align="right">401168</td>
+<td align="right">-2909</td>
+<td align="right"> -0.720%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_or_optimization">SQLITE_OMIT_OR_OPTIMIZATION</a></td>
+<td align="right">401374</td>
+<td align="right">-2703</td>
+<td align="right"> -0.669%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_view">SQLITE_OMIT_VIEW</a></td>
+<td align="right">401500</td>
+<td align="right">-2577</td>
+<td align="right"> -0.638%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_builtin_test">SQLITE_OMIT_BUILTIN_TEST</a></td>
+<td align="right">401711</td>
+<td align="right">-2366</td>
+<td align="right"> -0.586%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_xfer_opt">SQLITE_OMIT_XFER_OPT</a></td>
+<td align="right">402052</td>
+<td align="right">-2025</td>
+<td align="right"> -0.501%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_autoincrement">SQLITE_OMIT_AUTOINCREMENT</a></td>
+<td align="right">402098</td>
+<td align="right">-1979</td>
+<td align="right"> -0.490%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_schema_pragmas">SQLITE_OMIT_SCHEMA_PRAGMAS</a></td>
+<td align="right">402312</td>
+<td align="right">-1765</td>
+<td align="right"> -0.437%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_trace">SQLITE_OMIT_TRACE</a></td>
+<td align="right">402369</td>
+<td align="right">-1708</td>
+<td align="right"> -0.423%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_load_extension">SQLITE_OMIT_LOAD_EXTENSION</a></td>
+<td align="right">402611</td>
+<td align="right">-1466</td>
+<td align="right"> -0.363%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_automatic_index">SQLITE_OMIT_AUTOMATIC_INDEX</a></td>
+<td align="right">402685</td>
+<td align="right">-1392</td>
+<td align="right"> -0.344%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_like_optimization">SQLITE_OMIT_LIKE_OPTIMIZATION</a></td>
+<td align="right">402928</td>
+<td align="right">-1149</td>
+<td align="right"> -0.284%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_reindex">SQLITE_OMIT_REINDEX</a></td>
+<td align="right">402975</td>
+<td align="right">-1102</td>
+<td align="right"> -0.273%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_get_table">SQLITE_OMIT_GET_TABLE</a></td>
+<td align="right">402999</td>
+<td align="right">-1078</td>
+<td align="right"> -0.267%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_complete">SQLITE_OMIT_COMPLETE</a></td>
+<td align="right">403135</td>
+<td align="right">-942</td>
+<td align="right"> -0.233%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_tempdb">SQLITE_OMIT_TEMPDB</a></td>
+<td align="right">403200</td>
+<td align="right">-877</td>
+<td align="right"> -0.217%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_btreecount">SQLITE_OMIT_BTREECOUNT</a></td>
+<td align="right">403301</td>
+<td align="right">-776</td>
+<td align="right"> -0.192%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_localtime">SQLITE_OMIT_LOCALTIME</a></td>
+<td align="right">403307</td>
+<td align="right">-770</td>
+<td align="right"> -0.191%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_compileoption_diags">SQLITE_OMIT_COMPILEOPTION_DIAGS</a></td>
+<td align="right">403309</td>
+<td align="right">-768</td>
+<td align="right"> -0.190%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_flag_pragmas">SQLITE_OMIT_FLAG_PRAGMAS</a></td>
+<td align="right">403441</td>
+<td align="right">-636</td>
+<td align="right"> -0.157%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_quickbalance">SQLITE_OMIT_QUICKBALANCE</a></td>
+<td align="right">403455</td>
+<td align="right">-622</td>
+<td align="right"> -0.154%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_cast">SQLITE_OMIT_CAST</a></td>
+<td align="right">403457</td>
+<td align="right">-620</td>
+<td align="right"> -0.153%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_check">SQLITE_OMIT_CHECK</a></td>
+<td align="right">403501</td>
+<td align="right">-576</td>
+<td align="right"> -0.143%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_memorydb">SQLITE_OMIT_MEMORYDB</a></td>
+<td align="right">403555</td>
+<td align="right">-522</td>
+<td align="right"> -0.129%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_blob_literal">SQLITE_OMIT_BLOB_LITERAL</a></td>
+<td align="right">403619</td>
+<td align="right">-458</td>
+<td align="right"> -0.113%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_schema_version_pragmas">SQLITE_OMIT_SCHEMA_VERSION_PRAGMAS</a></td>
+<td align="right">403748</td>
+<td align="right">-329</td>
+<td align="right"> -0.081%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_lookaside">SQLITE_OMIT_LOOKASIDE</a></td>
+<td align="right">403753</td>
+<td align="right">-324</td>
+<td align="right"> -0.080%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_autoinit">SQLITE_OMIT_AUTOINIT</a></td>
+<td align="right">403759</td>
+<td align="right">-318</td>
+<td align="right"> -0.079%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#disable_dirsync">SQLITE_DISABLE_DIRSYNC</a></td>
+<td align="right">403782</td>
+<td align="right">-295</td>
+<td align="right"> -0.073%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_decltype">SQLITE_OMIT_DECLTYPE</a></td>
+<td align="right">403794</td>
+<td align="right">-283</td>
+<td align="right"> -0.070%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_deprecated">SQLITE_OMIT_DEPRECATED</a></td>
+<td align="right">403794</td>
+<td align="right">-283</td>
+<td align="right"> -0.070%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_between_optimization">SQLITE_OMIT_BETWEEN_OPTIMIZATION</a></td>
+<td align="right">403929</td>
+<td align="right">-148</td>
+<td align="right"> -0.037%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_progress_callback">SQLITE_OMIT_PROGRESS_CALLBACK</a></td>
+<td align="right">403957</td>
+<td align="right">-120</td>
+<td align="right"> -0.030%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_truncate_optimization">SQLITE_OMIT_TRUNCATE_OPTIMIZATION</a></td>
+<td align="right">403984</td>
+<td align="right">-93</td>
+<td align="right"> -0.023%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_tcl_variable">SQLITE_OMIT_TCL_VARIABLE</a></td>
+<td align="right">404003</td>
+<td align="right">-74</td>
+<td align="right"> -0.018%</td>
+</tr>
+
+<tr>
+<td>Baseline SQLite Library Size</td>
+<td align="right">404077</td>
+<td align="right">0</td>
+<td align="right"> 0.000%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#disable_lfs">SQLITE_DISABLE_LFS</a></td>
+<td align="right">404105</td>
+<td align="right">+28</td>
+<td align="right"> +0.007%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_iotrace">SQLITE_ENABLE_IOTRACE</a></td>
+<td align="right">404108</td>
+<td align="right">+31</td>
+<td align="right"> +0.008%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_autoreset">SQLITE_OMIT_AUTORESET</a></td>
+<td align="right">404143</td>
+<td align="right">+66</td>
+<td align="right"> +0.016%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_memory_management">SQLITE_ENABLE_MEMORY_MANAGEMENT</a></td>
+<td align="right">404348</td>
+<td align="right">+271</td>
+<td align="right"> +0.067%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_update_delete_limit">SQLITE_ENABLE_UPDATE_DELETE_LIMIT</a></td>
+<td align="right">404780</td>
+<td align="right">+703</td>
+<td align="right"> +0.174%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_column_metadata">SQLITE_ENABLE_COLUMN_METADATA</a></td>
+<td align="right">405198</td>
+<td align="right">+1121</td>
+<td align="right"> +0.277%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_unlock_notify">SQLITE_ENABLE_UNLOCK_NOTIFY</a></td>
+<td align="right">405371</td>
+<td align="right">+1294</td>
+<td align="right"> +0.320%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_atomic_write">SQLITE_ENABLE_ATOMIC_WRITE</a></td>
+<td align="right">405426</td>
+<td align="right">+1349</td>
+<td align="right"> +0.334%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_memsys5">SQLITE_ENABLE_MEMSYS5</a></td>
+<td align="right">406290</td>
+<td align="right">+2213</td>
+<td align="right"> +0.548%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_memsys3">SQLITE_ENABLE_MEMSYS3</a></td>
+<td align="right">406927</td>
+<td align="right">+2850</td>
+<td align="right"> +0.705%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#omit_wsd">SQLITE_OMIT_WSD</a></td>
+<td align="right">408536</td>
+<td align="right">+4459</td>
+<td align="right"> +1.104%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_stat3">SQLITE_ENABLE_STAT3</a></td>
+<td align="right">410352</td>
+<td align="right">+6275</td>
+<td align="right"> +1.553%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_rtree">SQLITE_ENABLE_RTREE</a></td>
+<td align="right">422554</td>
+<td align="right">+18477</td>
+<td align="right"> +4.573%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_fts3">SQLITE_ENABLE_FTS3</a></td>
+<td align="right">467173</td>
+<td align="right">+63096</td>
+<td align="right">+15.615%</td>
+</tr>
+
+<tr>
+<td><a href="compile.html#enable_fts4">SQLITE_ENABLE_FTS4</a></td>
+<td align="right">467185</td>
+<td align="right">+63108</td>
+<td align="right">+15.618%</td>
+</tr>
+</table>
+

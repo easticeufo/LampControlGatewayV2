@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">  
+</head>
+<body>
+    <p>Hello World</p>
+    <p>UID: <%=%d getuid() %>
+    <p>HOME DIR: <%= mprGetCurrentPath() %>
+    <p>DOCUMENTS DIR: <%= conn->rx->route->documents %>
+</body>
+</html>

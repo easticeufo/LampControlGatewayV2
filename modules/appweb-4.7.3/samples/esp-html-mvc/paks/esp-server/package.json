@@ -1,0 +1,25 @@
+{
+    "name": "esp-server",
+    "description": "ESP Server Framework",
+    "version": "4.6.0",
+    "app": {
+        "esp": {
+            "generate": {
+                "?appweb": "esp-server/generate/appweb.conf",
+            },
+        },
+        "http": {
+            "?routes": "esp-server",
+        },
+        "?mode": "debug",
+        "modes": {
+            "debug": {
+                "http": {
+                    "content": {
+                        "?keep": [ "c" ],
+                    },
+                },
+            },
+        },
+    },
+}

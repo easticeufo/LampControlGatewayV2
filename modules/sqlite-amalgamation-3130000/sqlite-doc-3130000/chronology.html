@@ -1,0 +1,940 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Chronology Of SQLite Releases</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+<h1 align=center>Chronology Of SQLite Releases</h1>
+
+<p>
+The following are all historical releases of
+SQLite, by date.  See the <a href="changes.html">release history</a> for more
+detail.
+</p>
+
+<table border=0>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-05-18&y=ci'>2016-05-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_13_0.html">3.13.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-04-18&y=ci'>2016-04-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_12_2.html">3.12.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-04-08&y=ci'>2016-04-08</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_12_1.html">3.12.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-04-01&y=ci'>2016-04-01</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_9_3.html">3.9.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-03-29&y=ci'>2016-03-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_12_0.html">3.12.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-03-03&y=ci'>2016-03-03</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_11_1.html">3.11.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-02-15&y=ci'>2016-02-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_11_0.html">3.11.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-01-20&y=ci'>2016-01-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_10_2.html">3.10.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-01-14&y=ci'>2016-01-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_10_1.html">3.10.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2016-01-06&y=ci'>2016-01-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_10_0.html">3.10.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-11-02&y=ci'>2015-11-02</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_9_2.html">3.9.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-10-16&y=ci'>2015-10-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_9_1.html">3.9.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-10-14&y=ci'>2015-10-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_9_0.html">3.9.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-07-29&y=ci'>2015-07-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_11_1.html">3.8.11.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-07-27&y=ci'>2015-07-27</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_11.html">3.8.11</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-05-20&y=ci'>2015-05-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_10_2.html">3.8.10.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-05-09&y=ci'>2015-05-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_10_1.html">3.8.10.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-05-07&y=ci'>2015-05-07</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_10.html">3.8.10</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-04-08&y=ci'>2015-04-08</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_9.html">3.8.9</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-02-25&y=ci'>2015-02-25</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_8_3.html">3.8.8.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-01-30&y=ci'>2015-01-30</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_8_2.html">3.8.8.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-01-20&y=ci'>2015-01-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_8_1.html">3.8.8.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2015-01-16&y=ci'>2015-01-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_8.html">3.8.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-12-09&y=ci'>2014-12-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_7_4.html">3.8.7.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-12-05&y=ci'>2014-12-05</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_7_3.html">3.8.7.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-11-18&y=ci'>2014-11-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_7_2.html">3.8.7.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-10-29&y=ci'>2014-10-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_7_1.html">3.8.7.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-10-17&y=ci'>2014-10-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_7.html">3.8.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-08-15&y=ci'>2014-08-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_6.html">3.8.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-06-04&y=ci'>2014-06-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_5.html">3.8.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-04-03&y=ci'>2014-04-03</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_4_3.html">3.8.4.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-03-26&y=ci'>2014-03-26</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_4_2.html">3.8.4.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-03-11&y=ci'>2014-03-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_4_1.html">3.8.4.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-03-10&y=ci'>2014-03-10</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_4.html">3.8.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-02-11&y=ci'>2014-02-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_3_1.html">3.8.3.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2014-02-03&y=ci'>2014-02-03</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_3.html">3.8.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-12-06&y=ci'>2013-12-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_2.html">3.8.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-10-17&y=ci'>2013-10-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_1.html">3.8.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-09-03&y=ci'>2013-09-03</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_0_2.html">3.8.0.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-08-29&y=ci'>2013-08-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_0_1.html">3.8.0.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-08-26&y=ci'>2013-08-26</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_8_0.html">3.8.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-05-20&y=ci'>2013-05-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_17.html">3.7.17</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-04-12&y=ci'>2013-04-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_16_2.html">3.7.16.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-03-29&y=ci'>2013-03-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_16_1.html">3.7.16.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-03-18&y=ci'>2013-03-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_16.html">3.7.16</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2013-01-09&y=ci'>2013-01-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_15_2.html">3.7.15.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-12-19&y=ci'>2012-12-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_15_1.html">3.7.15.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-12-12&y=ci'>2012-12-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_15.html">3.7.15</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-10-04&y=ci'>2012-10-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_14_1.html">3.7.14.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-09-03&y=ci'>2012-09-03</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_14.html">3.7.14</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-06-11&y=ci'>2012-06-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_13.html">3.7.13</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-05-22&y=ci'>2012-05-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_12_1.html">3.7.12.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-05-14&y=ci'>2012-05-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_12.html">3.7.12</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-03-20&y=ci'>2012-03-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_11.html">3.7.11</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2012-01-16&y=ci'>2012-01-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_10.html">3.7.10</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-11-01&y=ci'>2011-11-01</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_9.html">3.7.9</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-09-19&y=ci'>2011-09-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_8.html">3.7.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-06-28&y=ci'>2011-06-28</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_7_1.html">3.7.7.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-06-23&y=ci'>2011-06-23</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_7.html">3.7.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-05-19&y=ci'>2011-05-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_6_3.html">3.7.6.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-04-17&y=ci'>2011-04-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_6_2.html">3.7.6.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-04-13&y=ci'>2011-04-13</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_6_1.html">3.7.6.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-04-12&y=ci'>2011-04-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_6.html">3.7.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2011-02-01&y=ci'>2011-02-01</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_5.html">3.7.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-12-07&y=ci'>2010-12-07</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_4.html">3.7.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-10-08&y=ci'>2010-10-08</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_3.html">3.7.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-08-24&y=ci'>2010-08-24</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_2.html">3.7.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-08-23&y=ci'>2010-08-23</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_1.html">3.7.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-08-04&y=ci'>2010-08-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_0_1.html">3.7.0.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-07-21&y=ci'>2010-07-21</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_7_0.html">3.7.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-03-26&y=ci'>2010-03-26</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_23_1.html">3.6.23.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-03-09&y=ci'>2010-03-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_23.html">3.6.23</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2010-01-06&y=ci'>2010-01-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_22.html">3.6.22</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-12-07&y=ci'>2009-12-07</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_21.html">3.6.21</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-11-04&y=ci'>2009-11-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_20.html">3.6.20</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-10-30&y=ci'>2009-10-30</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_16_1.html">3.6.16.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-10-14&y=ci'>2009-10-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_19.html">3.6.19</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-09-11&y=ci'>2009-09-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_18.html">3.6.18</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-08-10&y=ci'>2009-08-10</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_17.html">3.6.17</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-06-27&y=ci'>2009-06-27</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_16.html">3.6.16</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-06-15&y=ci'>2009-06-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_15.html">3.6.15</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-05-25&y=ci'>2009-05-25</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_14_2.html">3.6.14.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-05-19&y=ci'>2009-05-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_14_1.html">3.6.14.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-05-07&y=ci'>2009-05-07</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_14.html">3.6.14</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-04-13&y=ci'>2009-04-13</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_13.html">3.6.13</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-03-31&y=ci'>2009-03-31</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_12.html">3.6.12</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-02-18&y=ci'>2009-02-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_11.html">3.6.11</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-01-15&y=ci'>2009-01-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_10.html">3.6.10</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-01-14&y=ci'>2009-01-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_9.html">3.6.9</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2009-01-12&y=ci'>2009-01-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_8.html">3.6.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-12-16&y=ci'>2008-12-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_7.html">3.6.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-11-26&y=ci'>2008-11-26</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_6_2.html">3.6.6.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-11-22&y=ci'>2008-11-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_6_1.html">3.6.6.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-11-19&y=ci'>2008-11-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_6.html">3.6.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-11-12&y=ci'>2008-11-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_5.html">3.6.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-10-15&y=ci'>2008-10-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_4.html">3.6.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-09-22&y=ci'>2008-09-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_3.html">3.6.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-08-30&y=ci'>2008-08-30</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_2.html">3.6.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-08-06&y=ci'>2008-08-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_1.html">3.6.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-07-16&y=ci'>2008-07-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_6_0.html">3.6.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-05-14&y=ci'>2008-05-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_9.html">3.5.9</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-04-16&y=ci'>2008-04-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_8.html">3.5.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-03-17&y=ci'>2008-03-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_7.html">3.5.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-02-06&y=ci'>2008-02-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_6.html">3.5.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2008-01-31&y=ci'>2008-01-31</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_5.html">3.5.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-12-14&y=ci'>2007-12-14</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_4.html">3.5.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-11-27&y=ci'>2007-11-27</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_3.html">3.5.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-11-05&y=ci'>2007-11-05</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_2.html">3.5.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-10-04&y=ci'>2007-10-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_1.html">3.5.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-09-04&y=ci'>2007-09-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_5_0.html">3.5.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-08-13&y=ci'>2007-08-13</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_4_2.html">3.4.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-07-20&y=ci'>2007-07-20</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_4_1.html">3.4.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-06-18&y=ci'>2007-06-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_4_0.html">3.4.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-04-25&y=ci'>2007-04-25</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_17.html">3.3.17</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-04-18&y=ci'>2007-04-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_16.html">3.3.16</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-04-09&y=ci'>2007-04-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_15.html">3.3.15</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-04-02&y=ci'>2007-04-02</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_14.html">3.3.14</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-02-13&y=ci'>2007-02-13</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_13.html">3.3.13</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-01-27&y=ci'>2007-01-27</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_12.html">3.3.12</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-01-22&y=ci'>2007-01-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_11.html">3.3.11</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-01-09&y=ci'>2007-01-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_10.html">3.3.10</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2007-01-04&y=ci'>2007-01-04</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_9.html">3.3.9</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-10-09&y=ci'>2006-10-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_8.html">3.3.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-08-12&y=ci'>2006-08-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_7.html">3.3.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-06-06&y=ci'>2006-06-06</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_6.html">3.3.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-04-05&y=ci'>2006-04-05</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_5.html">3.3.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-02-11&y=ci'>2006-02-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_4.html">3.3.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-01-31&y=ci'>2006-01-31</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_3.html">3.3.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-01-24&y=ci'>2006-01-24</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_2.html">3.3.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-01-16&y=ci'>2006-01-16</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_1.html">3.3.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2006-01-11&y=ci'>2006-01-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_3_0.html">3.3.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-12-19&y=ci'>2005-12-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_8.html">3.2.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-12-19&y=ci'>2005-12-19</a></td>
+<td width='20'></td>
+<td>2.8.17</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-09-24&y=ci'>2005-09-24</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_7.html">3.2.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-09-17&y=ci'>2005-09-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_6.html">3.2.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-08-27&y=ci'>2005-08-27</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_5.html">3.2.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-08-24&y=ci'>2005-08-24</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_4.html">3.2.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-08-21&y=ci'>2005-08-21</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_3.html">3.2.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-06-12&y=ci'>2005-06-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_2.html">3.2.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-03-29&y=ci'>2005-03-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_1.html">3.2.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-03-21&y=ci'>2005-03-21</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_2_0.html">3.2.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-03-17&y=ci'>2005-03-17</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_6.html">3.1.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-03-11&y=ci'>2005-03-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_5.html">3.1.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-03-11&y=ci'>2005-03-11</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_4.html">3.1.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-02-19&y=ci'>2005-02-19</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_3.html">3.1.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-02-15&y=ci'>2005-02-15</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_2.html">3.1.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-02-15&y=ci'>2005-02-15</a></td>
+<td width='20'></td>
+<td>2.8.16</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-02-01&y=ci'>2005-02-01</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_1.html">3.1.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2005-01-21&y=ci'>2005-01-21</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_1_0.html">3.1.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-10-12&y=ci'>2004-10-12</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_8.html">3.0.8</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-09-18&y=ci'>2004-09-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_7.html">3.0.7</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-09-02&y=ci'>2004-09-02</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_6.html">3.0.6</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-08-29&y=ci'>2004-08-29</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_5.html">3.0.5</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-08-09&y=ci'>2004-08-09</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_4.html">3.0.4</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-07-22&y=ci'>2004-07-22</a></td>
+<td width='20'></td>
+<td>2.8.15</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-07-22&y=ci'>2004-07-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_3.html">3.0.3</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-06-30&y=ci'>2004-06-30</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_2.html">3.0.2</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-06-22&y=ci'>2004-06-22</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_1.html">3.0.1</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-06-18&y=ci'>2004-06-18</a></td>
+<td width='20'></td>
+<td><a href="releaselog/3_0_0.html">3.0.0</a></td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-06-09&y=ci'>2004-06-09</a></td>
+<td width='20'></td>
+<td>2.8.14</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-03-08&y=ci'>2004-03-08</a></td>
+<td width='20'></td>
+<td>2.8.13</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-02-08&y=ci'>2004-02-08</a></td>
+<td width='20'></td>
+<td>2.8.12</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-01-14&y=ci'>2004-01-14</a></td>
+<td width='20'></td>
+<td>2.8.11</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-01-14&y=ci'>2004-01-14</a></td>
+<td width='20'></td>
+<td>2.8.10</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2004-01-06&y=ci'>2004-01-06</a></td>
+<td width='20'></td>
+<td>2.8.9</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-12-18&y=ci'>2003-12-18</a></td>
+<td width='20'></td>
+<td>2.8.8</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-12-04&y=ci'>2003-12-04</a></td>
+<td width='20'></td>
+<td>2.8.7</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-08-22&y=ci'>2003-08-22</a></td>
+<td width='20'></td>
+<td>2.8.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-07-22&y=ci'>2003-07-22</a></td>
+<td width='20'></td>
+<td>2.8.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-06-29&y=ci'>2003-06-29</a></td>
+<td width='20'></td>
+<td>2.8.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-06-04&y=ci'>2003-06-04</a></td>
+<td width='20'></td>
+<td>2.8.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-05-17&y=ci'>2003-05-17</a></td>
+<td width='20'></td>
+<td>2.8.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-05-17&y=ci'>2003-05-17</a></td>
+<td width='20'></td>
+<td>2.8.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-02-16&y=ci'>2003-02-16</a></td>
+<td width='20'></td>
+<td>2.8.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2003-01-25&y=ci'>2003-01-25</a></td>
+<td width='20'></td>
+<td>2.7.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-12-28&y=ci'>2002-12-28</a></td>
+<td width='20'></td>
+<td>2.7.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-12-17&y=ci'>2002-12-17</a></td>
+<td width='20'></td>
+<td>2.7.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-10-31&y=ci'>2002-10-31</a></td>
+<td width='20'></td>
+<td>2.7.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-09-25&y=ci'>2002-09-25</a></td>
+<td width='20'></td>
+<td>2.7.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-08-31&y=ci'>2002-08-31</a></td>
+<td width='20'></td>
+<td>2.7.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-08-25&y=ci'>2002-08-25</a></td>
+<td width='20'></td>
+<td>2.7.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-08-13&y=ci'>2002-08-13</a></td>
+<td width='20'></td>
+<td>2.6.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-31&y=ci'>2002-07-31</a></td>
+<td width='20'></td>
+<td>2.6.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-19&y=ci'>2002-07-19</a></td>
+<td width='20'></td>
+<td>2.6.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-18&y=ci'>2002-07-18</a></td>
+<td width='20'></td>
+<td>2.6.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-07&y=ci'>2002-07-07</a></td>
+<td width='20'></td>
+<td>2.5.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-06&y=ci'>2002-07-06</a></td>
+<td width='20'></td>
+<td>2.5.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-07-01&y=ci'>2002-07-01</a></td>
+<td width='20'></td>
+<td>2.5.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-06-25&y=ci'>2002-06-25</a></td>
+<td width='20'></td>
+<td>2.5.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-06-25&y=ci'>2002-06-25</a></td>
+<td width='20'></td>
+<td>2.5.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-06-19&y=ci'>2002-06-19</a></td>
+<td width='20'></td>
+<td>2.5.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-06-17&y=ci'>2002-06-17</a></td>
+<td width='20'></td>
+<td>2.5.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-05-10&y=ci'>2002-05-10</a></td>
+<td width='20'></td>
+<td>2.4.12</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-05-08&y=ci'>2002-05-08</a></td>
+<td width='20'></td>
+<td>2.4.11</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-05-03&y=ci'>2002-05-03</a></td>
+<td width='20'></td>
+<td>2.4.10</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-04-22&y=ci'>2002-04-22</a></td>
+<td width='20'></td>
+<td>2.4.9</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-04-20&y=ci'>2002-04-20</a></td>
+<td width='20'></td>
+<td>2.4.8</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-04-12&y=ci'>2002-04-12</a></td>
+<td width='20'></td>
+<td>2.4.7</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-04-02&y=ci'>2002-04-02</a></td>
+<td width='20'></td>
+<td>2.4.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-04-02&y=ci'>2002-04-02</a></td>
+<td width='20'></td>
+<td>2.4.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-03-30&y=ci'>2002-03-30</a></td>
+<td width='20'></td>
+<td>2.4.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-03-23&y=ci'>2002-03-23</a></td>
+<td width='20'></td>
+<td>2.4.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-03-20&y=ci'>2002-03-20</a></td>
+<td width='20'></td>
+<td>2.4.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-03-13&y=ci'>2002-03-13</a></td>
+<td width='20'></td>
+<td>2.4.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-03-11&y=ci'>2002-03-11</a></td>
+<td width='20'></td>
+<td>2.4.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-02-19&y=ci'>2002-02-19</a></td>
+<td width='20'></td>
+<td>2.3.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-02-14&y=ci'>2002-02-14</a></td>
+<td width='20'></td>
+<td>2.3.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-02-13&y=ci'>2002-02-13</a></td>
+<td width='20'></td>
+<td>2.3.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-02-03&y=ci'>2002-02-03</a></td>
+<td width='20'></td>
+<td>2.3.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-01-28&y=ci'>2002-01-28</a></td>
+<td width='20'></td>
+<td>2.2.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-01-22&y=ci'>2002-01-22</a></td>
+<td width='20'></td>
+<td>2.2.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-01-16&y=ci'>2002-01-16</a></td>
+<td width='20'></td>
+<td>2.2.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-01-14&y=ci'>2002-01-14</a></td>
+<td width='20'></td>
+<td>2.2.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2002-01-09&y=ci'>2002-01-09</a></td>
+<td width='20'></td>
+<td>2.2.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-12-22&y=ci'>2001-12-22</a></td>
+<td width='20'></td>
+<td>2.2.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-12-15&y=ci'>2001-12-15</a></td>
+<td width='20'></td>
+<td>2.1.7</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-12-14&y=ci'>2001-12-14</a></td>
+<td width='20'></td>
+<td>2.1.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-12-06&y=ci'>2001-12-06</a></td>
+<td width='20'></td>
+<td>2.1.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-12-05&y=ci'>2001-12-05</a></td>
+<td width='20'></td>
+<td>2.1.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-11-24&y=ci'>2001-11-24</a></td>
+<td width='20'></td>
+<td>2.1.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-11-23&y=ci'>2001-11-23</a></td>
+<td width='20'></td>
+<td>2.1.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-11-13&y=ci'>2001-11-13</a></td>
+<td width='20'></td>
+<td>2.1.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-11-12&y=ci'>2001-11-12</a></td>
+<td width='20'></td>
+<td>2.1.0</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-11-03&y=ci'>2001-11-03</a></td>
+<td width='20'></td>
+<td>2.0.8</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-22&y=ci'>2001-10-22</a></td>
+<td width='20'></td>
+<td>2.0.7</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-19&y=ci'>2001-10-19</a></td>
+<td width='20'></td>
+<td>2.0.6</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-15&y=ci'>2001-10-15</a></td>
+<td width='20'></td>
+<td>2.0.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-13&y=ci'>2001-10-13</a></td>
+<td width='20'></td>
+<td>2.0.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-13&y=ci'>2001-10-13</a></td>
+<td width='20'></td>
+<td>2.0.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-09&y=ci'>2001-10-09</a></td>
+<td width='20'></td>
+<td>2.0.2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-10-02&y=ci'>2001-10-02</a></td>
+<td width='20'></td>
+<td>2.0.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-09-28&y=ci'>2001-09-28</a></td>
+<td width='20'></td>
+<td>2.0-alpha-4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-09-27&y=ci'>2001-09-27</a></td>
+<td width='20'></td>
+<td>2.0-alpha-3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-09-20&y=ci'>2001-09-20</a></td>
+<td width='20'></td>
+<td>2.0-alpha-2</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-07-23&y=ci'>2001-07-23</a></td>
+<td width='20'></td>
+<td>1.0.32</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-04-15&y=ci'>2001-04-15</a></td>
+<td width='20'></td>
+<td>1.0.31</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-04-06&y=ci'>2001-04-06</a></td>
+<td width='20'></td>
+<td>1.0.30</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-04-05&y=ci'>2001-04-05</a></td>
+<td width='20'></td>
+<td>1.0.29</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-04-04&y=ci'>2001-04-04</a></td>
+<td width='20'></td>
+<td>1.0.28</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-03-20&y=ci'>2001-03-20</a></td>
+<td width='20'></td>
+<td>1.0.27</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-03-20&y=ci'>2001-03-20</a></td>
+<td width='20'></td>
+<td>1.0.26</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-03-15&y=ci'>2001-03-15</a></td>
+<td width='20'></td>
+<td>1.0.25</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-03-14&y=ci'>2001-03-14</a></td>
+<td width='20'></td>
+<td>1.0.24</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-02-20&y=ci'>2001-02-20</a></td>
+<td width='20'></td>
+<td>1.0.23</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-02-19&y=ci'>2001-02-19</a></td>
+<td width='20'></td>
+<td>1.0.22</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-02-19&y=ci'>2001-02-19</a></td>
+<td width='20'></td>
+<td>1.0.21</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-02-11&y=ci'>2001-02-11</a></td>
+<td width='20'></td>
+<td>1.0.20</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-02-06&y=ci'>2001-02-06</a></td>
+<td width='20'></td>
+<td>1.0.19</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2001-01-04&y=ci'>2001-01-04</a></td>
+<td width='20'></td>
+<td>1.0.18</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-12-10&y=ci'>2000-12-10</a></td>
+<td width='20'></td>
+<td>1.0.17</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-11-28&y=ci'>2000-11-28</a></td>
+<td width='20'></td>
+<td>1.0.16</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-23&y=ci'>2000-10-23</a></td>
+<td width='20'></td>
+<td>1.0.15</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-19&y=ci'>2000-10-19</a></td>
+<td width='20'></td>
+<td>1.0.14</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-19&y=ci'>2000-10-19</a></td>
+<td width='20'></td>
+<td>1.0.13</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-17&y=ci'>2000-10-17</a></td>
+<td width='20'></td>
+<td>1.0.12</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-11&y=ci'>2000-10-11</a></td>
+<td width='20'></td>
+<td>1.0.10</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-10-09&y=ci'>2000-10-09</a></td>
+<td width='20'></td>
+<td>1.0.9</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-09-30&y=ci'>2000-09-30</a></td>
+<td width='20'></td>
+<td>1.0.8</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-09-14&y=ci'>2000-09-14</a></td>
+<td width='20'></td>
+<td>1.0.5</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-08-28&y=ci'>2000-08-28</a></td>
+<td width='20'></td>
+<td>1.0.4</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-08-22&y=ci'>2000-08-22</a></td>
+<td width='20'></td>
+<td>1.0.3</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-08-18&y=ci'>2000-08-18</a></td>
+<td width='20'></td>
+<td>1.0.1</td></tr>
+<tr><td><a href='https://www.sqlite.org/src/timeline?ymd=2000-08-17&y=ci'>2000-08-17</a></td>
+<td width='20'></td>
+<td>1.0</td></tr>
+
+</table>
+

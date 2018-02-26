@@ -1,0 +1,560 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt;<a href="index.html">ESP Guide</a>&gt; <b>ESP Application Generator</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#generating">Generating Applications</a></li>
+                <li><a href="#controllers">Generating Controllers</a></li>
+                <li><a href="#database">Generating Database Tables</a></li>
+                <li><a href="#scaffolds">Generating Scaffolds</a></li>
+                <!--
+                <li><a href="#migrations">Generating Migrations</a></li>
+                <li><a href="#runMigrations">Running Migrations</a></li>
+                -->
+                <li><a href="#compiling">Compiling</a></li>
+                <li><a href="#running">Running</a></li>
+                <li><a href="#cleaning">Cleaning</a></li>
+                <li><a href="#options">Command Options</a></li>
+            </ul>
+<!-- BeginDsi "dsi/espSeeAlso.html" -->
+		        <h1>See Also</h1>
+		        <ul class="nav">
+		          <li><a href="../../../guide/esp/users/overview.html">ESP Overview</a></li>
+		          <li><a href="../../../guide/esp/users/pages.html">ESP Pages</a></li>
+		          <li><a href="../../../guide/esp/users/config.html">ESP Configuration Directives</a></li>
+		          <li><a href="../../../guide/esp/users/controllers.html">ESP Controllers and Actions</a></li>
+		          <li><a href="../../../guide/esp/users/mvc.html">ESP MVC</a></li>
+		          <li><a href="../../../guide/esp/users/pages-tour.html">ESP Page Tour</a></li>
+		          <li><a href="../../../guide/esp/users/generator.html">ESP Generator</a></li>
+		          <li><a href="../../../guide/esp/users/database.html">ESP Database Interface</a></li>
+		          <li><a href="../../../guide/appweb/users/caching.html">Caching Responses</a></li>
+		        </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>ESP Application Generator &mdash; <em>esp</em></h1>
+            <p>The ESP web framework provides an application generator and building tool named <em>esp</em>. 
+            This tool makes it easy and quick to create and manage your web applications. The <em>esp</em> 
+            command generates MVC web applications, database schema, scaffolds and views. The <em>esp</em> command 
+            can be used to run your application by invoking the Appweb web server and it can be used to pre-compile
+            controllers, views and web pages.</p>
+            <p>The <em>esp</em> program is not just for MVC applications. It can be used to pre-compile stand-alone
+            ESP web pages too.</p> 
+            <a id="generating"></a>
+            <h2 class="section">Generating Applications</h2>
+            <p>To start a new web application, run <em>esp</em> to create the application directory and generate the
+            essential application configuration and script files. For example:</p>
+            <pre>
+$> <b>mkdir blog</b>
+$> <b>cd blog</b>
+blog> <b>esp install esp-server</b>
+      [Save] package.json
+   [Install] esp-server 4.6.0
+    [Create] paks/esp-server/generate/appweb.conf
+    [Create] paks/esp-server/package.json
+      [Info] esp-server successfully installed
+    [Create] appweb.conf
+</pre>
+            <p>This generates the bare minimum application without additional packs. The appweb.conf file
+            is an Appweb configuration file. This defines the Appweb and ESP configuration when you run your application.
+            Alternatively, you can use the app.conf file that is suitable when hosting the application from an 
+            existing appweb configuration. The <em>package.json</em> file is the ESP configuration for the application.
+            The application source code stub is generated in <em>app.c</em>.</p>
+            <p>The format of the "esp install" command is:</p>
+            <pre>esp install [PACKS...]</pre>
+            <p>If this is the first install of any esp packages, a new package.json file will be created and the
+            application name will be set to the name of the directory. Alternatively, you can give the application a
+            name via the <em>--name NAME</em> option.
+            The PACKS are extension packs from the 
+            <a href="https://embedthis.com/catalog/">Pak Catalog</a> for the application. Some of the
+            supported packs are:</p>
+            <ul>
+                <li>angular &mdash; The <a href="http://www.angularjs.org">AngularJS Client Framework</a></li>
+<li>esp-angular &mdash; Angular support for Embedthis ESP</li>
+<li>esp-angular-mvc &mdash; ESP MVC application skeleton for Angular</li>
+<li>esp-html-mvc &mdash; Server-side HTML MVC skeleton</li>
+<li>esp-server &mdash; Default ESP service-side configuration for Appweb</li>
+<li>esp-html-mvc &mdash; ESP server-side MVC application skeleton</li>
+<li>less &mdash; The <a href="http://lesscss.org">Less</a> CSS pre-processor</li>
+<li>more &mdash; Collection of CSS polyfills for emerging HTML5 elements</li>
+            </ul>
+            <p>The Appweb distribution bundles the following packs:</p>
+            <ul>
+<li>esp-server &mdash; Default ESP service-side configuration for Appweb</li>
+<li>esp-html-mvc &mdash; ESP server-side HTML application skeleton</li>
+<li>esp-mvc &mdash; ESP MVC application skeleton</li>
+</ul>
+            <p> For example:</p>
+            <pre>
+$ <b>mkdir blog</b>
+$ <b>cd blog</b>
+$ <b>esp install esp-angular-mvc</b>
+</pre>
+            <h3>Pack Dependencies</h3>
+            <p>Pack may depend on other packs. The <em>esp</em> generator will resolve these 
+            dependencies and generate all the required packs. For example: the 
+            <em>esp-angular-mvc</em> pack depends on: angular, esp-angular-session, esp-angularesp, 
+            less and more packs. After generating, the pack dependencies are described in the
+            generated <em>package.json</em> file as the <em>settings.packs</em> property.</p>
+            <h3>Overwriting</h3>
+            <p>The <em>esp</em> command will create directories and generate configuration and 
+            source code files which can then be manually edited as required. The <em>esp</em> 
+            command is intelligent and will not overwrite existing files after you have generated
+            your application, so you can safely edit without losing your changes. 
+            You can add packs by generating the application and selecting additional packs. 
+            You can overwrite your changes if you wish to by using the <em>--overwrite</em> switch.</p>
+            
+            <h3>Created Directories</h3>
+            <p>The <em>esp</em> command will create directories as required when generating an application.
+            Not all these directories will be created depending on the generated packs.</p>
+            <table title="Directories">
+                <thead>
+                    <tr>
+                        <th>Directory</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cache</td>
+                        <td>Cached compiled controllers and pages</td>
+                    </tr>
+                    <tr>
+                        <td>client</td>
+                        <td>The <em>client</em> directory is the document root for the application. 
+                            In other words, this is the top-level web content directory that is public to all clients.
+                            Directories and files outside the <em>client</em> directory are not visible to the client.</td>
+                    </tr>
+                    <tr>
+                        <td>client/app</td>
+                        <td>Client side application Javascript code</td>
+                    </tr>
+                    <tr>
+                        <td>client/assets</td>
+                        <td>Client side assets: images and media</td>
+                    </tr>
+                    <tr>
+                        <td>client/css</td>
+                        <td>Client side CSS</td>
+                    </tr>
+                    <tr>
+                        <td>client/layouts</td>
+                        <td>Layout template pages</td>
+                    </tr>
+                    <tr>
+                        <td>client/lib</td>
+                        <td>Client side Javascript libraries</td>
+                    </tr>
+                    <tr>
+                        <td>client/pages</td>
+                        <td>Stand-alone client-side web pages</td>
+                    </tr>
+                    <tr>
+                        <td>controllers</td>
+                        <td>Controller source</td>
+                    </tr>
+                    <tr>
+                        <td>db</td>
+                        <td>Databases and scripts</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>The <em>esp</em> command will also create some files which have the following meaning:</p>
+            <table title="Files">
+                <thead>
+                    <tr>
+                        <th>Files</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>appweb.conf</td>
+                        <td>Appweb startup configuration file</td>
+                    </tr>
+                    <tr>
+                        <td>package.json</td>
+                        <td>ESP configuration file. Available to server and client.</td>
+                    </tr>
+                    <tr>
+                        <td>hosted.conf</td>
+                        <td>Appweb configuration file to include from an appweb.conf file</td>
+                    </tr>
+                    <tr>
+                        <td>client/index.esp</td>
+                        <td>Application home web page</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="controllers"></a>
+            <h2 class="section">Generating Controllers</h2>
+            <p>Controllers are the primary mechanism for responding to client requests. To generate a controller:</p>
+            <pre>
+esp generate controller NAME [actions...]
+</pre>
+            <p>This will create the named controller in the <em>controllers</em> directory. A controller manages the
+            web application and the controller action methods are invoked by ESP to respond to client requests and
+            generate responses.</p>
+            <p>If no actions are requested, esp will create a controller with initialization function but without any
+            actions. If actions are specified, esp will create an empty action method for each requested action. You can edit the
+            controller source to meet your needs.</p>
+            <p>If you use the command:</p>
+            <pre>
+esp generate controller admin edit login logout command
+</pre>
+            <p>The following controller code will be generated. There is one function generated for each action 
+            and a call to <em>espDefineAction</em> is added to register the controller. The <em>esp_controller_admin</em>
+            initialization function is invoked once when the controller is first loaded.</p>
+            <pre>
+#include "esp.h"
+static void edit() {}
+static void login() {}
+static void logout() {}
+static void command() {}
+ESP_EXPORT int esp_module_admin(HttpRoute *route) {
+    espDefineAction(route, "admin-cmd-edit", edit);
+    espDefineAction(route, "admin-cmd-login", login);
+    espDefineAction(route, "admin-cmd-logout", logout);
+    espDefineAction(route, "admin-cmd-command", command);
+    return 0;
+}
+</pre>
+            <a id="database"></a>
+            <h2 class="section">Generating Database Tables</h2>
+            <p>Database schema can be created and modified via the <em>esp</em> command. 
+            This will create a database table with fields of the required types.</p>
+            <pre>
+esp generate table NAME [field:type ...]
+</pre>
+            <p>If <em>field:type</em> values are supplied, the database will be updated for each specified field of 
+            the requested type. The valid database types are: binary, boolean, date,
+            datetime, decimal, float, integer, number, string, text, time, timestamp. </p>
+            <a id="migrations"></a>
+            <h2 class="section">Generating Migrations</h2>
+            <p>Database migrations are mini programs which modify the database schema or content. You can create database
+            migrations by the "<em>esp generate migration</em>" command. This command generates a migration for a
+            specific model by creating or removing tables and columns. To generate a migration:</p>
+            <pre>
+esp generate migration description MODEL [field:type ...]
+</pre>
+            <p>This will create a migration script under the db/migrations directory. Migration scripts filenames are
+            time stamped and use the description as part of the filename for the migration script (so keep it short and
+            sweet and don't use spaces!).</p>
+            <p>For each specified <em>field:type</em> pair, esp will generate add column code in the migration
+            script. If the --reverse switch is specified, then remove column code will be generated. To change the type
+            or name of a column, remove then re-add the column. </p>
+            
+            <a id="runMigrations"></a>
+            <h2 class="section">Running Migrations</h2>
+            <p>Migration scripts can be run via the "<em>esp migrate</em>" command. Without other parameters, the
+            command will run all migrations that have not yet been applied to the database. You can also use
+            "<em>esp migrate forward</em>" to apply the next unapplied migration. Similarly, "<em>esp migrate
+            backward</em>" will reverse the last applied migration. You can also use "<em>esp migrate NNN</em>" to
+            migrate forward or backward to a specific migration. NNN is the migration sequence number which is the
+            number at the start of the migration script file name.</p>
+            <p>Migrations are often under used. They are much more important than most people realize. Being able
+            to effectively create and manage database test data greatly simplifies this aspect of development and testing.</p>
+            
+            <a id="scaffolds"></a>
+            <h2 class="section">Generating Scaffolds</h2>
+            <p>Scaffolds enable you to quickly create sections of your application. A scaffold provides CRUD 
+            functionality (create, read, update and delete) for a database table. 
+            Generating a scaffold will create a database table, controller and a set of views that provide
+            add, edit and list functionality for a database table. Scaffolds are useful to quickly generate prototype
+            web pages and actions for managing a database table. </p>
+            <p>Generating scaffolds is available if you are using the <em>esp-html-mvc</em> or
+            <em>esp-angular-mvc</em> packs.</p>
+            <p>To generate a scaffold:</p>
+            <pre>
+<b>esp generate scaffold NAME [field:type ...]</b>
+</pre>
+            <p>This will create a scaffold for the named database table and will generate a controller of the same name. 
+            If field:type values are supplied, the database will be updated with columns for
+            each specified field of the requested type. The valid database types are: <em>binary, bool, date, 
+                float, int, string, text</em>. The scaffold controller will include a create, get, index, remove and 
+                update actions. Under <em>client/app</em> the scaffold views will be generated. These include an
+                edit and list HTML template with supporting Javascripts. </p>
+            <a id="compiling"></a>
+            <h2 class="section">Compiling</h2>
+            <p>ESP compiles views and controllers into native machine code libraries. These are automatically
+            compiled in response to client requests and are then loaded and run by ESP to serve the relevant 
+            response. Code is compiled only once but can be run many times to service incoming requests.</p>
+            <p>ESP will automatically recompile controllers, and web pages if the
+            source is modified. However, you can also explicitly pre-compile portions or the complete application via
+            the <em>esp</em> command.</p>
+            <h3>Compile Everything</h3>
+            <p>The <em>esp</em> command can recompile the entire application via:</p>
+            <pre>
+esp compile 
+</pre>
+            <p>This will compile and link all controllers and views and place the generated shared libraries (DLLs)
+            in the <em>cache</em> directory.</p>
+            <p>If you are using static linking, use the <em>--static</em> switch to generate archive libraries instead of
+                shared libraries. If you are doing this, you must manually call the ESP initializers. See the --genlink
+                option for how to generate the code to call the ESP initializers.</p>
+            <h3>Routes</h3>
+            <p>When <em>esp</em> is invoked it, loads the <em>appweb.conf</em> configuration file from the current
+            directory. If not found, esp will search up the parent directories for an appweb.conf file to use. The
+            <em>--config</em> esp option may also contain a full path to an appweb.conf file. </p>
+            <p>An appweb.conf file may contain directives for one more more applications.
+            It will usually contain many routes for various URIs. When "<em>esp compile</em>" is invoked without any
+            filtering arguments, esp will compile the resources managed by each of the ESP routes specified in the 
+            Appweb configuration file. </p>
+            <h3>Filtering</h3>
+            <p>If "<em>esp compile</em>" is invoked with one or more paths on the command line, these paths will act as 
+            filters such that only the designated paths will be compiled. For example:</p>
+            <pre>
+esp compile web/test.esp
+esp compile myapp
+esp compile views
+esp compile /path/to/my/app
+esp compile /directory/of/apps
+</pre>
+            <p>These paths are interpreted as filenames relative to the current directory.
+            If a controller, web page filename is provided, only that resource will be compiled. If a directory that 
+            is part of an MVC application is provided, then all resources under that directory will be compiled. 
+            If a directory that is a parent directory of ESP applications or web pages, then all those
+            resources contained by that directory will be compiled.</p>
+            <p>You may also use the <em>--routeName</em> or <em>--routePrefix</em> switches to select a specific route
+            in the appweb.conf configuration file. Then only the resources managed by that route will be compiled.</p>
+            <h3>Keep Source</h3>
+            <p>When compiling ESP pages, the <em>EspKeepSource</em> configuration file directive will control
+            if the intermediate C source code generated from the ESP will be preserved.  This can sometimes be helpful
+            for debugging. You also keep the generated source via the <em>esp --keep compile</em> option.</p> 
+            
+            <h3>Production Deployment</h3>
+            <p>For deployment in a production environment, it optimal to compile the entire application including
+            all controllers, views and web pages into a single combined library. This is refered to as "combined" mode.
+            The normal mode is called "discrete" mode. To do a combined compile, set the app.http.content.combine 
+                property in package.json to include "c" in an array, and then invoke <em>esp compile</em>. For example:</p>
+<pre>
+    app: {
+        http: {
+            content: {
+                combine: [
+                    "c",
+                ],
+            }
+        }
+    }
+</pre>
+            <h3>Static Linking</h3>
+            <p>When using dynamic linking, appweb automatically invokes the necessary ESP initializers when running
+            ESP pages or invoking ESP controllers. However, if you are using static linking, you need to manually
+            call these ESP initializers. You can generate the necessary initialization calls via the esp <em>--genlink
+                slink.c</em> switch. The generated code should be linked with your appweb main program replacing the default
+            slink.c file.</p>
+            <pre>
+esp --static --genlink slink.c
+</pre>
+            <h3>Cross Compiling</h3>
+            <p>When <em>esp compile</em> is invoked, it selects its compile and link rules from the <em>esp.conf</em>
+            configuration file. This file, which may be customized, contains the rules for various operating systems
+            and CPU architectures. The esp.conf file is included automatically when the ESP handler is added.</p>
+            <p>By default, the current system configuration is selected if not cross compiling.
+            If cross-compiling, the configuration for the target host specified via the Appweb configure program is
+            utilized.</p>
+            <p>The <em>esp</em> command can select alternate compile and link configurations via the 
+            <em>--platform</em> switch. For example:</p>
+            <pre>
+esp --platform vxworks-arm-debug
+</pre>
+            <p>This will compile the application for VxWorks on arm. Of course, the resulting module cannot be 
+            run on the development system if cross-compiling. 
+            
+            <p>The --platform option will search current directory and parent directories for an Appweb platform directory
+            of the same name. You can provide a full path name as an argument to the --platform switch if your application
+            is outside the Appweb source tree.</p>
+            
+            <p>Note: You may need to modify the esp.conf configuration file
+            to add rules for your operating system and CPU architecture or to customize for your application.</p>
+            <a id="running"></a>
+            <h2 class="section">Running</h2>
+            <p>To run your application:</p>
+            <pre>
+    esp run
+or 
+    appweb -v
+</pre>
+            <a id="cleaning"></a>
+            <h2 class="section">Cleaning</h2>
+            <p>To clean all generated files under the cache directory:</p>
+            <pre>
+esp clean
+</pre>
+            <a id="options"></a>
+            <h2 class="section">Command Options</h2>
+            <p>To see the <em>esp</em> command options, run <em>esp</em> with no options. This produces:</p>
+            <pre>
+ESP Usage:
+  esp [options] [commands]
+  Options:
+    --chdir dir                # Change to the named directory first
+    --config configFile        # Use named config file instead appweb.conf
+    --database name            # Database provider 'mdb|sqlite' 
+    --genlink                  # Generate a static link module
+    --host OS                  # Target O/S
+    --keep                     # Keep intermediate source
+    --listen [ip:]port         # Listen on specified address 
+    --log logFile:level        # Log to file file at verbosity level
+    --overwrite                # Overwrite existing files 
+    --quiet                    # Don't emit trace 
+    --platform os-arch-profile # Target platform. May be a full path.
+    --rebuild                  # Force a rebuild
+    --reverse                  # Reverse migrations
+    --routeName name           # Route name in appweb.conf to use 
+    --routePrefix prefix       # Route prefix in appweb.conf to use 
+    --show                     # Show compile commands
+    --static                   # Use static linking
+    --verbose                  # Emit verbose trace 
+    --why                      # Why compile or skip
+  Commands:
+    esp clean
+    esp compile [pathFilters ...]
+    esp generate controller name [action [, action] ...
+    esp generate migration description model [field:type [, field:type] ...]
+    esp generate scaffold model [field:type [, field:type] ...]
+    esp generate table name [field:type [, field:type] ...]
+    esp install paks...
+    esp list
+    esp migrate [forward|backward|NNN]
+    esp run
+    esp uninstall paks...
+    esp upgrade paks...
+</pre>
+            <table title="switches">
+                <thead>
+                    <tr>
+                        <th>Switch</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--chdir dir</td>
+                        <td>Change to the specified directory.</td>
+                    </tr>
+                    <tr>
+                        <td>--config configFile</td>
+                        <td>Use the named config file instead of appweb.conf.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">--database connector</td>
+                        <td>Select a database connector to use. Currently, this switch is not implemented and sqlite is
+                        the only connector supported.</td>
+                    </tr>
+                    <tr>
+                        <td>--genlink slink.c</td>
+                        <td>Generate a file of ESP initializers when using --static in combined mode.</td>
+                    </tr>
+                    <tr>
+                        <td>--keep</td>
+                        <td>Preserve intermediate files. Useful for debugging.</td>
+                    </tr>
+                    <tr>
+                        <td>--listen [ip:]port</td>
+                        <td>Listen on the specified address. Overrides the Listen directive in appweb.conf.</td>
+                    </tr>
+                    <tr>
+                        <td>--log logFile:level</td>
+                        <td>Log errors and trace to the log file at the given verbosity level. Levels are 0-9 with
+                            nine being the most verbose.</td>
+                    </tr>
+                    <tr>
+                        <td>--name</td>
+                        <td>Name for the application when compiling static.</td>
+                    </tr>
+                    <tr>
+                        <td>--overwrite</td>
+                        <td>Overwrite existing files. The <em>esp</em> command normally will not overwrite 
+                            existing files. This is to preserve user changes to previously generated files.</td>
+                    </tr>
+                    <tr>
+                        <td>--quiet or -q</td>
+                        <td>Run quietly and don't trace actions to the console.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">--platform os-arch-profile</td>
+                        <td>Target platform. This may be a full path to an Appweb platform directory in an
+                            Appweb source tree.</td>
+                    </tr>
+                    <tr>
+                        <td>--rebuild</td>
+                        <td>Force a rebuild of all components.</td>
+                    </tr>
+                    <tr>
+                        <td>--reverse</td>
+                        <td>Reverse migrations.</td>
+                    </tr>
+                    <tr>
+                        <td>--routeName name</td>
+                        <td>This selects the Appweb route by name that will be used for the ESP configuration. Routes can be
+                            given an explicit name via the "Name" appweb.conf directive. Otherwise routes are named by their
+                            route pattern.</td> 
+                    </tr>
+                    <tr>
+                        <td>--routePrefix prefix</td>
+                        <td>This selects the Appweb route by prefix that will be used for the ESP configuration. Routes can be
+                            given an explicit prefix via the "Prefix" appweb.conf directive. If the route prefix does not match, 
+                            the first portion of the route pattern is tested against the requested prefix.</td>
+                    </tr>
+                    <tr>
+                        <td>--show</td>
+                        <td>Show all commands invoked by esp.</td>
+                    </tr>
+                    <tr>
+                        <td>--static</td>
+                        <td>Use static linking when compiling ESP components.</td>
+                    </tr>
+                    <tr>
+                        <td>--verbose or -v</td>
+                        <td>Run in verbose mode and trace actions to the console (default).</td>
+                    </tr>
+                    <tr>
+                        <td>--why</td>
+                        <td>Show why a compile was performed or omitted.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

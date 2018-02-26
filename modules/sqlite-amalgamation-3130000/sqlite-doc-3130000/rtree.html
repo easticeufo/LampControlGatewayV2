@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>The SQLite R*Tree Module</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+<h1 align="center">The SQLite R*Tree Module</h1>
+
+<h2>1.0 Overview</h2>
+
+<p>
+An <a href="http://en.wikipedia.org/wiki/R-tree">R-Tree</a> is a special
+index that is designed for doing range queries.  R-Trees are most commonly
+used in geospatial systems where each entry is a rectangle with minimum and
+maximum X and Y coordinates.  Given a query rectangle, an R-Tree is able
+to quickly find all entries that are contained within the query rectangle
+or which overlap the query rectangle.  This idea is easily extended to
+three dimensions for use in CAD systems.  R-Trees also find use in time-domain
+range look-ups.  For example, suppose a database records the starting and
+ending times for a large number of events.  A R-Tree is able to quickly
+find all events that were active at any time during a given
+time interval, or all events that started during a particular time interval,
+or all events that both started and ended within a given time interval.
+And so forth.
+</p>
+
+<p>
+The R-Tree concept originated with 
+<a href="http://www.baymoon.com/~tg2/">Toni Guttman</a>: 
+<em>R-Trees: A Dynamic Index Structure for Spatial Searching</em>,
+Proc. 1984 ACM SIGMOD International Conference on Management of Data,
+pp. 47-57.
+The implementation found in SQLite is a refinement of Guttman's original
+idea, commonly called "R*Trees", that was described by
+Norbert Beckmann, Hans-Peter Kriegel, Ralf Schneider, Bernhard Seeger:
+<em>The R*-Tree: An Efficient and Robust Access Method for Points
+and Rectangles.</em> SIGMOD Conference 1990: 322-331.
+</p>
+
+<h2>2.0 Compiling The R*Tree Module</h2>
+
+<p>
+The source code to the SQLite R*Tree module is included as part
+of the <a href="amalgamation.html">amalgamation</a> but is disabled by default.  To enable the
+R*Tree module, simply compile with the <a href="compile.html#enable_rtree">SQLITE_ENABLE_RTREE</a> 
+C-preprocessor macro defined.  With many compilers, this is accomplished
+by adding the option "-DSQLITE_ENABLE_RTREE=1" to the compiler
+command-line.
+</p>
+
+<h2>3.0 Using the R*Tree Module</h2>
+
+<p>
+The SQLite R*Tree module is implemented as a
+<a href="c3ref/create_module.html">virtual table</a>.  Each R*Tree index is a
+virtual table with an odd number of columns between 3 and 11.
+The first column is always a 64-bit signed integer primary key.
+The other columns are pairs, one pair per dimension, containing the
+minimum and maximum values for that dimension, respectively.
+A 1-dimensional R*Tree thus has 3 columns.  
+A 2-dimensional R*Tree has 5 columns.
+A 3-dimensional R*Tree has 7 columns.
+A 4-dimensional R*Tree has 9 columns.
+And a 5-dimensional R*Tree has 11 columns.  The SQLite R*Tree implementation
+does not support R*Trees wider than 5 dimensions.
+</p>
+
+<p>
+The first column of an SQLite R*Tree is similar to an integer primary 
+key column of a normal SQLite table. It may only store a 64-bit signed
+integer value. Inserting a NULL value into this column causes SQLite
+to automatically generate a new unique primary key value. If an attempt
+is made to insert any other non-integer value into this column,
+the r-tree module silently converts it to an integer before writing it
+into the database.
+<p>
+The min/max-value pair columns are stored as 32-bit floating point values for
+"rtree" virtual tables or as 32-bit signed integers in "rtree_i32" virtual
+tables.  Unlike regular SQLite tables which can store data in a variety of
+datatypes and formats, the R*Tree rigidly enforce these storage types. 
+If any other type of value is inserted into such a column, the r-tree
+module silently converts it to the required type before writing the
+new record to the database.
+
+<h3>3.1 Creating An R*Tree Index</h3>
+
+<p>
+A new R*Tree index is created as follows:
+</p>
+
+<blockquote><pre>
+CREATE VIRTUAL TABLE <em>&lt;name&gt;</em> USING rtree(<em>&lt;column-names&gt;</em>);
+</pre></blockquote>
+
+<p>
+The <em>&lt;name&gt;</em> is the name your application chooses for the
+R*Tree index and <em>&lt;column-names&gt;</em> is a comma separated list
+of between 3 and 11 columns.
+The virtual &lt;name&gt; table creates three "shadow" tables to actually
+store its content.  The names of these shadow tables are:
+</p>
+
+<blockquote>
+<em>&lt;name&gt;</em><strong>_node</strong><br>
+<em>&lt;name&gt;</em><strong>_rowid</strong><br>
+<em>&lt;name&gt;</em><strong>_parent</strong>
+</blockquote>
+
+<p>
+The shadow tables are ordinary SQLite data tables.  You can query them 
+directly if you like, though this unlikely to reveal anything particularly
+useful. 
+And you can <a href="lang_update.html">UPDATE</a>, <a href="lang_delete.html">DELETE</a>, <a href="lang_insert.html">INSERT</a> or even <a href="lang_droptable.html">DROP</a> 
+the shadow tables, though doing so will corrupt your R*Tree index.
+So it is best to simply ignore the shadow tables.  Recognize that they
+hold your R*Tree index information and let it go as that.
+</p>
+
+<p>
+As an example, consider creating a two-dimensional R*Tree index for use in 
+spatial queries:
+</p>
+
+<blockquote><pre>
+CREATE VIRTUAL TABLE demo_index USING rtree(
+   id,              -- Integer primary key
+   minX, maxX,      -- Minimum and maximum X coordinate
+   minY, maxY       -- Minimum and maximum Y coordinate
+);
+</pre></blockquote>
+
+<h3>3.2 Populating An R*Tree Index</h3>
+
+<p>
+The usual <a href="lang_insert.html">INSERT</a>, <a href="lang_update.html">UPDATE</a>, and <a href="lang_delete.html">DELETE</a> commands work on an R*Tree
+index just like on regular tables.  So to insert some data into our sample
+R*Tree index, we can do something like this:
+</p>
+
+<blockquote><pre>
+INSERT INTO demo_index VALUES(
+    1,                   -- Primary key -- SQLite.org headquarters
+    -80.7749, -80.7747,  -- Longitude range
+    35.3776, 35.3778     -- Latitude range
+);
+INSERT INTO demo_index VALUES(
+    2,                   -- NC 12th Congressional District in 2010
+    -81.0, -79.6,
+    35.0, 36.2
+);
+</pre></blockquote>
+
+<p>
+The entries above might represent (for example) a bounding box around
+the main office for SQLite.org and bounding box around the
+12th Congressional District of North Carolina (prior to the 2011
+redistricting) in which SQLite.org was located.  
+</p>
+
+<h3>3.3 Querying An R*Tree Index</h3>
+
+<p>
+Any valid query will work against an R*Tree index.  But the R*Tree
+implementation is designed to make two kinds of queries especially
+efficient.  First, queries against the primary key are efficient:
+</p>
+
+<blockquote><pre>
+SELECT * FROM demo_index WHERE id=1;
+</pre></blockquote>
+
+<p>
+Of course, an ordinary SQLite table will also do a query against its
+integer primary key efficiently, so the previous is no big deal.
+The real reason for using an R*Tree is so that
+you can efficiently do inequality queries against the coordinate
+ranges.  To find all elements of the index that are contained within
+the vicinity of Charlotte, North Carolina, one might do:
+</p>
+
+<blockquote><pre>
+SELECT id FROM demo_index
+ WHERE minX>=-81.08 AND maxX<=-80.58
+   AND minY>=35.00  AND maxY<=35.44;
+</pre></blockquote>
+
+<p>
+The query above would very quickly locate the id of 1 even if the
+R*Tree contained millions of entries.  The previous is an example
+of a "contained-within" query.  The R*Tree also supports "overlapping"
+queries.  For example, to find all bounding boxes that overlap the
+Charlotte area:
+</p>
+
+<blockquote><pre>
+SELECT id FROM demo_index
+ WHERE maxX>=-81.08 AND minX<=-80.58
+   AND maxY>=35.00  AND minY<=35.44;
+</pre></blockquote>
+
+<p>
+This second query would find both entry 1 (the SQLite.org office) which
+is entirely contained within the query box and also
+the 12th Congressional District which extends well outside the
+query box but still overlaps the query box.
+</p>
+
+<p>
+Note that it is not necessary for all coordinates in an R*Tree index
+to be constrained in order for the index search to be efficient.
+One might, for example, want to query all objects that overlap with
+the 35th parallel:
+</p>
+
+<blockquote><pre>
+SELECT id FROM demo_index
+ WHERE maxY>=35.0  AND minY<=35.0;
+</pre></blockquote>
+
+<p>
+But, generally speaking, the more constraints that the R*Tree module
+has to work with, and the smaller the bounding box, the faster the
+results will come back.
+</p>
+
+<h3>3.3 Roundoff Error</h3>
+
+<p>
+By default, coordinates are stored in an R*Tree using 32-bit floating
+point values.  When a coordinate cannot be exactly represented by a
+32-bit floating point number, the lower-bound coordinates are rounded down
+and the upper-bound coordinates are rounded up.  Thus, bounding boxes might
+be slightly larger than specified, but will never be any smaller.  This
+is exactly what is desired for doing the more common "overlapping" queries
+where the application wants to find every entry in the R*Tree that overlaps
+a query bounding box.  Rounding the entry bounding boxes outward might cause a
+few extra entries to appears in an overlapping query if the edge of the
+entry bounding box corresponds to an edge of the query bounding box.  But
+the overlapping query will never miss a valid table entry.  
+
+<p>However, for a "contained-within" style query, rounding the bounding
+boxes outward might cause some entries to be excluded from the result set
+if the edge of the entry bounding box corresponds to the edge of the query
+bounding box.  To guard against this, applications should expand their
+contained-within query boxes slightly (by 0.000012%) by rounding down the
+lower coordinates and rounding up the top coordinates, in each dimension.
+
+<h2>4.0 Using R*Trees Effectively</h2>
+
+<p>
+The only information that an R*Tree index stores about an object is
+its integer ID and its bounding box.  Additional information needs to
+be stored in separate tables and related to the R*Tree index using
+the primary key.  For the example above, one might create an auxiliary
+table as follows:
+</p>
+
+<blockquote><pre>
+CREATE TABLE demo_data(
+  id INTEGER PRIMARY KEY,  -- primary key
+  objname TEXT,            -- name of the object
+  objtype TEXT,            -- object type
+  boundary BLOB            -- detailed boundary of object
+);
+</pre></blockquote>
+
+<p>
+In this example, the demo_data.boundary field is intended to hold some
+kind of binary representation of the precise boundaries of the object.
+The R*Tree index only holds an axis-aligned rectangular boundary for the
+object.  The R*Tree boundary is just an approximation of the true object
+boundary.  So what typically happens is that the R*Tree index is used to
+narrow a search down to a list of candidate objects and then more detailed
+and expensive computations are done on each candidate to find if the
+candidate truly meets the search criteria.
+</p>
+
+<blockquote><p>
+<strong>Key Point:</strong>
+An R*Tree index does not normally provide the exact answer but merely
+reduces the set of potential answers from millions to dozens.
+</p></blockquote>
+
+<p>
+Suppose the demo_data.boundary field holds some proprietary data description
+of a complex two-dimensional boundary for an object and suppose that the
+application has used the <a href="c3ref/create_function.html">sqlite3_create_function()</a> interface to
+created application-defined functions "contained_in" and
+"overlaps" accepting two demo_data.boundary objects and return true or false.
+One may assume that "contained_in" and "overlaps" are relatively slow
+functions that we do not want to invoke too frequently.
+Then an efficient way to find the name of all objects located within
+the North Carolina 12th District, one may be to run a query like this:
+</p>
+
+<blockquote><pre>
+SELECT objname FROM demo_data, demo_index
+ WHERE demo_data.id=demo_index.id
+   AND contained_in(demo_data.boundary, :boundary)
+   AND minX>=-81.0 AND maxX<=-79.6
+   AND minY>=35.0 AND maxY<=36.2;
+</pre></blockquote>
+
+<p>In the query above, one would presumably bind the binary BLOB 
+description of the precise boundary of the 12th district to the
+":boundary" parameter.</p>
+
+<p>Notice how the query above works:  The R*Tree index runs in the outer
+loop to find entries that are contained within the bounding box
+of longitude -81..-79.6 and latitude 35.0..36.2. 
+For each object identifier found, SQLite looks up
+the corresponding entry in the demo_data table.  It then uses the boundary
+field from the demo_data table as a parameter to the contained_in()
+function and if that function returns true, the objname field from
+the demo_data table is returned as the next row of query result.</p>
+
+<p>One would get the same answer without the use of the R*Tree index
+using the following simpler query:</p>
+
+<blockquote><pre>
+SELECT objname FROM demo_data
+ WHERE contained_in(demo_data.boundary, :boundary);
+</pre></blockquote>
+
+<p>The problem with this latter query is that it must apply the
+contained_in() function to millions of entries in the demo_data table.
+The use of the R*Tree in the penultimate query reduces the number of
+calls to contained_in() function to a small subset of the entire table.
+The R*Tree index did not find the exact answer itself, it merely
+limited the search space.</p>
+
+<a name="intrtree"></a>
+
+<h2>5.0 Integer-Valued R-Trees</h2>
+
+<p>
+The default virtual table ("rtree") normally stores coordinates as
+single-precision (4-byte) floating point numbers.  If integer coordinates
+are desired, declare the table using "rtree_i32" instead:
+
+<blockquote><pre>
+CREATE VIRTUAL TABLE intrtree USING rtree_i32(id,x0,x1,y0,y1,z0,z1);
+</pre></blockquote>
+
+<p>
+An rtree_i32 stores coordinates as 32-bit signed integers.  But it still
+using floating point computations internally as part of the r-tree algorithm.
+For applications running on processors without hardware floating point,
+it might be desirable to have a pure integer implementation of r-trees.
+This is accomplished by compiling with the <a href="compile.html#rtree_int_only">SQLITE_RTREE_INT_ONLY</a> option.
+When SQLITE_RTREE_INT_ONLY is used, both the "rtree" and the "rtree_i32"
+virtual tables store 32-bit integers and only integer values are used for
+internal computations.
+
+<a name="customquery"></a>
+
+<h2>6.0 Custom R-Tree Queries</h2>
+
+<p>By using standard SQL expressions in the WHERE clause of a SELECT query,
+a programmer can query for all R*Tree entries that have a spatial relationship
+(they intersect with or are contained within) a particular bounding-box.
+Custom R*Tree queries, using the MATCH
+operator in the WHERE clause of a SELECT, allow the programmer to query for 
+the set of R*Tree entries that intersect any arbitrary region or shape, not 
+just a box.  This capability is useful, for example, in computing the 
+subset of objects in the R*Tree that are visible from a camera positioned 
+in 3-D space.
+
+<p>Regions for custom R*Tree queries are defined by R*Tree geometry callbacks
+implemented by the application and registered with SQLite via a call to one
+of the following two APIs:
+
+<blockquote><pre>
+int sqlite3_rtree_query_callback(
+  sqlite3 *db,
+  const char *zQueryFunc,
+  int (*xQueryFunc)(sqlite3_rtree_query_info*),
+  void *pContext,
+  void (*xDestructor)(void*)
+);
+int sqlite3_rtree_geometry_callback(
+  sqlite3 *db,
+  const char *zGeom,
+  int (*xGeom)(sqlite3_rtree_geometry *, int nCoord, double *aCoord, int *pRes),
+  void *pContext
+);
+</pre></blockquote>
+
+<p>The sqlite3_rtree_query_callback() became available with SQLite
+<a href="releaselog/3_8_5.html">version 3.8.5</a> and is the preferred interface.
+The sqlite3_rtree_geometry_callback() is an older and less flexible
+interface that is supported for backwards compatibility.
+
+<p>A call to one of the above APIs creates a new SQL function named by the
+second parameter (zQueryFunc or zGeom).  When that SQL function appears
+on the right-hand side of the MATCH operator and the left-hand side of the
+MATCH operator is any column in the R*Tree virtual table, then the callback 
+defined by the third argument (xQueryFunc or xGeom) is invoked to determine
+if a particular object or subtree overlaps the desired region.
+
+<p>For example, a query like the following might be used to find all
+R*Tree entries that overlap with a circle centered a 45.3,22.9 with a
+radius of 5.0:
+
+<blockquote><pre>
+SELECT id FROM demo_index WHERE id MATCH circle(45.3, 22.9, 5.0)
+</blockquote></pre>
+
+<p>The SQL syntax for custom queries is the same regardless of which
+interface, sqlite3_rtree_geometry_callback() or sqlite3_rtree_query_callback(),
+is used to register the SQL function.  However, the newer query-style
+callbacks give the application greater control over how the query proceeds.
+
+<h3>6.1 The Legacy xGeom Callback</h3>
+
+<p>The legacy xGeom callback is invoked with four arguments.  The first
+argument is a pointer to an sqlite3_rtree_geometry structure which provides
+information about how the SQL function was invoked.  The second argument
+is the number of coordinates in each r-tree entry, and is always the same
+for any given R*Tree.  The number of coordinates is 2 for a 1-dimensional R*Tree,
+4 for a 2-dimensional R*Tree, 6 for a 3-dimensional R*Tree, and so forth.
+The third argument, aCoord[], is an array of nCoord coordinates that defines
+a bounding box to be tested.  The last argument is a pointer into which 
+the callback result should be written.  The result is zero
+if the bounding-box defined by aCoord[] is completely outside
+the region defined by the xGeom callback and the result is non-zero if
+the bounding-box is inside or overlaps with the xGeom region.  The xGeom
+callback should normally return SQLITE_OK.  If xGeom returns anything other
+than SQLITE_OK, then the r-tree query will abort with an error.
+
+<p>The sqlite3_rtree_geometry structure that the first argument to the
+xGeom callback points to has a structure shown below.  The exact same
+sqlite3_rtree_geometry
+structure is used for every callback for same MATCH operator in the same
+query.  The contents of the sqlite3_rtree_geometry
+structure are initialized by SQLite but are
+not subsequently modified.  The callback is free to make changes to the
+pUser and xDelUser elements of the structure if desired.
+
+<blockquote><pre>
+typedef struct sqlite3_rtree_geometry sqlite3_rtree_geometry;
+struct sqlite3_rtree_geometry {
+  void *pContext;                 /* Copy of pContext passed to s_r_g_c() */
+  int nParam;                     /* Size of array aParam */
+  double *aParam;                 /* Parameters passed to SQL geom function */
+  void *pUser;                    /* Callback implementation user data */
+  void (*xDelUser)(void *);       /* Called by SQLite to clean up pUser */
+};
+</pre></blockquote>
+
+<p>The pContext member of the sqlite3_rtree_geometry
+structure is always set to a copy of the pContext
+argument passed to sqlite3_rtree_geometry_callback() when the
+callback is registered. The aParam[] array (size nParam) contains the parameter
+values passed to the SQL function on the right-hand side of the MATCH operator.
+In the example "circle" query above, nParam would be set to 3 and the aParam[]
+array would contain the three values 45.3, 22.9 and 5.0.
+
+<p>The pUser and xDelUser members of the sqlite3_rtree_geometry structure are
+initially set to NULL. The pUser variable may be set by the callback
+implementation to any arbitrary value that may be useful to subsequent
+invocations of the callback within the same query (for example, a
+pointer to a complicated data structure used to test for region intersection).
+If the xDelUser variable is set to a non-NULL value, then after the
+query has finished running SQLite automatically invokes it with the
+value of the pUser variable as the only argument. In other words, xDelUser
+may be set to a destructor function for the pUser value.
+
+<p>The xGeom callback always does a depth-first search of the r-tree.
+
+<a name="xquery"></a>
+
+<h3>6.2 The New xQueryFunc Callback</h3>
+
+<p>The newer xQueryFunc callback receives more information from the r-tree
+query engine on each call, and it sends more information back to the query engine
+before it returns.
+To help keep the interface manageable, the xQueryFunc callback sends and receives
+information from the query engine as fields in the
+sqlite3_rtree_query_info structure:
+
+<blockquote><pre>
+struct sqlite3_rtree_query_info {
+  void *pContext;                   /* pContext from when function registered */
+  int nParam;                       /* Number of function parameters */
+  sqlite3_rtree_dbl *aParam;        /* value of function parameters */
+  void *pUser;                      /* callback can use this, if desired */
+  void (*xDelUser)(void*);          /* function to free pUser */
+  sqlite3_rtree_dbl *aCoord;        /* Coordinates of node or entry to check */
+  unsigned int *anQueue;            /* Number of pending entries in the queue */
+  int nCoord;                       /* Number of coordinates */
+  int iLevel;                       /* Level of current node or entry */
+  int mxLevel;                      /* The largest iLevel value in the tree */
+  sqlite3_int64 iRowid;             /* Rowid for current entry */
+  sqlite3_rtree_dbl rParentScore;   /* Score of parent node */
+  int eParentWithin;                /* Visibility of parent node */
+  int eWithin;                      /* OUT: Visiblity */
+  sqlite3_rtree_dbl rScore;         /* OUT: Write the score here */
+};
+</pre></blockquote>
+
+<p>The first five fields of the sqlite3_rtree_query_info structure are identical
+to the sqlite3_rtree_geometry structure, and have exactly the same meaning.
+The sqlite3_rtree_query_info structure also contains nCoord and aCoord fields 
+which have the same meaning as the parameter of the same name in the xGeom callback.
+
+<p>The xQueryFunc must set the eWithin field of sqlite3_rtree_query_info to
+on of the values NOT_WITHIN, PARTLY_WITHIN, or FULLY_WITHIN depending on whether
+or not the bounding box defined by aCoord[] is completely outside the region,
+overlaps the region, or is completely inside the region, respectively.  In
+addition, the xQueryFunc must set the rScore field to a non-negative value that
+indicates the order in which subtrees and entries of the query should be analyzed
+and returned.  Smaller scores are processed first.
+
+<p>As its name implies, an R*Tree is organized as a tree.  Each node of the
+tree is a bounding box.  The root of the tree is a bounding box that encapsulates
+all elements of the tree.  Beneath the root are a number of subtrees (typically
+20 or more) each with their own smaller bounding boxes and each containing some
+subset of the R*Tree entries.  The subtrees may have sub-subtrees, and so forth
+until finally one reaches the leaves of the tree which are the actual R*Tree
+entries.
+
+<p>An R*Tree query is initialized by making the root node the only entry
+in a priority queue sorted by rScore.
+The query proceeds by extracting the entry from the priority queue that has
+the lowest score.  If that entry is a leaf (meaning that it is an actual
+R*Tree entry and not a subtree) then that entry
+is returned as one row of the query result.  
+If the extracted priority queue entry is a node (a subtree),
+then sub-subtrees or leaves contained within that entry are passed to the
+xQueryFunc callback, one by one.  Those subelements for which the xQueryFunc
+callback sets eWithin to PARTLY_WITHIN or FULLY_WITHIN are added to the priority
+queue using the score supplied by the callback.  Subelements that return
+NOT_WITHIN are discarded.  The query runs until the priority queue is empty.
+
+<p>Every leaf entry and node (subtree) within the R*Tree has an integer "level".
+The leaves have a level of 0.  The first containing subtree of the leaves has
+a level of 1.  The root of the R*Tree has the largest level value.  The
+mxLevel entry in the sqlite3_rtree_query_info structure is the level value for
+the root of the R*Tree.  The iLevel entry in sqlite3_rtree_query_info gives the
+level for the object being interrogated.
+
+<p>Most R*Tree queries use a depth-first search.  This is accomplished by setting
+the rScore equal to iLevel.  A depth-first search is usually preferred since it
+minimizes the number of elements in the priority queue, which reduces memory
+requirements and speeds processing.  However, some application may prefer a
+breadth-first search, which can be accomplished by setting rScore to mxLevel-iLevel.
+By creating more complex formulas for rScore, applications can exercise
+detailed control over the order in which subtree are searched and leaf
+R*Tree entries are returned.  For example, in an application with many
+millions of R*Tree entries, the rScore might be arranged so that the
+largest or most significant entries are returned first, allowing the
+application to display the most important information quickly, and
+filling in smaller and less important details as they become available.
+
+<p>Other information fields of the sqlite3_rtree_query_info structure are
+available for use by the xQueryFunc callback, if desired.  The iRowid field
+is the rowid (the first of the 3 to 11 columns in the R*Tree) for the element
+being considered.  iRowid is only valid for leaves.  The eParentWithin and
+rParentScore values are copies of the eWithin and rScore values from the
+containing subtree of the current row.  The anQueue field is an array
+of mxLevel+1 unsigned integers that tell the current number of elements in
+the priority queue at each level.
+
+<h3>6.3 Additional Considerations for Custom Queries</h3>
+
+<p>
+The MATCH operator of a custom R*Tree query function must be a top-level
+AND-connected term of the WHERE clause, or else it will not be usable
+by the R*Tree query optimizer and the query will not be runnable.
+If the MATCH operator is connected to other terms of the WHERE clause 
+via an OR operator, for example, the query will fail with an error.
+
+<p>
+Two or more MATCH operators are allowed in the same WHERE clause, as long
+as they are connected by AND operators.  However,
+the R*Tree query engine only contains a single priority queue.  The priority
+assigned to each node in the search is the lowest priority returned by any
+of the MATCH operators.
+

@@ -1,0 +1,3 @@
+if (!App.config.me_ejscript) {
+    test.skip("Ejscript not enabled")
+}

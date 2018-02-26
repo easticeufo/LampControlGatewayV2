@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+   <% {
+       MprTime elapsed = (mprGetTime() - MPR->start) / 1000;
+       mprGC(MPR_GC_COMPLETE);
+       render("%s", httpStatsReport(0));
+       render("Uptime             %0d days, %02d:%02d:%02d", 
+           (int) (elapsed / 86400), (int) (elapsed / 3600 % 24), (int) (elapsed / 60 % 60), (int) (elapsed % 60));
+
+        {
+            Http *http;
+            HttpConn *conn;
+            MprWaitHandler *handler;
+            cchar *uri;
+            int next;
+            http = MPR->httpService;
+            mprLock(http->connections->mutex);
+            render("\n\n");
+            for (next = 0; (conn = mprGetNextItem(http->connections, &next)) != 0;) {
+                uri = conn->rx ? conn->rx->uri : "none";
+                handler = conn->sock ? conn->sock->handler : 0;
+                render("Conn state %d, lifespan %Ld/%Ld, timeouts %d/%d, error %d/%d, URI: %s, eof %d\n",
+                    conn->state, 
+                    (int64) (http->now - conn->lastActivity) / 1000,
+                    (int64) (http->now - conn->started) / 1000,
+                    (int) conn->limits->inactivityTimeout / 1000,
+                    (int) conn->limits->requestTimeout / 1000,
+                    conn->error, conn->connError,
+                    uri, conn->rx->eof);
+            }   
+            mprUnlock(http->connections->mutex);
+        }
+
+   } %></pre>
+</body>
+</html>

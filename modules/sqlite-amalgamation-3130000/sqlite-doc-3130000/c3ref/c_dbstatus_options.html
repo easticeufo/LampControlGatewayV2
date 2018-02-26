@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Status Parameters for database connections</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Status Parameters for database connections</h2><blockquote><pre>#define SQLITE_DBSTATUS_LOOKASIDE_USED       0
+#define SQLITE_DBSTATUS_CACHE_USED           1
+#define SQLITE_DBSTATUS_SCHEMA_USED          2
+#define SQLITE_DBSTATUS_STMT_USED            3
+#define SQLITE_DBSTATUS_LOOKASIDE_HIT        4
+#define SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE  5
+#define SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL  6
+#define SQLITE_DBSTATUS_CACHE_HIT            7
+#define SQLITE_DBSTATUS_CACHE_MISS           8
+#define SQLITE_DBSTATUS_CACHE_WRITE          9
+#define SQLITE_DBSTATUS_DEFERRED_FKS        10
+#define SQLITE_DBSTATUS_MAX                 10   /* Largest defined DBSTATUS */
+</pre></blockquote><p>
+These constants are the available integer "verbs" that can be passed as
+the second argument to the <a href="../c3ref/db_status.html">sqlite3_db_status()</a> interface.</p>
+
+<p>New verbs may be added in future releases of SQLite. Existing verbs
+might be discontinued. Applications should check the return code from
+<a href="../c3ref/db_status.html">sqlite3_db_status()</a> to make sure that the call worked.
+The <a href="../c3ref/db_status.html">sqlite3_db_status()</a> interface will return a non-zero error code
+if a discontinued or unsupported verb is invoked.</p>
+
+<p><dl>
+<a name="sqlitedbstatuslookasideused"></a>
+ <dt>SQLITE_DBSTATUS_LOOKASIDE_USED</dt>
+<dd>This parameter returns the number of lookaside memory slots currently
+checked out.</dd></p>
+
+<p><a name="sqlitedbstatuslookasidehit"></a>
+ <dt>SQLITE_DBSTATUS_LOOKASIDE_HIT</dt>
+<dd>This parameter returns the number malloc attempts that were
+satisfied using lookaside memory. Only the high-water value is meaningful;
+the current value is always zero.</p>
+
+<p><a name="sqlitedbstatuslookasidemisssize"></a>
+
+<dt>SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE</dt>
+<dd>This parameter returns the number malloc attempts that might have
+been satisfied using lookaside memory but failed due to the amount of
+memory requested being larger than the lookaside slot size.
+Only the high-water value is meaningful;
+the current value is always zero.</p>
+
+<p><a name="sqlitedbstatuslookasidemissfull"></a>
+
+<dt>SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL</dt>
+<dd>This parameter returns the number malloc attempts that might have
+been satisfied using lookaside memory but failed due to all lookaside
+memory already being in use.
+Only the high-water value is meaningful;
+the current value is always zero.</p>
+
+<p><a name="sqlitedbstatuscacheused"></a>
+ <dt>SQLITE_DBSTATUS_CACHE_USED</dt>
+<dd>This parameter returns the approximate number of bytes of heap
+memory used by all pager caches associated with the database connection.
+The highwater mark associated with SQLITE_DBSTATUS_CACHE_USED is always 0.</p>
+
+<p><a name="sqlitedbstatusschemaused"></a>
+ <dt>SQLITE_DBSTATUS_SCHEMA_USED</dt>
+<dd>This parameter returns the approximate number of bytes of heap
+memory used to store the schema for all databases associated
+with the connection - main, temp, and any <a href="../lang_attach.html">ATTACH</a>-ed databases.
+The full amount of memory used by the schemas is reported, even if the
+schema memory is shared with other database connections due to
+<a href="../sharedcache.html">shared cache mode</a> being enabled.
+The highwater mark associated with SQLITE_DBSTATUS_SCHEMA_USED is always 0.</p>
+
+<p><a name="sqlitedbstatusstmtused"></a>
+ <dt>SQLITE_DBSTATUS_STMT_USED</dt>
+<dd>This parameter returns the approximate number of bytes of heap
+and lookaside memory used by all prepared statements associated with
+the database connection.
+The highwater mark associated with SQLITE_DBSTATUS_STMT_USED is always 0.
+</dd></p>
+
+<p><a name="sqlitedbstatuscachehit"></a>
+ <dt>SQLITE_DBSTATUS_CACHE_HIT</dt>
+<dd>This parameter returns the number of pager cache hits that have
+occurred. The highwater mark associated with SQLITE_DBSTATUS_CACHE_HIT
+is always 0.
+</dd></p>
+
+<p><a name="sqlitedbstatuscachemiss"></a>
+ <dt>SQLITE_DBSTATUS_CACHE_MISS</dt>
+<dd>This parameter returns the number of pager cache misses that have
+occurred. The highwater mark associated with SQLITE_DBSTATUS_CACHE_MISS
+is always 0.
+</dd></p>
+
+<p><a name="sqlitedbstatuscachewrite"></a>
+ <dt>SQLITE_DBSTATUS_CACHE_WRITE</dt>
+<dd>This parameter returns the number of dirty cache entries that have
+been written to disk. Specifically, the number of pages written to the
+wal file in wal mode databases, or the number of pages written to the
+database file in rollback mode databases. Any pages written as part of
+transaction rollback or database recovery operations are not included.
+If an IO or other error occurs while writing a page to disk, the effect
+on subsequent SQLITE_DBSTATUS_CACHE_WRITE requests is undefined. The
+highwater mark associated with SQLITE_DBSTATUS_CACHE_WRITE is always 0.
+</dd></p>
+
+<p><a name="sqlitedbstatusdeferredfks"></a>
+ <dt>SQLITE_DBSTATUS_DEFERRED_FKS</dt>
+<dd>This parameter returns zero for the current value if and only if
+all foreign key constraints (deferred or immediate) have been
+resolved.  The highwater mark is always 0.
+</dd>
+</dl>
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

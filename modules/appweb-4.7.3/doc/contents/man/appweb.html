@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+<title>Appweb Man Page</title>
+</head>
+<BODY><PRE>
+APPWEB(1)                        User Commands                       APPWEB(1)
+
+<B>NAME</B>
+       appweb- Embedded HTTP Web Server
+
+<B>SYNOPSIS</B>
+       <B>appweb [options]</B>
+       <B>appweb [options] [IP][:port] [documentRoot]</B>
+
+       <B>appweb  </B>[<I>--config  configFile</I>] [<I>--chroot directory</I>] [<I>--debugger</I>] [<I>--exe</I>
+       <I>path</I>] [<I>--home directory</I>] [<I>--log logSpec</I>] [<I>--name uniqueName</I>] [<I>--threads</I>
+       <I>threads</I>] [<I>--version</I>] [<I>--verbose</I>]
+
+<B>DESCRIPTION</B>
+       Appweb  is  a  compact  embedded HTTP web server.  It is a fast, small-
+       footprint, multi-threaded, standards-based, portable  server  developed
+       for  use  by embedded devices and applications.  It can run as a stand-
+       alone web server or the Appweb library can be embedded in applications.
+
+       Appweb supports HTTP/1.1, SSL, digest and basic authentication, virtual
+       hosting, ranged requests, chunked transfers, file upload  and  security
+       limits.  Appweb has an Apache style configuration file and supports the
+       PHP and Ejscript web frameworks.
+
+       Appweb normally reads the <B>appweb.conf  </B>file  for  configuration  direc-
+       tives.  However, if appweb is invoked with an IP address or port number
+       on the command line, Appweb  will  not  read  the  configuration  file.
+       Rather it will listen for requests on the specified IP:PORT address. If
+       the PORT component is omitted, Appweb will listen on port 80. If the IP
+       address  is  omitted  and a port is supplied, Appweb will listen on all
+       network interfaces.
+
+       Appweb responds to the SIGUSR2 signal and toggles the trace level  from
+       2 to 4 and vice-versa. Appweb responds to the SIGINFO|SIGPWR signal and
+       emits operational stats to the trace log.
+
+<B>OPTIONS</B>
+       <B>--config filename</B>
+              Define the name of the Appweb configuration  file.  This  is  by
+              default <B>appweb</B>.
+
+       <B>--chroot directory</B>
+              Change  the  system  root  directory  for Appweb. This creates a
+              chroot jail so that the Appweb process cannot access  any  files
+              outside the given directory.
+
+       <B>--debugger</B>
+              Run Appweb in debug mode and disable all timeouts. This disables
+              request and session timeouts.  The <B>-d </B>option  is  an  alias  for
+              --debug.
+
+       <B>--exe path</B>
+              Set  the  path  to  the appweb.exe executable image. This may be
+              required on VxWorks so that Appweb can load  modules  which  are
+              located   at  "appweb.exe/../lib".  This  is  necessary  because
+              VxWorks cannot determine the path to  the  executable  image  at
+              runtime.
+
+       <B>--log logSpec</B>
+              Name the Appweb log file. This will override the ErrorLog direc-
+              tive in the  configuration  file.   When  the  maximum  size  is
+              exceeded,  the log file will be rotated to logName.old and a new
+              log file will be started. The <B>-l </B>option is an alias  for  --log.
+              The syntax is:
+
+              --log logName[:logLevel][.maxSize]
+
+       <B>--home directory</B>
+              Define the server home directory for Appweb.
+
+       <B>--name NAME</B>
+              Define  a unique name for this instance of Appweb. Useful for ps
+              -ef listings.
+
+       <B>--verbose</B>
+              Shorthand for --log stdout:4. The <B>-v  </B>option  is  an  alias  for
+              --verbose.
+
+       <B>--version</B>
+              Output the product version number.
+
+<B>FILES</B>
+       <B>/etc/appweb/appweb.conf</B>
+       <B>/var/www/appweb-default</B>
+       <B>/usr/lib/appweb</B>
+       <B>/var/log/appweb</B>
+
+<B>REPORTING BUGS</B>
+       Report bugs to &lt;dev@embedthis.com&gt;.
+
+<B>COPYRIGHT</B>
+       Copyright (C) Embedthis Software.
+
+<B>SEE ALSO</B>
+       appman authpass esp http
+
+appweb                            March 2014                         APPWEB(1)
+</PRE></BODY>
+</html>

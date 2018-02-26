@@ -1,0 +1,39 @@
+{
+    "dependencies": {
+        "esp-legacy-mvc": "*",
+        "esp-html-mvc": "~4.6"
+    },
+    "app": {
+        "esp": {
+            "generate": {
+                "migration": "esp-mvc/generate/migration.c",
+                "module": "esp-mvc/generate/src/app.c",
+                "controllerSingleton": "esp-mvc/generate/controller.c",
+                "appweb": "esp-html-mvc/generate/appweb.conf",
+                "clientList": "esp-html-mvc/generate/list.esp",
+                "clientEdit": "esp-html-mvc/generate/edit.esp",
+                "controller": "esp-html-mvc/generate/controller.c"
+            }
+        },
+        "http": {
+            "routes": "esp-server",
+            "database": "mdb://blog.mdb",
+            "serverPrefix": "/do",
+            "auth": {
+                "store": "app"
+            }
+        },
+        "mode": "debug",
+        "modes": {
+            "debug": {
+                "http": {
+                    "content": {
+                        "keep": [
+                            "c"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

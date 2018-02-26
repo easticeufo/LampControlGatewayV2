@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.10.1 On 2016-01-14</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.10.1 On 2016-01-14</h2><p><ul>
+<p><b>New feature:</b>
+<li>Add the <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntljournalpointer">SQLITE_FCNTL_JOURNAL_POINTER</a> file control.
+<p><b>Bug fix:</b>
+<li>Fix a 16-month-old bug in the query planner that could generate incorrect results
+    when a scalar subquery attempts to use the <a href="../queryplanner.html#partialsort">block sorting</a> optimization.  Ticket
+    <a href="https://www.sqlite.org/src/info/cb3aa0641d9a4">cb3aa0641d9a4</a>.
+<p><b>Hashes:</b>
+<li>SQLITE_SOURCE_ID: "2016-01-13 21:41:56 254419c36766225ca542ae873ed38255e3fb8588"
+<li>SHA1 for sqlite3.c: 1398ba8e4043550a533cdd0834bfdad1c9eab0f4
+
+</ul></p>
+<p><b>Changes carried forward from version 3.10.0 (2016-01-06):</b></p>
+<p><ul>
+<p><b>General improvements:</b>
+<li>Added support for <a href="../lang_expr.html#like">LIKE</a>, <a href="../lang_expr.html#glob">GLOB</a>, and <a href="../lang_expr.html#regexp">REGEXP</a> operators on <a href="../vtab.html">virtual tables</a>.
+<li>Added the <a href="../vtab.html#colUsed">colUsed field</a> to <a href="../c3ref/index_info.html">sqlite3_index_info</a> for use by
+    the <a href="../vtab.html#xbestindex">sqlite3_module.xBestIndex</a> method.
+<li>Enhance the <a href="../pragma.html#pragma_cache_spill">PRAGMA cache_spill</a> statement to accept a 32-bit integer
+    parameter which is the threshold below which cache spilling is prohibited.
+<li>On unix, if a symlink to a database file is opened, then the corresponding
+    journal files are based on the actual filename, not the symlink name.
+<li>Added the "--transaction" option to <a href="../sqldiff.html">sqldiff</a>.
+<li>Added the <a href="../c3ref/db_cacheflush.html">sqlite3_db_cacheflush()</a> interface.
+<li>Added the <a href="../c3ref/strlike.html">sqlite3_strlike()</a> interface.
+<li>When using <a href="../mmap.html">memory-mapped I/O</a> map the database file read-only so that stray pointers
+    and/or array overruns in the application cannot accidently modify the database file.
+<li>Added the <em>experimental</em> <a href="../c3ref/snapshot_get.html">sqlite3_snapshot_get()</a>, <a href="../c3ref/snapshot_open.html">sqlite3_snapshot_open()</a>,
+    and <a href="../c3ref/snapshot_free.html">sqlite3_snapshot_free()</a> interfaces.  These are subject to change or removal in
+    a subsequent release.
+<li>Enhance the <a href="../lang_datefunc.html#localtime">'utc' modifier</a> in the <a href="../lang_datefunc.html">date and time functions</a> so that it is a no-op if
+    the date/time is known to already be in UTC.  (This is not a compatibility break since
+    the behavior has long been documented as "undefined" in that case.)
+<li>Added the <a href="../json1.html#jgrouparray">json_group_array()</a> and <a href="../json1.html#jgroupobject">json_group_object()</a> SQL functions in the
+    <a href="../json1.html#jmini">json</a> extension.
+<li>Added the <a href="../compile.html#like_doesnt_match_blobs">SQLITE_LIKE_DOESNT_MATCH_BLOBS</a> compile-time option.
+<li>Many small performance optimizations.
+<p><b>Portability enhancements:</b>
+<li>Work around a sign-exension bug in the optimizer of the HP C compiler on HP/UX.
+    <a href="https://www.sqlite.org/src/fdiff?sbs=1&v1=869c95b0fc73026d&v2=232c242a0ccb3d67">(details)</a>
+<p><b>Enhancements to the <a href="../cli.html">command-line shell</a>:</b>
+<li>Added the ".changes ON|OFF" and ".vfsinfo" <a href="../cli.html#dotcmd">dot-commands</a>.
+<li>Translate between MBCS and UTF8 when
+    running in <a href="https://en.wikipedia.org/wiki/Cmd.exe">cmd.exe</a> on Windows.
+<p><b>Enhancements to makefiles:</b>
+<li>Added the --enable-editline and --enable-static-shell options
+    to the various autoconf-generated configure scripts.
+<li>Omit all use of "awk" in the makefiles, to make building easier for MSVC users.
+<p><b>Important fixes:</b>
+<li>Fix inconsistent integer to floating-point comparison operations that
+    could result in a corrupt index if the index is created on a table
+    column that contains both large integers and floating point values
+    of similar magnitude.  Ticket 
+    <a href="https://www.sqlite.org/src/tktview?name=38a97a87a6">38a97a87a6</a>.
+<li>Fix an infinite-loop in the query planner that could occur on
+    malformed <a href="../lang_with.html">common table expressions</a>.
+<li>Various bug fixes in the <a href="../sqldiff.html">sqldiff</a> tool.
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

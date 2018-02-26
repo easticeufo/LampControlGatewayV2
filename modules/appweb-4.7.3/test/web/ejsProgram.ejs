@@ -1,0 +1,11 @@
+<% 	
+    setHeader("Content-Type", "text/plain", true)
+    if (request.params.code) {
+        request.status = request.params.code
+        request.show(request)
+    } else if (request.params.redirect) {
+        redirect(request.params.redirect)
+    } else {
+        request.show(request)
+    }
+%>

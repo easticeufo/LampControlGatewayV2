@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Consortium</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h1 align=center>The SQLite Consortium</h1>
+
+<p>
+The SQLite Consortium is a membership association dedicated to
+insuring the continuing vitality and independence of SQLite.
+SQLite is high-quality, public domain software.  The goal of
+the SQLite Consortium is to make sure it stays that way.
+</p>
+
+<p>
+Consortium members contribute funding to support the ongoing
+development and maintenance of SQLite and in return receive
+enterprise-level technical support and legal assurances that
+SQLite will remain independent and open-source.  Consortium 
+members have direct access to
+the SQLite developers and receive priority consideration for
+any bug fixes or feature requests.  However, technical control
+and direction of SQLite remains with the SQLite architect and
+developers.  An important goal of the SQLite Consortium, after
+all, is to make sure that SQLite does not fall under the governance
+of any single company but remains independent and fully under the
+control of the SQLite developers.
+</p>
+
+<p>
+Companies that use SQLite as a critical component in their
+products or infrastructure may want to consider becoming
+SQLite Consortium Members as inexpensive insurance
+in the future vitality and independence of SQLite.  The SQLite Consortium 
+membership fee is a fraction of the cost of devoting internal
+staff to supporting the SQLite code base.  Benefits of
+membership include:
+</p>
+
+<ul>
+<li><p>
+Consortium members have the guaranteed, undivided attention of the SQLite
+developers for 23 staff-days per year and for as much additional time 
+above and beyond that amount that the core developers have available.
+There are no arbitrary limits on contact time.
+The consortium will never be over-subscribed.  New SQLite developers
+will be recruited and trained as necessary to cover the 23 day/year
+support commitment.
+</p></li>
+
+<li><p>
+Consortium members can call any developer at any time, day or
+night, and expect to get their full and immediate attention.
+Consortium members have access to the home telephone numbers
+and cellphone numbers and work schedules of the core developers
+so that the developers can be tracked down quickly in a crisis.
+</p></li>
+
+<li><p>
+The SQLite developers are eager and happy to write new code
+or debug existing code for consortium members.
+Consortium members can request and expect to receive significant
+new enhancements to the public SQLite code base.  Consortium
+members can also request their own private, proprietary extensions
+and enhancements.
+</p></li>
+
+<li><p>
+Consortium members can receive support for any
+version of SQLite no matter how old.
+Bug fixes will be back ported to older versions of SQLite upon
+request.
+</p></li>
+
+<li><p>
+Consortium members can receive private
+email and/or telephone notifications and briefings covering
+new bugs or recently added features.
+The core developers are constantly watching out for the
+interests of consortium members and will attempt to protect
+those interests in every way possible and alert members
+when their interests are threatened in any way.
+</p></li>
+
+<li><p>
+The SQLite developers will set up customized regression tests
+to fully and completely test SQLite as configured by consortium
+members.  Normally, only the standard SQLite configuration is fully
+tested at each release.  Consortium members that use a non-standard 
+configuration can request that their configuration be tested to the 
+same level of detail.
+</p></li>
+
+<li><p>
+Support requests are accepted from any employee or contractor working
+for a consortium member.
+Support is not limited to a single development
+team as it is with a maintenance subscription or technical support
+agreement.
+</p></li>
+
+<li><p>
+Support requests, comments, and suggestions for future
+changes to SQLite coming from consortium members take priority 
+over requests from all other sources.
+Consortium members go to the front of the line.
+</p></li>
+
+<li><p>
+We will be happy to 
+<a href="index.html#consortium_members">recognize consortium members</a>
+ on the SQLite website
+with a logo and/or a brief acknowledgement of their contribution to the
+project.  This is an opportunity for companies to build good will by
+demonstrating that they are giving back to the community.  Or, members 
+can remain anonymous.
+</p></li>
+
+</ul>
+
+
+<h2>How To Become A Consortium Member</h2>
+
+<p>
+Membership in the SQLite Consortium is via
+<a href="consortium_agreement-20071201.html">contract</a> with
+<a href="http://www.hwaci.com/">Hipp, Wyrick &amp; Company, Inc.</a>.
+Please call +1.704.948.4565 during US east-coast business hours
+for additional information.
+</p>
+
+
+
+</body></html>
+

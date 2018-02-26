@@ -1,0 +1,28 @@
+{
+    "name": "esp-legacy-mvc",
+    "description": "ESP Server Side Legacy MVC",
+    "version": "4.5.0",
+    "precious": true,
+    "export": [
+        "layouts/**",
+        "static/**",
+        "templates/**"
+    ],
+    "esp": {
+        "server": {
+            "generate": {
+                "appweb": "esp-legacy-mvc/appweb.conf",
+                "clientList": "esp-legacy-mvc/list.esp",
+                "clientEdit": "esp-legacy-mvc/edit.esp",
+                "controller": "esp-legacy-mvc/controller.c",
+                "controller-singleton": "esp-legacy-mvc/controller.c",
+                "migration": "esp-legacy-mvc/migration.c",
+                "files": [
+                    "esp-legacy-mvc/layouts/**",
+                    "esp-legacy-mvc/static/**",
+                    "esp-legacy-mvc/src/app.c"
+                ]
+            }
+        }
+    }
+}

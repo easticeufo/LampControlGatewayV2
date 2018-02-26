@@ -1,0 +1,135 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt;<a href="index.html">User Guide</a> &gt;<a href="frameworks.html">Web Frameworks</a>&gt;
+            <b>Action Handler</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#registering">Registering Actions</a></li>
+                <li><a href="#actions">Actions</a></li>
+                <li><a href="#api">Appweb API</a></li>
+            </ul>
+<!-- BeginDsi "dsi/webFrameSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/users/frameworks.html">Web Frameworks</a></li>
+                <li><a href="../../../guide/appweb/users/action.html">Action Handler</a></li>
+                <li><a href="../../../guide/appweb/users/cgi.html">CGI</a></li>
+                <li><a href="../../../guide/esp/users/index.html">ESP</a></li>
+                <li><a href="../../../guide/appweb/users/ejs.html">Ejscript</a></li>
+                <li><a href="../../../guide/appweb/users/php.html">PHP</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">User Guide Overview</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authorization</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../guide/appweb/users/ssl.html">SSL</a></li>
+                <li><a href="../../../guide/appweb/users/modules.html">Appweb Modules</a></li>
+                <li><a href="../../../guide/appweb/users/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/users/client.html">HTTP Client</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Using the Action Handler</h1>
+            <p>The Action handler is a simple Appweb handler that processes requires by invoking registered C
+            functions. The action handler is ideal for situations when you want to generate a simple response using
+            C code. The action handler employs a direct mapping from URIs to C functions with no further parsing or 
+            analysis of the URI than that provided by the Appweb router.</p>
+            <a name="registering"></a>
+            <h2>Registering Actions</h2>
+            <p>Actions are registered by calling 
+            <a href="../../../api/http.html#http_8h_1a97b87c9cd5010bbd1188abfa67296768">httpDefineAction</a> and providing
+            the function to run and the corresponding URI.
+<pre>
+static void hello(HttpConn *conn)
+{
+    httpWrite(conn, "Hello World\n");
+    httpFinalize(conn);
+}
+httpDefineAction("/action/hello", hello);</pre>
+            <p>The httpDefineAction call registers the hello C function to be invoked whenever the
+            /action/hello URI is requested.</p>
+            <a name="actions"></a>
+            <h2>Actions</h2>
+            <p>An action routine is responsible for rendering a complete response to the client. A response is
+            concluded by calling 
+            <a href="../../../api/http.html#group___http_tx_1ga279ad49e5163402e2afd6caf478bcc70">httpFinalize</a>. 
+            If you cannot yet complete the response without waiting, 
+            it is best not to block, as this will consume a thread from the worker pool while waiting. Instead,
+            return from the action without calling httpFinalize and arrange for the response to be completed later.
+            Note: that the Appweb RequestTimeout and InactivityTimeout in appweb.conf may terminate a long running
+            request. If you need to extend these timeouts for a request, call
+            <a href="../../../api/http.html#group___http_conn_1gaa4b4def5658e51af56d186e0b35ace55">httpSetTimeout</a>.</p>
+            <a name="api"></a>
+            <h2>Appweb API</h2>
+            <p>The Appweb Native APIs consist of C language headers, function prototypes, structure definitions and
+            defines. They are divided into three API groups. You can use many of these APIs from within Action 
+            routines.</p>
+            <table title="APIs" class="full">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="../../../api/appweb.html">Appweb</a></td>
+                    <td>Appweb Http API</td>
+                </tr>
+                <tr>
+                    <td><a href="../../../api/http.html">Http</a></td>
+                    <td>Http Client and Server Library API</td>
+                </tr>
+                <tr>
+                    <td class="nowrap"><a href="../../../api/mpr.html">MPR</a></td>
+                    <td>Multithreaded Platform Runtime API</td>
+                </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

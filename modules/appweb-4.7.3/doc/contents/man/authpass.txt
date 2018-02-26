@@ -1,0 +1,38 @@
+AUTH(1)                          User Commands                         AUTH(1)
+
+
+
+NAME
+       authpass - Create and manage passwords
+
+SYNOPSIS
+       authpass [--cipher blowfish|md5] [--create] [--password password] pass-
+       wordFile realm userName
+
+OPTIONS
+       --cipher blowfish|md5
+              Specifies the cipher to use to hash  the  password.  Default  is
+              blowfish.  Blowfish  is  substantially more secure.  MD5 must be
+              used for digest authentication.
+
+       --password password
+              Specifies a password to use to for the user.
+
+       --create
+              Create the specified password file.
+
+
+DESCRIPTION
+       The authpass program is used to create user passwords  in  a  nominated
+       password  configuration  file.  Appweb uses the same authorization file
+       and format for Basic, Digest and Post authentication stores. This  sim-
+       plifies administration.
+
+REPORTING BUGS
+       Report bugs to <dev@embedthis.com>.
+
+COPYRIGHT
+       Copyright (C) Embedthis Software.
+
+SEE ALSO
+auth                             February 2014                         AUTH(1)

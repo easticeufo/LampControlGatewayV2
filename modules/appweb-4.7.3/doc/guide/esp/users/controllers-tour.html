@@ -1,0 +1,253 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">ESP Guide</a> &gt; <b>Controllers Tour</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#starting">Starting Appweb</a></li>
+                <li><a href="#testing">Testing Appweb</a></li>
+                <li><a href="#hello">Hello World</a></li>
+                <li><a href="#dynamic">Dynamic Content</a></li>
+                <li><a href="#declarations">Declarations</a></li>
+                <li><a href="#params">Forms and Parameters</a></li>
+                <li><a href="#controls">Web Controls</a></li>
+                <li><a href="#sessions">Sessions and Flash</a></li>
+                <li><a href="#layouts">Layouts</a></li>
+                <li><a href="#learn">Learn More</a></li>
+            </ul>
+<!-- BeginDsi "dsi/espSeeAlso.html" -->
+		        <h1>See Also</h1>
+		        <ul class="nav">
+		          <li><a href="../../../guide/esp/users/overview.html">ESP Overview</a></li>
+		          <li><a href="../../../guide/esp/users/pages.html">ESP Pages</a></li>
+		          <li><a href="../../../guide/esp/users/config.html">ESP Configuration Directives</a></li>
+		          <li><a href="../../../guide/esp/users/controllers.html">ESP Controllers and Actions</a></li>
+		          <li><a href="../../../guide/esp/users/mvc.html">ESP MVC</a></li>
+		          <li><a href="../../../guide/esp/users/pages-tour.html">ESP Page Tour</a></li>
+		          <li><a href="../../../guide/esp/users/generator.html">ESP Generator</a></li>
+		          <li><a href="../../../guide/esp/users/database.html">ESP Database Interface</a></li>
+		          <li><a href="../../../guide/appweb/users/caching.html">Caching Responses</a></li>
+		        </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>ESP Controllers Tour</h1>
+            <p>This quick tour of the ESP Controller provides an overview of how to create and use 
+            stand-alone ESP controllers.
+            First make sure you have read the <a href="../../appweb/users/quickStart.html">Quick Start</a> and 
+            <a href="pagesTour.html">ESP Pages Tour</a>.</p>
+            
+            <a id="hello"></a>
+            <h2 class="section">Hello World Controller</h2>
+            <p>The first step in any tour is to create a simple "Hello World". And so, this Controllers tour will
+            do the same.</p>
+            <p>Create a file called <em>hello.c</em> using your favorite text editor with the following content:</p>
+            <pre>#include "esp.h"
+static void hello() {
+    render("Hello World\n");
+}
+ESP_EXPORT int esp_module_greetings(HttpRoute *route) {
+    espDefineAction(route, "greetings-hello", hello);
+    return 0;
+}
+</pre>
+            <p>
+            <p>Don't worry about the layout directive for now, that tells ESP not to use a layout page.</p>
+            <p>To view the "Hello" web page, type the following url: <em>http://localhost/hello.esp</em> into your browser.</p>
+            <img src="../../../images/esp/controllers-tour/hello.png" alt="hello" class= "bare-screen" /> 
+            <a id="dynamic"></a>
+            <h2 class="section">Dynamic Content</h2>
+            <p>While that was fun, the output is static and boring, so let's add some dynamic content. You can embed
+            "C" language code and ESP function calls  by including them inside a special ESP web page directive that 
+            will be executed and converted to HTML before being sent to the client. There are a variety of server-side 
+            ESP web page directives, the one you'll use first, is: </p>
+            <p><em>&lt;%= expression %&gt;</em>.</p>
+            <p>To add the current date and time, modify the hello.esp web page and add the highlighted line:</p>
+            <pre>
+&lt;h1&gt;Hello Bright World&lt;/h1&gt;
+&lt;h2&gt;<b>Generated on &lt;%= mprGetDate(0); %&gt;</b>&lt;/h2&gt;
+</pre>
+            <p>Now when you re-run the page, it will display the current date and time. If you refresh the page by
+            pressing reload, the new date and time will be displayed.</p>
+            
+            
+            <img src="../../../images/esp/controllers-tour/hello-dynamic.png" alt="hello" class="bare-screen" />
+            <h4>No Restart Required</h4>
+            <p>Notice that you did not have to restart the web server, nor did you have to manually recompile the
+            ESP code. Rather, ESP transparently recompiled the web page in the background. ESP noticed that the hello.esp
+            web page had been modified and it re-parsed and compiled it into a loadable module ready for
+            execution. This web module is then cached in-memory and on-disk for fast execution.</p>
+            <p>You can also embed more complex ESP into our page, like:</p>
+            <pre>
+<b>&lt;h3&gt;&lt;% render("Request method is %s", getMethod()); %&gt;&lt;/h3&gt;</b>
+<b>&lt;% 
+    int i;
+    for (int i = 0; i &lt; 10; i++) {
+        render(" Line: %d&lt;/br&gt;\r\n", i);
+    } 
+%&gt;</b>
+</pre>
+            <p>By using the ESP statement directive <b>&lt;% code %&gt;</b>, you can embed arbitrary "C" language
+            statements in your web page. The <em>render</em> function allows you to write arbitrary data which is patched
+            back where the directive was defined in the page. See the <a href="pages.html">ESP Pages</a>
+            document for full details about all the ESP web page directives.</p>
+            
+            <a id="declarations"></a>
+            <h2 class="section">Declarations</h2>
+            <p>Some compilers (Microsoft CL) do not permit "C" declarations except at the start of a block. When ESP
+            compiles an ESP web page, it converts it to "C" code and wraps it inside a function that will be invoked
+            at run-time in response to client requests. ESP supports MSCL by controlling where ESP code will be
+            placed in the web page function. To ensure that declarations are emitted at the start of the function block 
+            use the <em>^start</em> directive.</p>
+<pre>&lt;%^start
+    char *msg = "hello world";
+    int  x = 42;
+%&gt;
+&lt;%  render("%s, the answer is %d", msg, x); %&gt;
+</pre>
+            <a id="params"></a>
+            <h2 class="section">Forms and Request Params</h2>
+            <p>When an HTML form is submitted, ESP converts form data and query parameters into ESP request parameters. 
+            These can be accessed via the <em>param()</em> function or more conveniently via the literal <em>@@variable</em> 
+            directive. By prefixing a variable with <em>@@</em> ESP will automatically look up the request parameters,
+            and if not found, the session data store for the variable, and then substitute its value.</p>
+            <p>If an HTTP request has the URI: <em>http://example.com/submit.esp?name=julie</em>, then the following
+            ESP code could access the user name directly.</p>
+<pre>&lt;p&gt;User Name: <b>@@name</b>&lt;/p&gt;</pre>
+            <h3>XSS Security</h3>
+            <p>Normally, echoing user input back to the client in a web page is bad practice and can invite XSS security
+            attacks. Fortunately, ESP HTML escapes the variable value to prevent such attacks. </p>
+            <p>General ESP output can also be escaped by using a "safe" "%S" format specifier. The renderSafe function
+            can also be used.</p>
+<pre>&lt;p&gt;User Name: <b>&lt;%=%S param("name"); %&gt;</b>&lt;/p&gt;
+&lt;p&gt;User Name: <b>&lt;%= renderSafe(param("name")); %&gt;</b>&lt;/p&gt;
+</pre>
+            <a id="controls"></a>
+            <h2 class="section">Web Controls</h2>
+            <p>ESP includes a rich library of web control functions that easily generate HTML. These web controls
+            are integrated with the <a href="http://jquery.com/">jQuery</a> client-side JavaScript library.
+            <p>Controls are provided to create forms, buttons, input lists, checkboxes, selectable tabs, and tables.
+            <p>To the following control will emit a text label that will dynamically update using background AJAX requests.
+            This control will create the appropriate HTML to invoke the <em>data.esp</em> page every 1 second to
+            get the current time. The web page will transparently update with the data returned by <em>data.esp</em>.</p>
+<pre>&lt;% Time: label("", "{ data-refresh: "data.esp", data-period: 1000 }"); %&gt;</pre>
+            <a id="binding"></a>
+            <h3>Database Binding</h3>
+            <p>To make it easy to display and update database data, ESP supports "data binding" where a database 
+            record can be bound to a request form. Thereafter, the ESP web controls will take data from the record.
+<pre>
+&lt;% 
+    form(userRecord, 0); 
+        input("name", 0);
+        input("address", 0);
+        button("commit", "OK", 0);
+        buttonLink("Cancel", "../index.esp",  0);
+        buttonLink("Delete", "destroy.esp");
+    endform();
+%&gt;
+</pre>
+            <p>In this example, the <em>form</em> control <i>binds</i> the <em>userRecord</em>. The input controls
+            then retrieve the "name", and "address" fields from the database record and emit the appropriate HTML
+            input elements.</p>
+            <a id="sessions"></a>
+            <h2>Sessions and Flash</h2>
+            <p>ESP provides an integrated session store so that state can be shared across requests. Session variables
+            can be accessed using the <em>@@variable</em> directive in ESP pages or via the
+            <em>renderVar()</em> and <em>getSessionVar()</em> APIs.</p>
+            <p>Flash storage is a portion of the session storage used to pass messages and state to the next request 
+            only. This is useful after a form, to add feedback messages to the next web page. Messages can be added
+            to flash storage via the <em>error</em>, <em>inform</em>, or <em>warn</em> APIs. </p>
+<pre>&lt;% <b>inform</b>("Record updated"); %&gt;</pre>
+            
+            <p>The <em>flash</em> web
+            control is used in the next web page to extract flash messages for display.</p>
+<pre>&lt;% <b>flash</b>("all", NULL); %&gt;</pre>
+            <a id="layouts"></a>
+            <h2>Layouts</h2>
+            <p>ESP Layouts provide a powerful and flexible solution for implementing a consistent UI. 
+            ESP pages use layout pages that define the look and feel of an application. Content pages are 
+            then rendered by merging with one or more layout pages that define the look and feel of the 
+            application to create a composite page that the user will actually see. In this way, a web 
+            application can easily maintain a consistent look and feel without repeating boilerplate code 
+            from page to page. </p>
+            
+            <p>A layout page provides template for the page and defines the location for the content via a
+                <em>&lt;%@ content %&gt;</em> directive.</p>
+<pre>
+&lt;html&gt;
+&lt;body&gt;
+    &lt;div class="top"&gt;
+        &lt;img src="banner.jpg" /&gt;
+    &lt;/div&gt;
+    &lt;div class="content"&gt;
+        <b>&lt;%@ content %&gt;</b>
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+            <p>A content page defines only the HTML and code that is unique for a specific page. 
+            It is merged with a layout page by inserting the content and replacing the <em>&lt;%@ content %&gt;</em> tag 
+            in the layout page.</p>
+            <p>To use a layout page, a layout directory must be defined in the <em>appweb.conf</em> configuration file
+            using the EspDir directive. With this directive, pages will use the 
+            "<em>./layouts/default.esp</em>" layout page by default.
+<pre>EspDir layout "./layouts"</pre>
+            <p>The ESP <em>&lt;%@ layout</em> directive may be used in web pages to control what layout page (if any) 
+            is used for the page. </p>
+<pre>
+&lt;%@ layout "custom-layout.esp" %&gt;
+&lt;h1&gt;Hello Bright World&lt;/h1&gt;
+</pre>
+            <a id="learn"></a>
+            <h2 class="section">Learn More ...</h2>
+            <p>That concludes a quick tour through some of the capabilities of the ESP web framework.</p>
+            <p>To learn more, please read:</p>
+            <ul>
+                <li><a href="../../../index.html">ESP Documentation</a></li>
+                <li><a href="../../../ref/esp/espArchitecture.html">ESP Architecture</a></li>
+                <li><a href="mvc.html">ESP MVC Framework</a></li>
+                <li><a href="mvcTour.html">ESP MVC Tour</a>
+            </ul>
+            <p>You may also like to ask questions at the 
+            <a href="http://appwebserver.org/forum/">Appweb Support Forum</a>.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

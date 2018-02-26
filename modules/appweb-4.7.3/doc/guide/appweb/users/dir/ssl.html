@@ -1,0 +1,441 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>SSL Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#listenSecure">ListenSecure</a></li>
+                <li><a href="#sslCipherSuite">SSLCipherSuite</a></li>
+                <li><a href="#sslCertificateFile">SSLCertificateFile</a></li>
+                <li><a href="#sslCertificateKeyFile">SSLCertificateKeyFile</a></li>
+                <li><a href="#sslCaCertificateFile">SSLCACertificateFile</a></li>
+                <li><a href="#sslVerifyClient">SSLVerifyClient</a></li>
+                <li><a href="#sslVerifyIssuer">SSLVerifyIssuer</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../ssl.html">SSL Guide</a></li>
+                <li><a href="../configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>SSL Directives</h1>
+            
+            <a id="listenSecure"></a>
+            <h2>ListenSecure</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>IP address and port on which to listing for incoming SSL/TLS requests.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>ListenSecure [IP address:]portNumber</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Examples</td>
+                        <td>Listen 80<br />
+                            ListenSecure 205.162.77.64:7777<br/>
+                            ListenSecure [::]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The ListenSecure directive specifies the IP endpoints on which Appweb will listen for 
+                            incoming SSL/TLS HTTP requests. If you specify only the port number and omit the IP address,
+                            Appweb will listen on all network interfaces including the loop-back adaptor. Multiple Listen
+                            directives may be given and Appweb will listen on all the specified endpoints for SSL/TLS.</p>
+                            <p>In Appweb 4 and later, you do not need to use a Virtual Host to use SSL/TLS.</p>
+                            <p>For IPv6 endpoints, enclose the IP address in square brackets. For example:
+                                Listen [2001:05c0:9168:0000:0000:0000:0000:0001]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- DEPRECATED
+            <a id="sslEngine"></a>
+            <h2>SSLEngine</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Enable SSL processing.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLEngine [on | off]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>ListenSecure 443<br/>
+                        &lt;VirtualHost *:443&gt;<br />
+                        &nbsp; &nbsp; SSLEngine on<br />
+                        &lt;/VirtualHost&gt;</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLEngine directive enables SSL processing for the enclosing block of directives.
+                            They may be for either the default server or a Virtual Host.</p>
+                            <p>By default the SSL engine is enabled.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            DEPRECATED -->
+            
+            <a id="sslProtocol"></a>
+            <h2>SSLProtocol</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Restrict the SSL protocols for OpenSSL.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLProtocol [+ | -] protocol ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>OpenSSL only. Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLProtocol all -SSLV2</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLProtocol directive defines which SSL protocol variants to enable for use. The
+                                following protocol options are available:</p>
+                            <h3>SSLv2</h3>
+                            <p>This is the original Secure Sockets Layer (SSL) protocol defined by Netscape. It has
+                                several flaws and should not be used if SSLv3 or TLSv1 are available.</p>
+                            <h3>SSLv3</h3>
+                                <p>This is the Secure Sockets Layer (SSL) protocol version 3.</p>
+                            <h3>TLSv1</h3>
+                            <p>This is the Transport Layer Security (TLS) protocol version 1. It is the most current SSL
+                            standard defined by the IETF and should be used if available.</p>
+                            <h3>TLSv1.1, TLSv1.2</h3>
+                            <p>Available when using OpenSSL 1.0.1 or later.</p>
+                            <h3>ALL</h3>
+                                <p>Enables all SSL protocol variants.</p>
+                            <p>If unspecified, the default is: TLSv1, TLSv1.1 or TLSv1.2.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>
+                            <p>You should not use SSLv2 if possible. </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslCipherSuite"></a>
+            <h2>SSLCipherSuite</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the permissible SSL Cipher suites.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLCipherSuite cipher-spec</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route (with EST and OpenSSL stacks only)</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+                        #<br/># For EST<br/>#<br/>
+                            CipherSuite TLS_RSA_WITH_AES_128_CBC_SHA<br/>
+                            CipherSuite TLS_RSA_WITH_RC4_128_SHA<br/><br/>
+                        #<br/># For OpenSSL<br/>#<br/>
+                        CipherSuite HIGH:RC4+SHA</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLCipherSuite directive specifies the permissible set of cipher algorithms to use when 
+                            communicating with the client. If unspecified, the cipher suite is defined by the SSL
+                            protocol stack and negotiated with the client. You may use this directive multiple times or
+                            may specify multiple ciphers separated by commas. This directive is only supported with the
+                            EST and OpenSSL stacks.</p>
+                            
+                            <p>The format of this directive varies depending on the SSL protocol stack. The EST, 
+                            stack use the standard 
+                            <a href="http://www.iana.org/assignments/tls-parameters/tls-parameters.xml#tls-parameters-3">IANA
+                                Cipher Suite Registry</a> names. The OpenSSL stack uses its own proprietary cipher
+                            naming. If using OpenSSL, please consult
+                            the <a href="http://www.openssl.org/docs/apps/ciphers.html">OpenSSL</a> documentation for
+                            how to format the cipher suite argument. </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslCertificateFile"></a>
+            <h2>SSLCertificateFile</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the location of the X.509 file containing the server certificate</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLCertificateFile path</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLCertificateFile /var/appweb/server.crt</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLCertificateFile directive defines the file containing the PEM encoded X.509
+                            certificate for the server. The file may also contain the private key for the server in
+                            which case you do not need to use the SSLCertificateKeyFile directive.</p>
+                            <p>The path may be an absolute path or it may be relative to the Home directory.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslCertificateKeyFile"></a>
+            <h2>SSLCertificateKeyFile</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the location of the server's private key</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLCertificateKeyFile</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLCertificateKeyFile /var/appweb/server.key.pem</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLCertificateKeyFile directive defines the file containing the PEM encoded private
+                            key file for the server. This directive is not required if the server's private key is
+                            combined with the certificate file.</p>
+                            <p>If the private key is encrypted, you will be prompted to enter the pass-phrase to
+                            decrypt the private key on system reboot.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>There is a dilemma here. If you use an encrypted private key, the server will pause until you
+                        enter the pass-phrase which makes headless operation impossible. If you do not encrypt the
+                        private key, your private key is more vulnerable should the server be compromised. Which option
+                        you choose depends on whether headless operation is essential or not.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslCaCertificateFile"></a>
+            <h2>SSLCACertificateFile</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the location of the certificate file for client authentication</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLCACertificateFile path</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLCACertificateFile /var/appweb/ca.crt</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLCACertificateFile directive defines the file containing the certificates to use
+                            when authenticating client certificates. This directive is only necessary if you wish to
+                            verify client certificates. If so, you must specify the "SSLVerifyClient on"
+                            directive.</p>
+                            <p>The certificate file contains the concatenated certificates to use in preference order.
+                            The path may be an absolute path or it may be relative to the Home directory.</p>
+                            <p>If using the OpenSSL stack, You may alternatively use SSLCACertificatePath if you have
+                            separate certificates.</p> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslCaCertificatePath"></a>
+            <h2>SSLCACertificatePath</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines a directory of client authentication certificates.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLCACertificatePath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>OpenSSL only. Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLCACertificatePath /var/appweb/certs</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLCACertificatePath directive is an OpenSSL directive that defines the directory
+                            containing the certificates to use when authenticating client certificates. This directive is
+                            only necessary if you wish to verify client certificates. If so, you must specify the
+                            "SSLVerifyClient on" directive.</p>
+                            <p>The path may be an absolute path or it may be relative to the Home directory.</p>
+                            <p>This directive is only supported for OpenSSL. If using another SSL stack, you may use
+                            SSLCACertificateFile if you have a bundle of certificates concatenated together.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="sslVerifyClient"></a>
+            <h2>SSLVerifyClient</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the type of client certificate verification.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLVerifyClient [off | on]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLVerifyClient on</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive controls whether the client must provide a client certificate for the
+                            server to verify the identity of the client. If set to <b>off</b>, no certificate is
+                            required. If one is supplied, it will be ignored. The certificate and the certificate's
+                            issuer will be verified. Use the SSLVerifyIssuer directive to turn off verification of the
+                            issuer if you need to use a self-signed test certificate.</p>
+                            <p>If the directive is set to <b>on</b>, the client must provide a valid certificate.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="sslVerifyIssuer"></a>
+            <h2>SSLVerifyIssuer</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines whether the issuer of the client certificate is verified.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLVerifyIssuer [off | on]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLVerifyIssuer on</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive controls whether the issuer of the client certificate will be verified.
+                            If set to <b>off</b>, the certificate issuer will not be verified. This is useful to 
+                            accept self-signed test certificates.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

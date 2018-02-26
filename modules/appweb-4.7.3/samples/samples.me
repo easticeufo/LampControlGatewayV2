@@ -1,0 +1,30 @@
+/*
+    samples.me -- MakeMe file to build all the samples
+ */
+
+Me.load({
+    targets: {
+        samples: {
+            action: function () {
+                for each (sample in Path('.').files('*/start.me')) {
+                    if (me.platform.os == 'windows' && sample.contains('chroot-server')) {
+                        continue
+                    }
+                    trace('Sample', sample.dirname)
+                    run('me', {dir: sample.dirname})
+                }
+            }
+        },
+        'clean-samples': {
+            action: function () {
+                for each (sample in Path('.').files('*/start.me')) {
+                    if (me.platform.os == 'windows' && sample.contains('chroot-server')) {
+                        continue
+                    }
+                    trace('Sample', sample.dirname)
+                    run('me clean', {dir: sample.dirname})
+                }
+            }
+        },
+    },
+})

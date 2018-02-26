@@ -1,0 +1,4 @@
+<h1>${UCONTROLLER} List</h1>
+
+<% table(readTable("${CONTROLLER}"), "{data-esp-click: '@edit'}"); %>
+<% buttonLink("New ${UCONTROLLER}", "@init", 0); %>

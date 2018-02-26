@@ -1,0 +1,21 @@
+<html><head><title>upload.esp</title></head>
+<body>
+    <pre><% {
+        HttpConn        *conn;
+        HttpUploadFile  *file;
+        MprKey          *kp;
+
+        conn = getConn();
+        for (ITERATE_KEY_DATA(conn->rx->files, kp, file)) {
+            mprTrace(0, "FILE %x\n", file);
+            render("FILENAME %s\n", file->filename);
+            render("CLIENT_NAME %s\n", file->clientFilename);
+            render("TYPE %s\n", file->contentType);
+            render("SIZE %d\n", file->size);
+        }
+    } %></pre>
+    <pre>
+        <% showRequest(); %>
+    </pre>
+</body>
+</html>

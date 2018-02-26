@@ -1,0 +1,18 @@
+/*
+    start.me - MakeMe build file
+ */
+
+Me.load({
+    configure: {
+        requires: ['appweb'],
+    },
+    targets: {
+        run: {
+            run: 'appweb',
+        },
+        cleanup: {
+            type: 'clean',
+            action: "rm(['cache/*'])",
+        },
+    },
+})

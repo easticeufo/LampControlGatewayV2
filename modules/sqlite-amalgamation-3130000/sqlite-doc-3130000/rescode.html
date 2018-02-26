@@ -1,0 +1,1261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Result Codes</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+<h1 align="center">SQLite Result Codes</h1>
+
+<p>
+Many of the routines in the SQLite <a href="c3ref/intro.html">C-language Interface</a> return
+numeric result codes indicating either success or failure, and 
+in the event of a failure, providing some idea of the cause of
+the failure.  This document strives to explain what each
+of those numeric result codes means.
+
+<h2>Result Codes versus Error Codes</h2>
+
+<p>
+"Error codes" are a subset of "result codes" that indicate that
+something has gone wrong.  There are only a few non-error result
+codes:  <a href="rescode.html#ok">SQLITE_OK</a>, <a href="rescode.html#row">SQLITE_ROW</a>, and <a href="rescode.html#done">SQLITE_DONE</a>.  The term
+"error code" means any result code other than these three.
+
+<a name="pve"></a>
+
+<h2>Primary Result Codes versus Extended Result Codes</h2>
+
+<p>
+Result codes are signed 32-bit integers.
+The least significant 8 bits of the result code define a broad category
+and are called the "primary result code".  More significant bits provide
+more detailed information about the error and are called the
+"extended result code"
+
+<p>
+Note that the primary result code is always a part of the extended
+result code.  Given a full 32-bit extended result code, the application
+can always find the corresponding primary result code merely by extracting
+the least significant 8 bits of the extended result code.
+
+<p>
+All extended result codes are also error codes.  Hence the terms
+"extended result code" and "extended error code" are interchangeable.
+
+<p>
+For historic compatibility, the C-language interfaces return
+primary result codes by default.  
+The extended result code for the most recent error can be
+retrieved using the <a href="c3ref/errcode.html">sqlite3_extended_errcode()</a> interface.
+The <a href="c3ref/extended_result_codes.html">sqlite3_extended_result_codes()</a> interface can be used to put
+a <a href="c3ref/sqlite3.html">database connection</a> into a mode where it returns the
+extended result codes instead of the primary result codes.
+
+<h2>Definitions</h2>
+
+<p>
+All result codes are integers.
+Symbolic names for all result codes are created using
+"#define" macros in the sqlite3.h header file.
+There are separate sections in the sqlite3.h header file for
+the <a href="c3ref/c_abort.html">result code definitions</a> and the <a href="c3ref/c_abort_rollback.html">extended result code definitions</a>.
+
+<p>
+Primary result code symbolic names are of the form "SQLITE_XXXXXX" where
+XXXXXX is a sequence of uppercase alphabetic characters.  Extended
+result code names are of the form "SQLITE_XXXXXX_YYYYYYY" where
+the XXXXXX part is the corresponding primary result code and the
+YYYYYYY is an extension that further classifies the result code.
+
+<p>
+The names and numeric values for existing result codes are fixed
+and unchanging.  However, new result codes, and especially new extended
+result codes, might appear in future releases of SQLite.
+
+<h2>Primary Result Code List</h2>
+<p>The 31 result codes
+  are <a href="c3ref/c_abort.html">defined in sqlite3.h</a> and are
+  listed in alphabetical order below:
+  <table border=0 width="100%" cellpadding=10>
+  <tr><td valign="top" align="left"><ul>
+<li> <a href="rescode.html#abort">SQLITE_ABORT</a> (4)
+<li> <a href="rescode.html#auth">SQLITE_AUTH</a> (23)
+<li> <a href="rescode.html#busy">SQLITE_BUSY</a> (5)
+<li> <a href="rescode.html#cantopen">SQLITE_CANTOPEN</a> (14)
+<li> <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> (19)
+<li> <a href="rescode.html#corrupt">SQLITE_CORRUPT</a> (11)
+<li> <a href="rescode.html#done">SQLITE_DONE</a> (101)
+<li> <a href="rescode.html#empty">SQLITE_EMPTY</a> (16)
+<li> <a href="rescode.html#error">SQLITE_ERROR</a> (1)
+<li> <a href="rescode.html#format">SQLITE_FORMAT</a> (24)
+<li> <a href="rescode.html#full">SQLITE_FULL</a> (13)
+</ul></td><td valign="top" align="left"><ul>
+<li> <a href="rescode.html#internal">SQLITE_INTERNAL</a> (2)
+<li> <a href="rescode.html#interrupt">SQLITE_INTERRUPT</a> (9)
+<li> <a href="rescode.html#ioerr">SQLITE_IOERR</a> (10)
+<li> <a href="rescode.html#locked">SQLITE_LOCKED</a> (6)
+<li> <a href="rescode.html#mismatch">SQLITE_MISMATCH</a> (20)
+<li> <a href="rescode.html#misuse">SQLITE_MISUSE</a> (21)
+<li> <a href="rescode.html#nolfs">SQLITE_NOLFS</a> (22)
+<li> <a href="rescode.html#nomem">SQLITE_NOMEM</a> (7)
+<li> <a href="rescode.html#notadb">SQLITE_NOTADB</a> (26)
+<li> <a href="rescode.html#notfound">SQLITE_NOTFOUND</a> (12)
+<li> <a href="rescode.html#notice">SQLITE_NOTICE</a> (27)
+</ul></td><td valign="top" align="left"><ul>
+<li> <a href="rescode.html#ok">SQLITE_OK</a> (0)
+<li> <a href="rescode.html#perm">SQLITE_PERM</a> (3)
+<li> <a href="rescode.html#protocol">SQLITE_PROTOCOL</a> (15)
+<li> <a href="rescode.html#range">SQLITE_RANGE</a> (25)
+<li> <a href="rescode.html#readonly">SQLITE_READONLY</a> (8)
+<li> <a href="rescode.html#row">SQLITE_ROW</a> (100)
+<li> <a href="rescode.html#schema">SQLITE_SCHEMA</a> (17)
+<li> <a href="rescode.html#toobig">SQLITE_TOOBIG</a> (18)
+<li> <a href="rescode.html#warning">SQLITE_WARNING</a> (28)
+</td></td></table>
+
+<a name="extrc"></a>
+<h2>Extended Result Code List</h2>
+<p>The 52 extended result codes
+  are <a href="c3ref/c_abort_rollback.html">defined in sqlite3.h</a> and are
+  listed in alphabetical order below:
+  <table border=0 width="100%" cellpadding=10>
+  <tr><td valign="top" align="left"><ul>
+<li> <a href="rescode.html#abort_rollback">SQLITE_ABORT_ROLLBACK</a> (516)
+<li> <a href="rescode.html#busy_recovery">SQLITE_BUSY_RECOVERY</a> (261)
+<li> <a href="rescode.html#busy_snapshot">SQLITE_BUSY_SNAPSHOT</a> (517)
+<li> <a href="rescode.html#cantopen_convpath">SQLITE_CANTOPEN_CONVPATH</a> (1038)
+<li> <a href="rescode.html#cantopen_fullpath">SQLITE_CANTOPEN_FULLPATH</a> (782)
+<li> <a href="rescode.html#cantopen_isdir">SQLITE_CANTOPEN_ISDIR</a> (526)
+<li> <a href="rescode.html#cantopen_notempdir">SQLITE_CANTOPEN_NOTEMPDIR</a> (270)
+<li> <a href="rescode.html#constraint_check">SQLITE_CONSTRAINT_CHECK</a> (275)
+<li> <a href="rescode.html#constraint_commithook">SQLITE_CONSTRAINT_COMMITHOOK</a> (531)
+<li> <a href="rescode.html#constraint_foreignkey">SQLITE_CONSTRAINT_FOREIGNKEY</a> (787)
+<li> <a href="rescode.html#constraint_function">SQLITE_CONSTRAINT_FUNCTION</a> (1043)
+<li> <a href="rescode.html#constraint_notnull">SQLITE_CONSTRAINT_NOTNULL</a> (1299)
+<li> <a href="rescode.html#constraint_primarykey">SQLITE_CONSTRAINT_PRIMARYKEY</a> (1555)
+<li> <a href="rescode.html#constraint_rowid">SQLITE_CONSTRAINT_ROWID</a> (2579)
+<li> <a href="rescode.html#constraint_trigger">SQLITE_CONSTRAINT_TRIGGER</a> (1811)
+<li> <a href="rescode.html#constraint_unique">SQLITE_CONSTRAINT_UNIQUE</a> (2067)
+<li> <a href="rescode.html#constraint_vtab">SQLITE_CONSTRAINT_VTAB</a> (2323)
+<li> <a href="rescode.html#corrupt_vtab">SQLITE_CORRUPT_VTAB</a> (267)
+<li> <a href="rescode.html#ioerr_access">SQLITE_IOERR_ACCESS</a> (3338)
+<li> <a href="rescode.html#ioerr_blocked">SQLITE_IOERR_BLOCKED</a> (2826)
+<li> <a href="rescode.html#ioerr_checkreservedlock">SQLITE_IOERR_CHECKRESERVEDLOCK</a> (3594)
+<li> <a href="rescode.html#ioerr_close">SQLITE_IOERR_CLOSE</a> (4106)
+<li> <a href="rescode.html#ioerr_convpath">SQLITE_IOERR_CONVPATH</a> (6666)
+<li> <a href="rescode.html#ioerr_delete">SQLITE_IOERR_DELETE</a> (2570)
+<li> <a href="rescode.html#ioerr_delete_noent">SQLITE_IOERR_DELETE_NOENT</a> (5898)
+<li> <a href="rescode.html#ioerr_dir_close">SQLITE_IOERR_DIR_CLOSE</a> (4362)
+</ul></td><td valign="top" align="left"><ul>
+<li> <a href="rescode.html#ioerr_dir_fsync">SQLITE_IOERR_DIR_FSYNC</a> (1290)
+<li> <a href="rescode.html#ioerr_fstat">SQLITE_IOERR_FSTAT</a> (1802)
+<li> <a href="rescode.html#ioerr_fsync">SQLITE_IOERR_FSYNC</a> (1034)
+<li> <a href="rescode.html#ioerr_gettemppath">SQLITE_IOERR_GETTEMPPATH</a> (6410)
+<li> <a href="rescode.html#ioerr_lock">SQLITE_IOERR_LOCK</a> (3850)
+<li> <a href="rescode.html#ioerr_mmap">SQLITE_IOERR_MMAP</a> (6154)
+<li> <a href="rescode.html#ioerr_nomem">SQLITE_IOERR_NOMEM</a> (3082)
+<li> <a href="rescode.html#ioerr_rdlock">SQLITE_IOERR_RDLOCK</a> (2314)
+<li> <a href="rescode.html#ioerr_read">SQLITE_IOERR_READ</a> (266)
+<li> <a href="rescode.html#ioerr_seek">SQLITE_IOERR_SEEK</a> (5642)
+<li> <a href="rescode.html#ioerr_shmlock">SQLITE_IOERR_SHMLOCK</a> (5130)
+<li> <a href="rescode.html#ioerr_shmmap">SQLITE_IOERR_SHMMAP</a> (5386)
+<li> <a href="rescode.html#ioerr_shmopen">SQLITE_IOERR_SHMOPEN</a> (4618)
+<li> <a href="rescode.html#ioerr_shmsize">SQLITE_IOERR_SHMSIZE</a> (4874)
+<li> <a href="rescode.html#ioerr_short_read">SQLITE_IOERR_SHORT_READ</a> (522)
+<li> <a href="rescode.html#ioerr_truncate">SQLITE_IOERR_TRUNCATE</a> (1546)
+<li> <a href="rescode.html#ioerr_unlock">SQLITE_IOERR_UNLOCK</a> (2058)
+<li> <a href="rescode.html#ioerr_write">SQLITE_IOERR_WRITE</a> (778)
+<li> <a href="rescode.html#locked_sharedcache">SQLITE_LOCKED_SHAREDCACHE</a> (262)
+<li> <a href="rescode.html#notice_recover_rollback">SQLITE_NOTICE_RECOVER_ROLLBACK</a> (539)
+<li> <a href="rescode.html#notice_recover_wal">SQLITE_NOTICE_RECOVER_WAL</a> (283)
+<li> <a href="rescode.html#readonly_cantlock">SQLITE_READONLY_CANTLOCK</a> (520)
+<li> <a href="rescode.html#readonly_dbmoved">SQLITE_READONLY_DBMOVED</a> (1032)
+<li> <a href="rescode.html#readonly_recovery">SQLITE_READONLY_RECOVERY</a> (264)
+<li> <a href="rescode.html#readonly_rollback">SQLITE_READONLY_ROLLBACK</a> (776)
+<li> <a href="rescode.html#warning_autoindex">SQLITE_WARNING_AUTOINDEX</a> (284)
+</td></td></table>
+
+
+<h2>Result Code Meanings</h2>
+<p>
+The meanings for all 83 result code values are shown below,
+in numeric order.
+<!--------------------------------------------------------------->
+<a name="ok"></a>
+<h3>(0) SQLITE_OK</h3>
+
+  The SQLITE_OK result code means that the operation was successful and
+  that there were no errors.  Most other result codes indicate an error.
+
+
+<!--------------------------------------------------------------->
+<a name="error"></a>
+<h3>(1) SQLITE_ERROR</h3>
+
+  The SQLITE_ERROR result code is a generic error code that is used when
+  no other more specific error code is available.
+
+
+<!--------------------------------------------------------------->
+<a name="internal"></a>
+<h3>(2) SQLITE_INTERNAL</h3>
+
+  The SQLITE_INTERNAL result code indicates an internal malfunction.
+  In a working version of SQLite, an application should never see this
+  result code.  If application does encounter this result code, it shows
+  that there is a bug in the database engine.
+  <p>
+  SQLite does not currently generate this result code.
+  However, <a href="c3ref/create_function.html">application-defined SQL functions</a> or
+  <a href="vtab.html">virtual tables</a>, or <a href="vfs.html">VFSes</a>, or other extensions might cause this 
+  result code to be returned.
+
+
+<!--------------------------------------------------------------->
+<a name="perm"></a>
+<h3>(3) SQLITE_PERM</h3>
+
+  The SQLITE_PERM result code indicates that the requested access mode
+  for a newly created database could not be provided.
+
+
+<!--------------------------------------------------------------->
+<a name="abort"></a>
+<h3>(4) SQLITE_ABORT</h3>
+
+  The SQLITE_ABORT result code indicates that an operation was aborted
+  prior to completion, usually be application request.
+  See also: <a href="rescode.html#interrupt">SQLITE_INTERRUPT</a>.
+  <p>
+  If the callback function to <a href="c3ref/exec.html">sqlite3_exec()</a> returns non-zero, then
+  sqlite3_exec() will return SQLITE_ABORT.
+  <p>
+  If a <a href="lang_transaction.html">ROLLBACK</a> operation occurs on the same <a href="c3ref/sqlite3.html">database connection</a> as
+  a pending read or write, then the pending read or write may fail with
+  an SQLITE_ABORT or <a href="rescode.html#abort_rollback">SQLITE_ABORT_ROLLBACK</a> error.
+  <p>
+  In addition to being a result code,
+  the SQLITE_ABORT value is also used as a <a href="c3ref/c_fail.html">conflict resolution mode</a>
+  returned from the <a href="c3ref/vtab_on_conflict.html">sqlite3_vtab_on_conflict()</a> interface.
+
+
+<!--------------------------------------------------------------->
+<a name="busy"></a>
+<h3>(5) SQLITE_BUSY</h3>
+
+  The SQLITE_BUSY result code indicates that the database file could not
+  be written (or in some cases read) because of concurrent activity by 
+  some other <a href="c3ref/sqlite3.html">database connection</a>, usually a database connection in a
+  separate process.
+  <p>
+  For example, if process A is in the middle of a large write transaction
+  and at the same time process B attempts to start a new write transaction,
+  process B will get back an SQLITE_BUSY result because SQLite only supports
+  one writer at a time.  Process B will need to wait for process A to finish
+  its transaction before starting a new transaction.  The
+  <a href="c3ref/busy_timeout.html">sqlite3_busy_timeout()</a> and <a href="c3ref/busy_handler.html">sqlite3_busy_handler()</a> interfaces and
+  the <a href="pragma.html#pragma_busy_timeout">busy_timeout pragma</a> are available to process B to help it deal
+  with SQLITE_BUSY errors.
+  <p>
+  An SQLITE_BUSY error can occur at any point in a transaction: when the
+  transaction is first started, during any write or update operations, or
+  when the transaction commits.
+  To avoid encountering SQLITE_BUSY errors in the middle of a transaction,
+  the application can use <a href="lang_transaction.html#immediate">BEGIN IMMEDIATE</a> instead of just <a href="lang_transaction.html">BEGIN</a> to
+  start a transaction.  The <a href="lang_transaction.html#immediate">BEGIN IMMEDIATE</a> command might itself return
+  SQLITE_BUSY, but if it succeeds, then SQLite guarantees that no 
+  subsequent operations on the same database through the next <a href="lang_transaction.html">COMMIT</a> 
+  will return SQLITE_BUSY.
+  <p>
+  See also:  <a href="rescode.html#busy_recovery">SQLITE_BUSY_RECOVERY</a> and <a href="rescode.html#busy_snapshot">SQLITE_BUSY_SNAPSHOT</a>.
+  <p>
+  The SQLITE_BUSY result code differs from <a href="rescode.html#locked">SQLITE_LOCKED</a> in that
+  SQLITE_BUSY indicates a conflict with a
+  separate <a href="c3ref/sqlite3.html">database connection</a>, probably in a separate process,
+  whereas <a href="rescode.html#locked">SQLITE_LOCKED</a> 
+  indicates a conflict within the same <a href="c3ref/sqlite3.html">database connection</a> (or sometimes
+  a database connection with a <a href="sharedcache.html">shared cache</a>).
+
+
+<!--------------------------------------------------------------->
+<a name="locked"></a>
+<h3>(6) SQLITE_LOCKED</h3>
+
+  The SQLITE_LOCKED result code indicates that a write operation could not
+  continue because of a conflict within the same <a href="c3ref/sqlite3.html">database connection</a> or
+  a conflict with a different database connection that uses a <a href="sharedcache.html">shared cache</a>.
+  <p>
+  For example, a <a href="lang_droptable.html">DROP TABLE</a> statement cannot be run while another thread
+  is reading from that table on the same <a href="c3ref/sqlite3.html">database connection</a> because 
+  dropping the table would delete the table out from under the concurrent
+  reader.
+  <p>
+  The SQLITE_LOCKED result code differs from <a href="rescode.html#busy">SQLITE_BUSY</a> in that
+  SQLITE_LOCKED indicates a conflict on the same <a href="c3ref/sqlite3.html">database connection</a>
+  (or on a connection with a <a href="sharedcache.html">shared cache</a>) whereas <a href="rescode.html#busy">SQLITE_BUSY</a> indicates
+  a conflict with a different database connection, probably in a different
+  process.
+
+
+<!--------------------------------------------------------------->
+<a name="nomem"></a>
+<h3>(7) SQLITE_NOMEM</h3>
+
+  The SQLITE_NOMEM result code indicates that SQLite was unable to allocate
+  all the memory it needed to complete the operation.  In other words, an
+  internal call to <a href="c3ref/free.html">sqlite3_malloc()</a> or <a href="c3ref/free.html">sqlite3_realloc()</a> has failed in
+  a case where the memory being allocated was required in order to continue
+  the operation.
+
+
+<!--------------------------------------------------------------->
+<a name="readonly"></a>
+<h3>(8) SQLITE_READONLY</h3>
+
+  The SQLITE_READONLY result code is returned when an attempt is made to 
+  alter some data for which the current database connection does not have
+  write permission.
+
+
+<!--------------------------------------------------------------->
+<a name="interrupt"></a>
+<h3>(9) SQLITE_INTERRUPT</h3>
+
+  The SQLITE_INTERRUPT result code indicates that an operation was
+  interrupted by the <a href="c3ref/interrupt.html">sqlite3_interrupt()</a> interface.
+  See also: <a href="rescode.html#abort">SQLITE_ABORT</a>
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr"></a>
+<h3>(10) SQLITE_IOERR</h3>
+
+  The SQLITE_IOERR result code says that the operation could not finish
+  because the operating system reported an I/O error.
+  <p>
+  A full disk drive will normally give an <a href="rescode.html#full">SQLITE_FULL</a> error rather than
+  an SQLITE_IOERR error.
+  <p>
+  There are many different extended result codes for I/O errors that
+  identify the specific I/O operation that failed.
+
+
+<!--------------------------------------------------------------->
+<a name="corrupt"></a>
+<h3>(11) SQLITE_CORRUPT</h3>
+
+  The SQLITE_CORRUPT result code indicates that the database file has
+  been corrupted.  See the <a href="lockingv3.html#how_to_corrupt">How To Corrupt Your Database Files</a> for
+  further discussion on how corruption can occur.
+
+
+<!--------------------------------------------------------------->
+<a name="notfound"></a>
+<h3>(12) SQLITE_NOTFOUND</h3>
+
+  The SQLITE_NOTFOUND result code is used in two contexts.
+  SQLITE_NOTFOUND can be returned by the <a href="c3ref/file_control.html">sqlite3_file_control()</a> interface
+  to indicate that the <a href="c3ref/c_fcntl_busyhandler.html">file control opcode</a> passed as the third argument
+  was not recognized by the underlying <a href="vfs.html">VFS</a>.
+  SQLITE_NOTFOUND can also be returned by the xSetSystemCall() method of
+  an <a href="c3ref/vfs.html">sqlite3_vfs</a> object.
+  <p>
+  The SQLITE_NOTFOUND result code is also used
+  internally by the SQLite implementation, but those internal uses are
+  not exposed to the application.
+
+
+<!--------------------------------------------------------------->
+<a name="full"></a>
+<h3>(13) SQLITE_FULL</h3>
+
+  The SQLITE_FULL result code indicates that a write could not complete
+  because the disk is full.  Note that this error can occur when trying
+  to write information into the main database file, or it can also
+  occur when writing into <a href="tempfiles.html">temporary disk files</a>.
+  <p>
+  Sometimes applications encounter this error even though there is an
+  abundance of primary disk space because the error occurs when writing
+  into <a href="tempfiles.html">temporary disk files</a> on a system where temporary files are stored
+  on a separate partition with much less space that the primary disk.
+
+
+<!--------------------------------------------------------------->
+<a name="cantopen"></a>
+<h3>(14) SQLITE_CANTOPEN</h3>
+
+  The SQLITE_CANTOPEN result code indicates that SQLite was unable to
+  open a file.  The file in question might be a primary database file
+  or on of several <a href="tempfiles.html">temporary disk files</a>.
+
+
+<!--------------------------------------------------------------->
+<a name="protocol"></a>
+<h3>(15) SQLITE_PROTOCOL</h3>
+
+  The SQLITE_PROTOCOL result code indicates a problem with the file locking
+  protocol used by SQLite.  The SQLITE_PROTOCOL error is currently only
+  returned when using <a href="wal.html">WAL mode</a> and attempting to start a new transaction.
+  There is a race condition that can occur when two separate 
+  <a href="c3ref/sqlite3.html">database connections</a> both try to start a transaction at the same time
+  in <a href="wal.html">WAL mode</a>.  The loser of the race backs off and tries again, after
+  a brief delay.  If the same connection loses the locking race dozens
+  of times over a span of multiple seconds, it will eventually give up and
+  return SQLITE_PROTOCOL.  The SQLITE_PROTOCOL error should appear in practice
+  very, very rarely, and only when there are many separate processes all
+  competing intensely to write to the same database.
+
+
+<!--------------------------------------------------------------->
+<a name="empty"></a>
+<h3>(16) SQLITE_EMPTY</h3>
+
+  The SQLITE_EMPTY result code is not currently used.
+
+
+<!--------------------------------------------------------------->
+<a name="schema"></a>
+<h3>(17) SQLITE_SCHEMA</h3>
+
+  The SQLITE_SCHEMA result code indicates that the database schema
+  has changed.  This result code can be returned from <a href="c3ref/step.html">sqlite3_step()</a> for
+  a <a href="c3ref/stmt.html">prepared statement</a> that was generated using <a href="c3ref/prepare.html">sqlite3_prepare()</a> or
+  <a href="c3ref/prepare.html">sqlite3_prepare16()</a>.  If the database schema was changed by some other
+  process in between the time that the statement was prepared and the time
+  the statement was run, this error can result.
+  <p>
+  If a <a href="c3ref/stmt.html">prepared statement</a> is generated from <a href="c3ref/prepare.html">sqlite3_prepare_v2()</a> then
+  the statement is automatically re-prepared if the schema changes, up to
+  <a href="compile.html#max_schema_retry">SQLITE_MAX_SCHEMA_RETRY</a> times (default: 50).  The <a href="c3ref/step.html">sqlite3_step()</a>
+  interface will only return SQLITE_SCHEMA back to the application if 
+  the failure persists after these many retries.
+
+
+<!--------------------------------------------------------------->
+<a name="toobig"></a>
+<h3>(18) SQLITE_TOOBIG</h3>
+
+  The SQLITE_TOOBIG error code indicates that a string or BLOB was
+  too large.  The default maximum length of a string or BLOB in SQLite is
+  1,000,000,000 bytes.  This maximum length can be changed at compile-time
+  using the <a href="limits.html#max_length">SQLITE_MAX_LENGTH</a> compile-time option, or at run-time using
+  the <a href="c3ref/limit.html">sqlite3_limit</a>(db,<a href="c3ref/c_limit_attached.html#sqlitelimitlength">SQLITE_LIMIT_LENGTH</a>,...) interface.  The
+  SQLITE_TOOBIG error results when SQLite encounters a string or BLOB
+  that exceeds the compile-time or run-time limit.
+  <p>
+  The SQLITE_TOOBIG error code can also result when an oversized SQL
+  statement is passed into one of the <a href="c3ref/prepare.html">sqlite3_prepare_v2()</a> interfaces.
+  The maximum length of an SQL statement defaults to a much smaller
+  value of 1,000,000 bytes.  The maximum SQL statement length can be
+  set at compile-time using <a href="limits.html#max_sql_length">SQLITE_MAX_SQL_LENGTH</a> or at run-time
+  using <a href="c3ref/limit.html">sqlite3_limit</a>(db,<a href="c3ref/c_limit_attached.html#sqlitelimitsqllength">SQLITE_LIMIT_SQL_LENGTH</a>,...).
+
+
+<!--------------------------------------------------------------->
+<a name="constraint"></a>
+<h3>(19) SQLITE_CONSTRAINT</h3>
+
+  The SQLITE_CONSTRAINT error code means that an SQL constraint violation
+  occurred while trying to process an SQL statement.  Additional information
+  about the failed constraint can be found by consulting the
+  accompanying error message (returned via <a href="c3ref/errcode.html">sqlite3_errmsg()</a> or
+  <a href="c3ref/errcode.html">sqlite3_errmsg16()</a>) or by looking at the <a href="rescode.html#extrc">extended error code</a>.
+
+
+<!--------------------------------------------------------------->
+<a name="mismatch"></a>
+<h3>(20) SQLITE_MISMATCH</h3>
+
+  The SQLITE_MISMATCH error code indicates a datatype mismatch.
+  <p>
+  SQLite is normally very forgiving about mismatches between the type of
+  a value and the declared type of the container in which that value is
+  to be stored.  For example, SQLite allows the application to store
+  a large BLOB in a column with a declared type of BOOLEAN.  But in a few
+  cases, SQLite is strict about types.  The SQLITE_MISMATCH error is
+  returned in those few cases when the types do not match.
+  <p>
+  The <a href="lang_createtable.html#rowid">rowid</a> of a table must be an integer.  Attempt to set the <a href="lang_createtable.html#rowid">rowid</a>
+  to anything other than an integer (or a NULL which will be automatically
+  converted into the next available integer rowid) results in an
+  SQLITE_MISMATCH error.
+
+
+<!--------------------------------------------------------------->
+<a name="misuse"></a>
+<h3>(21) SQLITE_MISUSE</h3>
+
+  The SQLITE_MISUSE return code might be returned if the application uses
+  any SQLite interface in a way that is undefined or unsupported.  For
+  example, using a <a href="c3ref/stmt.html">prepared statement</a> after that prepared statement has
+  been <a href="c3ref/finalize.html">finalized</a> might result in an SQLITE_MISUSE error.
+  <p>
+  SQLite tries to detect misuse and report the misuse using this result code.
+  However, there is no guarantee that the detection of misuse will be
+  successful.  Misuse detection is probabilistic.  Applications should
+  never depend on an SQLITE_MISUSE return value.
+  <p>
+  If SQLite ever returns SQLITE_MISUSE from any interface, that means that
+  the application is incorrectly coded and needs to be fixed.  Do not ship
+  an application that sometimes returns SQLITE_MISUSE from a standard
+  SQLite interface because that application contains potentially serious bugs.
+
+
+<!--------------------------------------------------------------->
+<a name="nolfs"></a>
+<h3>(22) SQLITE_NOLFS</h3>
+
+  The SQLITE_NOLFS error can be returned on systems that do not support
+  large files when the database grows to be larger than what the filesystem
+  can handle.  "NOLFS" stands for "NO Large File Support".
+
+
+<!--------------------------------------------------------------->
+<a name="auth"></a>
+<h3>(23) SQLITE_AUTH</h3>
+
+  The SQLITE_AUTH error is returned when the
+  <a href="c3ref/set_authorizer.html">authorizer callback</a> indicates that an
+  SQL statement being prepared is not authorized.
+
+
+<!--------------------------------------------------------------->
+<a name="format"></a>
+<h3>(24) SQLITE_FORMAT</h3>
+
+  The SQLITE_FORMAT error code is not currently used by SQLite.
+
+
+<!--------------------------------------------------------------->
+<a name="range"></a>
+<h3>(25) SQLITE_RANGE</h3>
+
+  The SQLITE_RANGE error indices that the parameter number argument
+  to one of the <a href="c3ref/bind_blob.html">sqlite3_bind</a> routines or the
+  column number in one of the <a href="c3ref/column_blob.html">sqlite3_column</a>
+  routines is out of range.
+
+
+<!--------------------------------------------------------------->
+<a name="notadb"></a>
+<h3>(26) SQLITE_NOTADB</h3>
+
+  When attempting to open a file, the SQLITE_NOTADB error indicates that
+  the file being opened does not appear to be an SQLite database file.
+
+
+<!--------------------------------------------------------------->
+<a name="notice"></a>
+<h3>(27) SQLITE_NOTICE</h3>
+
+  The SQLITE_NOTICE result code is not returned by any C/C++ interface.
+  However, SQLITE_NOTICE (or rather one of its <a href="rescode.html#extrc">extended error codes</a>)
+  is sometimes used as the first argument in an <a href="c3ref/log.html">sqlite3_log()</a> callback
+  to indicate that an unusual operation is taking place.
+
+
+<!--------------------------------------------------------------->
+<a name="warning"></a>
+<h3>(28) SQLITE_WARNING</h3>
+
+  The SQLITE_WARNING result code is not returned by any C/C++ interface.
+  However, SQLITE_WARNING (or rather one of its <a href="rescode.html#extrc">extended error codes</a>)
+  is sometimes used as the first argument in an <a href="c3ref/log.html">sqlite3_log()</a> callback
+  to indicate that an unusual and possibly ill-advised operation is
+  taking place.
+
+
+<!--------------------------------------------------------------->
+<a name="row"></a>
+<h3>(100) SQLITE_ROW</h3>
+
+  The SQLITE_ROW result code returned by
+  <a href="c3ref/step.html">sqlite3_step()</a> indicates that another row of output is available.
+
+
+<!--------------------------------------------------------------->
+<a name="done"></a>
+<h3>(101) SQLITE_DONE</h3>
+
+  The SQLITE_DONE result code indicates that an operation has completed.
+  The SQLITE_DONE result code is most commonly seen as a return value
+  from <a href="c3ref/step.html">sqlite3_step()</a> indicating that the SQL statement has run to
+  completion.  But SQLITE_DONE can also be returned by other multi-step
+  interfaces such as <a href="c3ref/backup_finish.html#sqlite3backupstep">sqlite3_backup_step()</a>.
+
+
+<!--------------------------------------------------------------->
+<a name="busy_recovery"></a>
+<h3>(261) SQLITE_BUSY_RECOVERY</h3>
+
+  The SQLITE_BUSY_RECOVERY error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#busy">SQLITE_BUSY</a> that indicates that an operation could not continue
+  because another process is busy recovering a <a href="wal.html">WAL mode</a> database file
+  following a crash.  The SQLITE_BUSY_RECOVERY error code only occurs
+  on <a href="wal.html">WAL mode</a> databases.
+
+
+<!--------------------------------------------------------------->
+<a name="locked_sharedcache"></a>
+<h3>(262) SQLITE_LOCKED_SHAREDCACHE</h3>
+
+  The SQLITE_LOCKED_SHAREDCACHE error code is
+  an <a href="rescode.html#pve">extended error code</a> for <a href="rescode.html#locked">SQLITE_LOCKED</a>
+  indicating that the locking conflict has occurred due to contention
+  with a different <a href="c3ref/sqlite3.html">database connection</a> that happens to hold a 
+  <a href="sharedcache.html">shared cache</a> with the database connection to which the error was
+  returned.  For example, if the other database connection is holding
+  an <a href="lockingv3.html#excl_lock">exclusive lock</a> on the database, then the database connection
+  that receives this error will be unable to read or write any part
+  of the database file unless it has the <a href="pragma.html#pragma_read_uncommitted">read_uncommitted pragma</a>
+  enabled.
+  <p>
+  The SQLITE_LOCKED_SHARECACHE error code works very much like the
+  <a href="rescode.html#busy">SQLITE_BUSY</a> error code except that SQLITE_LOCKED_SHARECACHE is
+  for separate database connections that share a cache whereas 
+  SQLITE_BUSY is for the much more common case of separate database
+  connections that do not share the same cache.  Also, the
+  <a href="c3ref/busy_handler.html">sqlite3_busy_handler()</a> and <a href="c3ref/busy_timeout.html">sqlite3_busy_timeout()</a> interfaces
+  do not help in resolving SQLITE_LOCKED_SHAREDCACHE conflicts.
+
+
+<!--------------------------------------------------------------->
+<a name="readonly_recovery"></a>
+<h3>(264) SQLITE_READONLY_RECOVERY</h3>
+
+  The SQLITE_READONLY_RECOVERY error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#readonly">SQLITE_READONLY</a>.  The SQLITE_READONLY_RECOVERY error code indicates
+  that a <a href="wal.html">WAL mode</a> database cannot be opened because the database file
+  needs to be recovered and recovery requires write access but only
+  read access is available.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_read"></a>
+<h3>(266) SQLITE_IOERR_READ</h3>
+
+  The SQLITE_IOERR_READ error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to read from a file on disk.  This error might result
+  from a hardware malfunction or because a filesystem came unmounted
+  while the file was open.
+
+
+<!--------------------------------------------------------------->
+<a name="corrupt_vtab"></a>
+<h3>(267) SQLITE_CORRUPT_VTAB</h3>
+
+  The SQLITE_CORRUPT_VTAB error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#corrupt">SQLITE_CORRUPT</a> used by <a href="vtab.html">virtual tables</a>.  A <a href="vtab.html">virtual table</a> might
+  return SQLITE_CORRUPT_VTAB to indicate that content in the virtual table
+  is corrupt.
+
+
+<!--------------------------------------------------------------->
+<a name="cantopen_notempdir"></a>
+<h3>(270) SQLITE_CANTOPEN_NOTEMPDIR</h3>
+
+  The SQLITE_CANTOPEN_NOTEMPDIR error code is no longer used.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_check"></a>
+<h3>(275) SQLITE_CONSTRAINT_CHECK</h3>
+
+  The SQLITE_CONSTRAINT_CHECK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtable.html#ckconst">CHECK constraint</a> failed.
+
+
+<!--------------------------------------------------------------->
+<a name="notice_recover_wal"></a>
+<h3>(283) SQLITE_NOTICE_RECOVER_WAL</h3>
+
+  The SQLITE_NOTICE_RECOVER_WAL result code is
+  passed to the callback of
+  <a href="c3ref/log.html">sqlite3_log()</a> when a <a href="wal.html">WAL mode</a> database file is recovered.
+
+
+<!--------------------------------------------------------------->
+<a name="warning_autoindex"></a>
+<h3>(284) SQLITE_WARNING_AUTOINDEX</h3>
+
+  The SQLITE_WARNING_AUTOINDEX result code is
+  passed to the callback of
+  <a href="c3ref/log.html">sqlite3_log()</a> whenever <a href="optoverview.html#autoindex">automatic indexing</a> is used.
+  This can serve as a warning to application designers that the
+  database might benefit from additional indexes.
+
+
+<!--------------------------------------------------------------->
+<a name="abort_rollback"></a>
+<h3>(516) SQLITE_ABORT_ROLLBACK</h3>
+
+  The SQLITE_ABORT_ROLLBACK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#abort">SQLITE_ABORT</a> indicating that an SQL statement aborted because
+  the transaction that was active when the SQL statement first started
+  was rolled back.  Pending write operations always fail with this error
+  when a rollback occurs.  A <a href="lang_transaction.html">ROLLBACK</a> will cause a pending read operation
+  to fail only if the schema was changed within the transaction being rolled
+  back.
+
+
+<!--------------------------------------------------------------->
+<a name="busy_snapshot"></a>
+<h3>(517) SQLITE_BUSY_SNAPSHOT</h3>
+
+  The SQLITE_BUSY_SNAPSHOT error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#busy">SQLITE_BUSY</a> that occurs on <a href="wal.html">WAL mode</a> databases when a database
+  connection tries to promote a read transaction into a write transaction
+  but finds that another <a href="c3ref/sqlite3.html">database connection</a> has already written to the
+  database and thus invalidated prior reads.
+  <p>
+  The following scenario illustrates how an SQLITE_BUSY_SNAPSHOT error
+  might arise:
+  <ol>
+  <li> Process A starts a read transaction on the database and does one
+       or more SELECT statement.  Process A keeps the transaction open.
+  <li> Process B updates the database, changing values previous read by
+       process A.
+  <li> Process A now tries to write to the database.  But process A's view
+       of the database content is now obsolete because process B has
+       modified the database file after process A read from it.  Hence
+       process A gets an SQLITE_BUSY_SNAPSHOT error.
+  </ol>
+
+
+<!--------------------------------------------------------------->
+<a name="readonly_cantlock"></a>
+<h3>(520) SQLITE_READONLY_CANTLOCK</h3>
+
+  The SQLITE_READONLY_CANTLOCK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#readonly">SQLITE_READONLY</a>.  The SQLITE_READONLY_CANTLOCK error code indicates
+  that SQLite is unable to obtain a read lock on a <a href="wal.html">WAL mode</a> database
+  because the shared-memory file associated with that database is read-only.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_short_read"></a>
+<h3>(522) SQLITE_IOERR_SHORT_READ</h3>
+
+  The SQLITE_IOERR_SHORT_READ error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating that a read attempt in the <a href="vfs.html">VFS</a> layer
+  was unable to obtain as many bytes as was requested.  This might be
+  due to a truncated file.
+
+
+<!--------------------------------------------------------------->
+<a name="cantopen_isdir"></a>
+<h3>(526) SQLITE_CANTOPEN_ISDIR</h3>
+
+  The SQLITE_CANTOPEN_ISDIR error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#cantopen">SQLITE_CANTOPEN</a> indicating that a file open operation failed because
+  the file is really a directory.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_commithook"></a>
+<h3>(531) SQLITE_CONSTRAINT_COMMITHOOK</h3>
+
+  The SQLITE_CONSTRAINT_COMMITHOOK error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a
+  <a href="c3ref/commit_hook.html">commit hook callback</a> returned non-zero that thus
+  caused the SQL statement to be rolled back.
+
+
+<!--------------------------------------------------------------->
+<a name="notice_recover_rollback"></a>
+<h3>(539) SQLITE_NOTICE_RECOVER_ROLLBACK</h3>
+
+  The SQLITE_NOTICE_RECOVER_ROLLBACK result code is
+  passed to the callback of
+  <a href="c3ref/log.html">sqlite3_log()</a> when a <a href="lockingv3.html#hotjrnl">hot journal</a> is rolled back.
+
+
+<!--------------------------------------------------------------->
+<a name="readonly_rollback"></a>
+<h3>(776) SQLITE_READONLY_ROLLBACK</h3>
+
+  The SQLITE_READONLY_ROLLBACK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#readonly">SQLITE_READONLY</a>.  The SQLITE_READONLY_ROLLBACK error code indicates
+  that a database cannot be opened because it has a <a href="lockingv3.html#hotjrnl">hot journal</a> that
+  needs to be rolled back but cannot because the database is readonly.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_write"></a>
+<h3>(778) SQLITE_IOERR_WRITE</h3>
+
+  The SQLITE_IOERR_WRITE error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to write into a file on disk.  This error might result
+  from a hardware malfunction or because a filesystem came unmounted
+  while the file was open.  This error should not occur if the filesystem
+  is full as there is a separate error code (SQLITE_FULL) for that purpose.
+
+
+<!--------------------------------------------------------------->
+<a name="cantopen_fullpath"></a>
+<h3>(782) SQLITE_CANTOPEN_FULLPATH</h3>
+
+  The SQLITE_CANTOPEN_FULLPATH error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#cantopen">SQLITE_CANTOPEN</a> indicating that a file open operation failed because
+  the operating system was unable to convert the filename into a full pathname.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_foreignkey"></a>
+<h3>(787) SQLITE_CONSTRAINT_FOREIGNKEY</h3>
+
+  The SQLITE_CONSTRAINT_FOREIGNKEY error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="foreignkeys.html">foreign key constraint</a> failed.
+
+
+<!--------------------------------------------------------------->
+<a name="readonly_dbmoved"></a>
+<h3>(1032) SQLITE_READONLY_DBMOVED</h3>
+
+  The SQLITE_READONLY_DBMOVED error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#readonly">SQLITE_READONLY</a>.  The SQLITE_READONLY_DBMOVED error code indicates
+  that a database cannot be modified because the database file has been
+  moved since it was opened, and so any attempt to modify the database
+  might result in database corruption if the processes crashes because the
+  <a href="lockingv3.html#rollback">rollback journal</a> would not be correctly named.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_fsync"></a>
+<h3>(1034) SQLITE_IOERR_FSYNC</h3>
+
+  The SQLITE_IOERR_FSYNC error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to flush previously written content out of OS and/or
+  disk-control buffers and into persistent storage.  In other words,
+  this code indicates a problem with the fsync() system call in unix
+  or the FlushFileBuffers() system call in windows.
+
+
+<!--------------------------------------------------------------->
+<a name="cantopen_convpath"></a>
+<h3>(1038) SQLITE_CANTOPEN_CONVPATH</h3>
+
+  The SQLITE_CANTOPEN_CONVPATH error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#cantopen">SQLITE_CANTOPEN</a> used only by Cygwin <a href="vfs.html">VFS</a> and indicating that
+  the cygwin_conv_path() system call failed while trying to open a file.
+  See also: <a href="rescode.html#ioerr_convpath">SQLITE_IOERR_CONVPATH</a>
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_function"></a>
+<h3>(1043) SQLITE_CONSTRAINT_FUNCTION</h3>
+
+  The SQLITE_CONSTRAINT_FUNCTION error code is not currently used
+  by the SQLite core.  However, this error code is available for use
+  by extension functions.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_dir_fsync"></a>
+<h3>(1290) SQLITE_IOERR_DIR_FSYNC</h3>
+
+  The SQLITE_IOERR_DIR_FSYNC error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to invoke fsync() on a directory.  The unix <a href="vfs.html">VFS</a> attempts
+  to fsync() directories after creating or deleting certain files to
+  ensure that those files will still appear in the filesystem following
+  a power loss or system crash.  This error code indicates a problem
+  attempting to perform that fsync().
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_notnull"></a>
+<h3>(1299) SQLITE_CONSTRAINT_NOTNULL</h3>
+
+  The SQLITE_CONSTRAINT_NOTNULL error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtable.html#notnullconst">NOT NULL constraint</a> failed.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_truncate"></a>
+<h3>(1546) SQLITE_IOERR_TRUNCATE</h3>
+
+  The SQLITE_IOERR_TRUNCATE error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to truncate a file to a smaller size.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_primarykey"></a>
+<h3>(1555) SQLITE_CONSTRAINT_PRIMARYKEY</h3>
+
+  The SQLITE_CONSTRAINT_PRIMARYKEY error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtable.html#primkeyconst">PRIMARY KEY constraint</a> failed.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_fstat"></a>
+<h3>(1802) SQLITE_IOERR_FSTAT</h3>
+
+  The SQLITE_IOERR_FSTAT error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the <a href="vfs.html">VFS</a> layer
+  while trying to invoke fstat() (or the equivalent) on a file in order
+  to determine information such as the file size or access permissions.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_trigger"></a>
+<h3>(1811) SQLITE_CONSTRAINT_TRIGGER</h3>
+
+  The SQLITE_CONSTRAINT_TRIGGER error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtrigger.html#raise">RAISE function</a> within
+  a <a href="lang_createtrigger.html">trigger</a> fired, causing the SQL statement to abort.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_unlock"></a>
+<h3>(2058) SQLITE_IOERR_UNLOCK</h3>
+
+  The SQLITE_IOERR_UNLOCK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within xUnlock method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_unique"></a>
+<h3>(2067) SQLITE_CONSTRAINT_UNIQUE</h3>
+
+  The SQLITE_CONSTRAINT_UNIQUE error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtable.html#uniqueconst">UNIQUE constraint</a> failed.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_rdlock"></a>
+<h3>(2314) SQLITE_IOERR_RDLOCK</h3>
+
+  The SQLITE_IOERR_UNLOCK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within xLock method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object while trying
+  to obtain a read lock.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_vtab"></a>
+<h3>(2323) SQLITE_CONSTRAINT_VTAB</h3>
+
+  The SQLITE_CONSTRAINT_VTAB error code is not currently used
+  by the SQLite core.  However, this error code is available for use
+  by application-defined <a href="vtab.html">virtual tables</a>.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_delete"></a>
+<h3>(2570) SQLITE_IOERR_DELETE</h3>
+
+  The SQLITE_IOERR_UNLOCK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within xDelete method on the <a href="c3ref/vfs.html">sqlite3_vfs</a> object.
+
+
+<!--------------------------------------------------------------->
+<a name="constraint_rowid"></a>
+<h3>(2579) SQLITE_CONSTRAINT_ROWID</h3>
+
+  The SQLITE_CONSTRAINT_ROWID error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#constraint">SQLITE_CONSTRAINT</a> indicating that a <a href="lang_createtable.html#rowid">rowid</a> is not unique.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_blocked"></a>
+<h3>(2826) SQLITE_IOERR_BLOCKED</h3>
+
+  The SQLITE_IOERR_BLOCKED error code is no longer used.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_nomem"></a>
+<h3>(3082) SQLITE_IOERR_NOMEM</h3>
+
+  The SQLITE_IOERR_NOMEM error code is sometimes returned by the <a href="vfs.html">VFS</a>
+  layer to indicate that an operation could not be completed due to the
+  inability to allocate sufficient memory.  This error code is normally
+  converted into <a href="rescode.html#nomem">SQLITE_NOMEM</a> by the higher layers of SQLite before
+  being returned to the application.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_access"></a>
+<h3>(3338) SQLITE_IOERR_ACCESS</h3>
+
+  The SQLITE_IOERR_ACCESS error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xAccess method on the <a href="c3ref/vfs.html">sqlite3_vfs</a> object.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_checkreservedlock"></a>
+<h3>(3594) SQLITE_IOERR_CHECKRESERVEDLOCK</h3>
+
+  The SQLITE_IOERR_CHECKRESERVEDLOCK error code is
+  an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xCheckReservedLock method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_lock"></a>
+<h3>(3850) SQLITE_IOERR_LOCK</h3>
+
+  The SQLITE_IOERR_LOCK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error in the 
+  advisory file locking logic.
+  Usually an SQLITE_IOERR_LOCK error indicates a problem obtaining
+  a <a href="lockingv3.html#pending_lock">PENDING lock</a>.  However it can also indicate miscellaneous
+  locking errors on some of the specialized <a href="vfs.html">VFSes</a> used on Macs.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_close"></a>
+<h3>(4106) SQLITE_IOERR_CLOSE</h3>
+
+  The SQLITE_IOERR_ACCESS error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xClose method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_dir_close"></a>
+<h3>(4362) SQLITE_IOERR_DIR_CLOSE</h3>
+
+  The SQLITE_IOERR_DIR_CLOSE error code is no longer used.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_shmopen"></a>
+<h3>(4618) SQLITE_IOERR_SHMOPEN</h3>
+
+  The SQLITE_IOERR_SHMOPEN error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xShmMap method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object
+  while trying to open a new shared memory segment.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_shmsize"></a>
+<h3>(4874) SQLITE_IOERR_SHMSIZE</h3>
+
+  The SQLITE_IOERR_SHMSIZE error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xShmMap method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object
+  while trying to resize an existing shared memory segment.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_shmlock"></a>
+<h3>(5130) SQLITE_IOERR_SHMLOCK</h3>
+
+  The SQLITE_IOERR_SHMLOCK error code is no longer used.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_shmmap"></a>
+<h3>(5386) SQLITE_IOERR_SHMMAP</h3>
+
+  The SQLITE_IOERR_SHMMAP error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xShmMap method on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object
+  while trying to map a shared memory segment into the process address space.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_seek"></a>
+<h3>(5642) SQLITE_IOERR_SEEK</h3>
+
+  The SQLITE_IOERR_SEEK error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xRead or xWrite methods on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object
+  while trying to seek a file descriptor to the beginning point of the
+  file where the read or write is to occur.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_delete_noent"></a>
+<h3>(5898) SQLITE_IOERR_DELETE_NOENT</h3>
+
+  The SQLITE_IOERR_DELETE_NOENT error code
+  is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating that the
+  xDelete method on the <a href="c3ref/vfs.html">sqlite3_vfs</a> object failed because the
+  file being deleted does not exist.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_mmap"></a>
+<h3>(6154) SQLITE_IOERR_MMAP</h3>
+
+  The SQLITE_IOERR_MMAP error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating an I/O error
+  within the xFetch or xUnfetch methods on the <a href="c3ref/io_methods.html">sqlite3_io_methods</a> object
+  while trying to map or unmap part of the database file into the
+  process address space.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_gettemppath"></a>
+<h3>(6410) SQLITE_IOERR_GETTEMPPATH</h3>
+
+  The SQLITE_IOERR_GETTEMPPATH error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> indicating that the <a href="vfs.html">VFS</a> is unable to determine
+  a suitable directory in which to place temporary files.
+
+
+<!--------------------------------------------------------------->
+<a name="ioerr_convpath"></a>
+<h3>(6666) SQLITE_IOERR_CONVPATH</h3>
+
+  The SQLITE_IOERR_CONVPATH error code is an <a href="rescode.html#pve">extended error code</a>
+  for <a href="rescode.html#ioerr">SQLITE_IOERR</a> used only by Cygwin <a href="vfs.html">VFS</a> and indicating that
+  the cygwin_conv_path() system call failed.
+  See also: <a href="rescode.html#cantopen_convpath">SQLITE_CANTOPEN_CONVPATH</a>
+
+
+
+

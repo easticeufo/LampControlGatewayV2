@@ -1,0 +1,55 @@
+/*
+    libappweb.me -- MakeMe File for the Appweb library
+ */
+
+Me.load({
+
+    targets: {
+        libappweb: {
+            type: 'lib',
+            headers: [ '*.h' ],
+            sources: [ '*.c' ],
+            exclude: /romFiles|slink/,
+            depends: [ 'libhttp', 'libmpr' ],
+        },
+
+        'genslink': {
+            action: "run('esp --static --genlink slink.c compile')",
+            generate: "esp --static --genlink slink.c compile",
+        },
+
+        'slink.c': {
+            path: 'slink.c',
+            precious: true,
+            build: "
+                if (!Path('slink.c').exists) {
+                    trace('Generate', 'slink.c')
+                    cp('slink.empty', 'slink.c')
+                }
+            ",
+            'generate-nmake': 'if not exist slink.c copy slink.empty slink.c',
+            'generate-sh': '[ ! -f slink.c ] && cp slink.empty slink.c ; true',
+        },
+
+        /*
+            Static library for esp applications. Always built but only contains code if static linking.
+         */
+        libslink: {
+            type: 'lib',
+            depends: [ 'slink.c' ],
+            sources: [ 'slink.c' ],
+            postblend: function (target) {
+                if (Path('slink.c').exists) {
+                    /* Dynamically compute the required sources for static linking */
+                    let sources = me.targets.libslink.sources
+                    for each (file in Path('slink.c').readString().match(/SOURCE [^ ]*/g)) {
+                        sources.push(TARGET.home.join(file.replace(/SOURCE /mg, '')))
+                    }
+                }
+                if (target.static) {
+                    target.depends += ['esp', 'libmod_esp']
+                }
+            },
+        },
+	},
+})

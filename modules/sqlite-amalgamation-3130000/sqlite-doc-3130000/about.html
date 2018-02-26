@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>About SQLite</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+<h1 align=center>About SQLite</h1>
+
+<table align="right" border="1" cellpadding="10" hspace="20" cellspacing="0">
+<tr><td>
+<b>See Also...</b>
+<p><ul>
+<li> <a href="index.html">Home</a> </li>
+<li> <a href="features.html">Features</a> </li>
+<li> <a href="whentouse.html">When to use SQLite</a> </li>
+<li> <a href="faq.html">Frequently Asked Questions</a> </li>
+<li> <a href="famous.html">Well-known Users</a> </li>
+<li> <a href="books.html">Books About SQLite</a> </li>
+<li> <a href="quickstart.html">Getting Started</a> </li>
+<li> <a href="lang.html">SQL Syntax</a>
+<ul>
+<li> <a href="pragma.html#toc">Pragmas</a>
+<li> <a href="lang_corefunc.html">SQL functions</a>
+<li> <a href="lang_datefunc.html">Date &amp; time functions</a>
+<li> <a href="lang_aggfunc.html">Aggregate functions</a>
+</ul>
+</li>
+<li> <a href="c3ref/intro.html">C/C++ Interface Spec</a>
+<ul>
+<li> <a href="cintro.html">Introduction</a>
+<li> <a href="c3ref/funclist.html">List of C-language APIs</a>
+</ul>
+</li>
+<li> <a href="tclsqlite.html">The TCL Interface Spec</a>
+<li> <a href="http://www.sqlite.org/src/timeline">Development Timeline</a> </li>
+<li> <a href="http://www.sqlite.org/src/wiki?name=Bug+Reports">Report a Bug</a> </li>
+<li> <a href="news.html">News</a> </li>
+<li> <a href="sitemap.html">Sitemap</a> </li>
+</ul></p>
+</table>
+
+<p>SQLite is an in-process library that implements a
+<a href="selfcontained.html">self-contained</a>, 
+<a href="serverless.html">serverless</a>,
+<a href="zeroconf.html">zero-configuration</a>,
+<a href="transactional.html">transactional</a>
+SQL database engine.
+The code for SQLite is in the
+<a href="copyright.html">public domain</a> and is thus free for
+use for any purpose, commercial or private.
+SQLite is the <a href="mostdeployed.html">most widely deployed</a> database in the world
+with more applications than we can
+count, including several <a href="famous.html">high-profile projects.</a></p>
+
+<p>SQLite is an embedded SQL database engine.
+Unlike most other SQL databases, SQLite does not have a separate
+server process.  SQLite reads and writes directly to ordinary disk
+files.  A complete SQL database with multiple tables, indices,
+triggers, and views, is contained in a single disk file.
+The database <a href="fileformat2.html">file format</a> is cross-platform - you can freely copy a database
+between 32-bit and 64-bit systems or between 
+<a href="http://en.wikipedia.org/wiki/Endianness">big-endian</a> and
+<a href="http://en.wikipedia.org/wiki/Endianness">little-endian</a>
+architectures.  These features make SQLite a popular choice as
+an <a href="appfileformat.html">Application File Format</a>.
+Think of SQLite not as a replacement for 
+<a href="http://www.oracle.com/database/index.html">Oracle</a> but
+as a replacement for <a href="http://man.he.net/man3/fopen">fopen()</a></p>
+
+<p>SQLite is a compact library.
+With all features enabled, the <a href="footprint.html">library size</a> can be less than 500KiB,
+depending on the target platform and compiler optimization settings.
+(64-bit code is larger.  And some compiler optimizations
+such as aggressive function inlining and loop unrolling can cause the
+object code to be much larger.)  If optional features are omitted, the
+size of the SQLite library can be reduced below 300KiB.  SQLite can also
+be made to run in minimal stack space (4KiB) and
+very little heap (100KiB), making SQLite a popular database engine 
+choice on memory constrained gadgets such as cellphones, PDAs, and MP3 players.
+There is a tradeoff between memory usage and speed.  
+SQLite generally runs faster the more memory
+you give it.  Nevertheless, performance is usually quite good even
+in low-memory environments.</p>
+
+<p>SQLite is 
+<a href="testing.html">very carefully tested</a> prior to every
+release and has a reputation for being very reliable.
+Most of the SQLite source code is devoted purely to testing and
+verification.  An automated test suite runs millions and millions of
+test cases involving hundreds of millions of individual SQL statements
+and achieves <a href="testing.html#coverage">100% branch test coverage</a>.  
+SQLite responds gracefully to memory
+allocation failures and disk I/O errors.  Transactions are
+<a href="http://en.wikipedia.org/wiki/ACID">ACID</a>
+even if interrupted by system crashes or power failures.  
+All of this is verified by
+the automated tests using special test harnesses which simulate 
+system failures.
+Of course, even with all this testing, there are still bugs.
+But unlike some similar projects (especially commercial competitors)
+SQLite is open and honest about all bugs and provides
+<a href="http://www.sqlite.org/src/rptview?rn=2">bugs lists</a> and
+minute-by-minute <a href="http://www.sqlite.org/src/timeline">
+chronologies</a> of bug reports and code changes.</p>
+
+<p>The SQLite code base is supported by an
+<a href="crew.html">international team</a> of developers who work on
+SQLite full-time.
+The developers continue to expand the capabilities of SQLite
+and enhance its reliability and performance while maintaining
+backwards compatibility with the 
+<a href="c3ref/intro.html">published interface spec</a>,
+<a href="lang.html">SQL syntax</a>, and database <a href="fileformat2.html">file format</a>.
+The source code is absolutely free to anybody who wants it,
+but <a href="support.html#prosupport">professional support</a> is also available.</p>
+
+<p>We the developers hope that you find SQLite useful and we
+charge you to use it well: to make good and beautiful products that
+are fast, reliable, and simple to use.  Seek forgiveness for yourself
+as you forgive others.  And just as you have received SQLite for free,
+so also freely give, paying the debt forward.</p>
+

@@ -1,0 +1,6 @@
+<!-- Nominate the desired layout page. MVC applications use default.esp by default -->
+
+<%@ layout "layout.esp" %>
+
+<!-- Specify any ESP code here -->
+<% render("Hello World"); %>

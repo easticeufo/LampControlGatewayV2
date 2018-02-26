@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.8.5 On 2014-06-04</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.8.5 On 2014-06-04</h2><p><ul>
+<li>Added support for <a href="../queryplanner.html#partialsort">partial sorting by index</a>.
+<li>Enhance the query planner so that it always prefers an index that uses a superset of
+    WHERE clause terms relative to some other index.
+<li>Improvements to the <a href="../fts3.html#*fts4automergecmd">automerge command</a> of <a href="../fts3.html#fts4">FTS4</a> to better control the index size
+    for a full-text index that is subject to a large number of updates.
+<li>Added the <a href="../rtree.html#xquery">sqlite3_rtree_query_callback()</a> interface to <a href="../rtree.html">R-Tree extension</a>
+<li>Added new <a href="../uri.html#coreqp">URI query parameters</a> "nolock" and "immutable".
+<li>Use less memory by not remembering CHECK constraints on read-only
+    database connections.
+<li>Enable the <a href="../queryplanner.html#or_in_where">OR optimization</a> for <a href="../withoutrowid.html">WITHOUT ROWID</a> tables.
+<li>Render expressions of the form "x IN (?)" (with a single value in
+    the list on the right-hand side of the IN operator) as if they where "x==?",
+    Similarly optimize "x NOT IN (?)"
+<li>Add the ".system" and ".once" commands to the <a href="../cli.html">command-line shell</a>.
+<li>Added the <a href="../c3ref/c_iocap_atomic.html">SQLITE_IOCAP_IMMUTABLE</a> bit to the set of bits that can be returned by
+    the xDeviceCharacteristics method of a <a href="../vfs.html">VFS</a>.
+<li>Added the <a href="../c3ref/c_testctrl_always.html">SQLITE_TESTCTRL_BYTEORDER</a> test control.
+<p><b>Bug Fixes:</b>
+<li>OFFSET clause ignored on queries without a FROM clause.
+    Ticket <a href="http://www.sqlite.org/src/info/07d6a0453d">07d6a0453d</a>
+<li>Assertion fault on queries involving expressions of the form
+    "x IN (?)".  Ticket <a href="http://www.sqlite.org/src/info/e39d032577">e39d032577</a>.
+<li>Incorrect column datatype reported.
+    Ticket <a href="http://www.sqlite.org/src/info/a8a0d2996a">a8a0d2996a</a>
+<li>Duplicate row returned on a query against a table with more than
+    16 indices, each on a separate column, and all used via OR-connected constraints.
+    Ticket <a href="http://www.sqlite.org/src/info/10fb063b11">10fb063b11</a>
+<li>Partial index causes assertion fault on UPDATE OR REPLACE.
+    Ticket <a href="http://www.sqlite.org/src/info/2ea3e9fe63">2ea3e9fe63</a>
+<li>Crash when calling undocumented SQL function sqlite_rename_parent()
+    with NULL parameters.
+    Ticket <a href="http://www.sqlite.org/src/info/264b970c4379fd">264b970c43</a>
+<li>ORDER BY ignored if the query has an identical GROUP BY.
+    Ticket <a href="http://www.sqlite.org/src/info/b75a9ca6b0499">b75a9ca6b0</a>
+<li>The group_concat(x,'') SQL function returns NULL instead of an empty string
+    when all inputs are empty strings.  
+    Ticket <a href="http://www.sqlite.org/src/info/55746f9e65f85">55746f9e65</a>
+<li>Fix a bug in the VDBE code generator that caused crashes when
+    doing an INSERT INTO ... SELECT statement where the number of columns
+    being inserted is larger than the number of columns in the destination
+    table.
+    Ticket <a href="http://www.sqlite.org/src/info/e9654505cfda9">e9654505cfd</a>
+<li>Fix a problem in CSV import in the <a href="../cli.html">command-line shell</a>
+    where if the leftmost field of the first row
+    in the CSV file was both zero bytes in size and unquoted no data would
+    be imported.
+<li>Fix a problem in FTS4 where the left-most column that contained
+    the <a href="../fts3.html#fts4notindexed">notindexed column</a> name as a prefix
+    was not indexed rather than the column whose name matched exactly.
+<li>Fix the <a href="../c3ref/db_readonly.html">sqlite3_db_readonly()</a> interface so that it returns true if
+    the database is read-only due to the file format write version number
+    being too large.
+
+<li>SQLITE_SOURCE_ID: "2014-06-04 14:06:34 b1ed4f2a34ba66c29b130f8d13e9092758019212"
+<li>SHA1 for sqlite3.c: 7bc194957238c61b1a47f301270286be5bc5208c
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

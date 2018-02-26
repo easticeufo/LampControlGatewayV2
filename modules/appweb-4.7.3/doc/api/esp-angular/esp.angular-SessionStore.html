@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Class SessionStore</title>
+
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+</head>
+
+<body>
+<div class='body'>
+
+<div class="content">
+
+<a name='top'></a>
+<h1 class='className'>SessionStore</h1>
+<div class='classBlock'>
+<table class='classHead' summary='SessionStore'>
+   <tr><td><strong>Module</strong></td><td>esp.angular</td></tr>
+   <tr><td><strong>Definition</strong></td><td> class SessionStore</td></tr>
+   <tr><td><strong>Inheritance</strong></td><td>SessionStore <img src='images/inherit.gif' alt='inherit'/> <a href='Object.html'>Object</a><tr><td><strong>Stability</strong></td><td>Prototype.</td></tr>
+       </td></tr>
+</table>
+
+<p class='classBrief'>The SessionStore service object that provides access to client session storage using the
+window.sessionStorage API.</p>
+
+<p class='classDescription'>When the browser window is closed, the values stored are removed.<br/><br/>Values are converted to JSON strings before storing and are converted back from JSON to objects when retrieved.</p>
+
+</div>
+
+
+<hr />
+<a name='Properties'></a>
+<h2 class='classSection'>Properties</h2>
+   <p>(No own properties defined)</p><p class='inheritedLink'><a href='Object.html#Properties'><i>Inherited Properties</i></a></p>
+
+<hr />
+<a name='ClassMethods'></a>
+<h2 class='classSection'>SessionStore Class Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#get'><b>get</b></a>(key: <a href='String.html'>String</a>): <a href='Object.html'>Object</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Get an item from session storage using the given key.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#put'><b>put</b></a>(key: <a href='String.html'>String</a>, value: <a href='Object.html'>Object</a>): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Put an item to the session storage using the given key.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#remove'><b>remove</b></a>(key: <a href='String.html'>String</a>): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Remove an item from the session storage.</td></tr>
+</table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<a name='InstanceMethods'></a>
+<h2 class='classSection'>SessionStore Instance Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <p>(No own instance methods defined)</p></table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<h2>Method Detail</h2>
+<a name='get'></a>
+<div class='api'>
+<div class='apiSig'>static     get(key: <a href='String.html'>String</a>): <a href='Object.html'>Object</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Get an item from session storage using the given key. </dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>key: <a href='String.html'>String</a> </td><td>Unique item key identifier used when the item was put to the session storage.</td></tr></table></dd>
+</dl><dl><dt>Returns</dt>
+<dd>The previously stored object.</dd></dl>
+</div>
+</div>
+<hr />
+<a name='put'></a>
+<div class='api'>
+<div class='apiSig'>static     put(key: <a href='String.html'>String</a>, value: <a href='Object.html'>Object</a>): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Put an item to the session storage using the given key. </dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>key: <a href='String.html'>String</a> </td><td>Unique item key identifier to associate with the item value.</td></tr><tr class='param'><td class='param'>value: <a href='Object.html'>Object</a> </td><td>Any Javascript value. These values are converted to strings via JSON before storing.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<a name='remove'></a>
+<div class='api'>
+<div class='apiSig'>static     remove(key: <a href='String.html'>String</a>): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Remove an item from the session storage. </dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>key: <a href='String.html'>String</a> </td><td>Unique item key identifier used when the item was put to the session storage.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<div class="terms">
+   <p class="terms">
+       <a href="http://embedthis.com/">       Embedthis Software LLC, 2003-2014. All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+   </p>
+</div></div>
+</div>
+</body>
+</html>

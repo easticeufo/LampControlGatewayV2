@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Initialize The SQLite Library</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Initialize The SQLite Library</h2><blockquote><pre>int sqlite3_initialize(void);
+int sqlite3_shutdown(void);
+int sqlite3_os_init(void);
+int sqlite3_os_end(void);
+</pre></blockquote><p>
+The sqlite3_initialize() routine initializes the
+SQLite library.  The sqlite3_shutdown() routine
+deallocates any resources that were allocated by sqlite3_initialize().
+These routines are designed to aid in process initialization and
+shutdown on embedded systems.  Workstation applications using
+SQLite normally do not need to invoke either of these routines.</p>
+
+<p>A call to sqlite3_initialize() is an "effective" call if it is
+the first time sqlite3_initialize() is invoked during the lifetime of
+the process, or if it is the first time sqlite3_initialize() is invoked
+following a call to sqlite3_shutdown().  Only an effective call
+of sqlite3_initialize() does any initialization.  All other calls
+are harmless no-ops.</p>
+
+<p>A call to sqlite3_shutdown() is an "effective" call if it is the first
+call to sqlite3_shutdown() since the last sqlite3_initialize().  Only
+an effective call to sqlite3_shutdown() does any deinitialization.
+All other valid calls to sqlite3_shutdown() are harmless no-ops.</p>
+
+<p>The sqlite3_initialize() interface is threadsafe, but sqlite3_shutdown()
+is not.  The sqlite3_shutdown() interface must only be called from a
+single thread.  All open <a href="../c3ref/sqlite3.html">database connections</a> must be closed and all
+other SQLite resources must be deallocated prior to invoking
+sqlite3_shutdown().</p>
+
+<p>Among other things, sqlite3_initialize() will invoke
+sqlite3_os_init().  Similarly, sqlite3_shutdown()
+will invoke sqlite3_os_end().</p>
+
+<p>The sqlite3_initialize() routine returns <a href="../rescode.html#ok">SQLITE_OK</a> on success.
+If for some reason, sqlite3_initialize() is unable to initialize
+the library (perhaps it is unable to allocate a needed resource such
+as a mutex) it returns an <a href="../rescode.html">error code</a> other than <a href="../rescode.html#ok">SQLITE_OK</a>.</p>
+
+<p>The sqlite3_initialize() routine is called internally by many other
+SQLite interfaces so that an application usually does not need to
+invoke sqlite3_initialize() directly.  For example, <a href="../c3ref/open.html">sqlite3_open()</a>
+calls sqlite3_initialize() so the SQLite library will be automatically
+initialized when <a href="../c3ref/open.html">sqlite3_open()</a> is called if it has not be initialized
+already.  However, if SQLite is compiled with the <a href="../compile.html#omit_autoinit">SQLITE_OMIT_AUTOINIT</a>
+compile-time option, then the automatic calls to sqlite3_initialize()
+are omitted and the application must call sqlite3_initialize() directly
+prior to using any other SQLite interface.  For maximum portability,
+it is recommended that applications always invoke sqlite3_initialize()
+directly prior to using any other SQLite interface.  Future releases
+of SQLite may require this.  In other words, the behavior exhibited
+when SQLite is compiled with <a href="../compile.html#omit_autoinit">SQLITE_OMIT_AUTOINIT</a> might become the
+default behavior in some future release of SQLite.</p>
+
+<p>The sqlite3_os_init() routine does operating-system specific
+initialization of the SQLite library.  The sqlite3_os_end()
+routine undoes the effect of sqlite3_os_init().  Typical tasks
+performed by these routines include allocation or deallocation
+of static resources, initialization of global variables,
+setting up a default <a href="../c3ref/vfs.html">sqlite3_vfs</a> module, or setting up
+a default configuration using <a href="../c3ref/config.html">sqlite3_config()</a>.</p>
+
+<p>The application should never invoke either sqlite3_os_init()
+or sqlite3_os_end() directly.  The application should only invoke
+sqlite3_initialize() and sqlite3_shutdown().  The sqlite3_os_init()
+interface is called automatically by sqlite3_initialize() and
+sqlite3_os_end() is called by sqlite3_shutdown().  Appropriate
+implementations for sqlite3_os_init() and sqlite3_os_end()
+are built into SQLite when it is compiled for Unix, Windows, or OS/2.
+When <a href="../custombuild.html">built for other platforms</a>
+(using the <a href="../compile.html#os_other">SQLITE_OS_OTHER=1</a> compile-time
+option) the application must supply a suitable implementation for
+sqlite3_os_init() and sqlite3_os_end().  An application-supplied
+implementation of sqlite3_os_init() or sqlite3_os_end()
+must return <a href="../rescode.html#ok">SQLITE_OK</a> on success and some other <a href="../rescode.html">error code</a> upon
+failure.
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

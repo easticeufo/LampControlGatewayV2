@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Run-Time Loadable Extensions</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h1 align="center">Run-Time Loadable Extensions</h1>
+
+<p>SQLite has the ability to load extensions (including new
+<a href="c3ref/create_function.html">application-defined SQL functions</a>,
+<a href="datatype3.html#collation">collating sequences</a>, <a href="vtab.html">virtual tables</a>, and <a href="vfs.html">VFSes</a>) at run-time.
+This feature allows the code for extensions to be developed and
+tested separately from the application and then loaded
+on an as-needed basis.</p>
+
+<p>Extensions can also be statically linked with the application.
+The code template shown below will work just as well as a statically
+linked extension as it does as a run-time loadable extension except that
+you should give the entry point function ("sqlite3_extension_init")
+a different name to avoid name collisions if your application contains
+two or more extensions.</p>
+
+<h2>Loading An Extension</h2>
+
+<p>An SQLite extension is a shared library or DLL.  To load it, you
+need to supply SQLite with the name of the file containing the
+shared library or DLL and an entry point to initialize the extension.
+In C code, this information is supplied using the
+<a href="c3ref/load_extension.html">sqlite3_load_extension()</a> API.  See the documentation on that
+routine for additional information.</p>
+
+<p>Note that different operating systems use different filename
+suffixes for their shared libraries.  Windows use ".dll", Mac uses
+".dylib", and most unixes other than mac use ".so".  If you want to
+make your code portable, you can omit the suffix from the shared
+library filename and the appropriate suffix will be added automatically
+by the <a href="c3ref/load_extension.html">sqlite3_load_extension()</a> interface.</p>
+
+<p>There is also an SQL function that can be used to load extensions:
+<a href="lang_corefunc.html#load_extension">load_extension(X,Y)</a>.  It works just like the <a href="c3ref/load_extension.html">sqlite3_load_extension()</a>
+C interface.</p>
+
+<p>Both methods for loading an extension allow you to specify
+the name of an entry point for the extension.  
+You can leave this argument blank - passing in
+a NULL pointer for the <a href="c3ref/load_extension.html">sqlite3_load_extension()</a> C-language interface
+or omitting the second argument for the <a href="lang_corefunc.html#load_extension">load_extension()</a> SQL interface -
+and the extension loader logic will attempt to figure out the entry point
+on its own.  It will first try the generic extension name
+"sqlite3_extension_init".  If that does not work, it constructs a
+entry point using the template "sqlite3_X_init" where the X is replaced
+by the lowercase equivalent of every ASCII character in the filename
+after the last "/" and before the first following "." omitting the
+first three characters if they happen to be "lib".  So, for example,
+if the filename is "/usr/lib/libmathfunc-4.8.so" the entry point name
+would be "sqlite3_mathfunc_init".  Or if the filename is 
+"./SpellFixExt.dll" then the entry point would be called
+"sqlite3_spellfixext_init".
+
+<p>For security reasons, extension loading is turned off by default.
+In order to use either the C-language or SQL extension loading functions,
+one must first enable extension loading using the
+<a href="c3ref/enable_load_extension.html">sqlite3_enable_load_extension()</a> C-language API in your application.</p>
+
+<p>From the <a href="cli.html">command-line shell</a>, extensions can be loaded using the
+".load" dot-command.  For example:
+
+<blockquote><pre>
+.load ./YourCode
+</pre></blockquote>
+
+<p>Note that the command-line shell program has already enabled
+extension loading for you (by calling the <a href="c3ref/enable_load_extension.html">sqlite3_enable_load_extension()</a>
+interface as part of its setup) so the command above works without
+any special switches, setup, or other complications.</p>
+
+<p>The ".load" command with one argument invokes sqlite3_load_extension()
+with the zProc parameter set to NULL, causing SQLite to first look for
+an entry point named "sqlite3_extension_init" and then "sqlite3_X_init"
+where "X" is derived from the filename.  If your extension has an entry
+point with a different name, simply supply that name as the second
+argument.  For example:</p>
+
+<blockquote><pre>
+.load ./YourCode nonstandard_entry_point
+</pre></blockquote>
+
+<a name="build"></a>
+
+<h2>Compiling A Loadable Extension</h2>
+
+<p>Loadable extensions are C-code.  To compile them on
+most unix-like operating
+systems, the usual command is something like this:</p>
+
+<blockquote><pre>
+gcc -g -fPIC -shared YourCode.c -o YourCode.so
+</pre></blockquote>
+
+<p>Macs are unix-like, but they do not follow the usual shared library
+conventions.  To compile a shared library on a Mac, use a command like
+this:</p>
+
+<blockquote><pre>
+gcc -g -fPIC -dynamiclib YourCode.c -o YourCode.dylib
+</pre></blockquote>
+
+<p>If when you try to load your library you get back an error message
+that says "mach-o, but wrong architecture" then you might need to add
+command-line options "-arch i386" or "arch x86_64" to gcc, depending
+on how your application is built.</p>
+
+<p>To compile on Windows using MSVC, a command similar to the following
+will usually work:</p>
+
+<blockquote><pre>
+cl YourCode.c -link -dll -out:YourCode.dll
+</pre></blockquote>
+
+<p>To compile for Windows using MinGW, the command line is just like it
+is for unix except that the output file suffix is changed to ".dll" and
+the -fPIC argument is omitted:</p>
+
+<blockquote><pre>
+gcc -g -shared YourCode.c -o YourCode.dll
+</pre></blockquote>
+
+<a name="write"></a>
+
+<h2>Programming Loadable Extensions</h2>
+
+<p>A template loadable extension contains the following three elements:</p>
+
+<ol>
+<li><p>
+Use "<tt>#include &lt;sqlite3ext.h&gt;</tt>" at the top of your source
+code files instead of "<tt>#include &lt;sqlite3.h&gt;</tt>".
+</p>
+
+<li><p>
+Put the macro "<tt>SQLITE_EXTENSION_INIT1</tt>" on a line by itself 
+right after the "<tt>#include &lt;sqlite3ext.h&gt;</tt>" line.
+</p>
+
+<li><p>
+Add an extension loading entry point routine that looks like 
+something the following:
+<blockquote><pre>
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+int sqlite3_extension_init( /* <== Change this name, maybe */
+  sqlite3 *db, 
+  char **pzErrMsg, 
+  const sqlite3_api_routines *pApi
+){
+  int rc = SQLITE_OK;
+  SQLITE_EXTENSION_INIT2(pApi);
+  /* insert code to initialize your extension here */
+  return rc;
+}
+</pre></blockquote>
+<p>You will do well to customize the name of your entry point to
+correspond to the name of the shared library you will be generating,
+rather than using the generic "sqlite3_extension_init" name.  Giving
+your extension a custom entry point name will enable you to statically
+link two or more extensions into the same program without a linker
+conflict, if you later decide to use static linking rather than run-time
+linking.
+If your shared library ends up being named "YourCode.so" or
+"YourCode.dll" or "YourCode.dylib" as shown in the compiler examples
+above, then the correct entry point name would be
+"sqlite3_yourcode_init".
+</ol>
+
+<p>Here is a complete template extension that you can copy/paste 
+to get started:</p>
+<blockquote>
+<pre style="background-color:#f3f3f3;border:1px #000 dashed;padding:0.5em">
+/* Add your header comment here */
+#include &lt;sqlite3ext.h&gt; /* Do not use &lt;sqlite3.h&gt;! */
+SQLITE_EXTENSION_INIT1
+
+/* Insert your extension code here */
+
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+/* TODO: Change the entry point name so that "extension" is replaced by
+** text derived from the shared library filename as follows:  Copy every
+** ASCII alphabetic character from the filename after the last "/" through
+** the next following ".", converting each character to lowercase, and
+** discarding the first three characters if they are "lib".
+*/
+int sqlite3_extension_init(
+  sqlite3 *db, 
+  char **pzErrMsg, 
+  const sqlite3_api_routines *pApi
+){
+  int rc = SQLITE_OK;
+  SQLITE_EXTENSION_INIT2(pApi);
+  /* Insert here calls to
+  **     sqlite3_create_function_v2(),
+  **     sqlite3_create_collation_v2(),
+  **     sqlite3_create_module_v2(), and/or
+  **     sqlite3_vfs_register()
+  ** to register the new features that your extension adds.
+  */
+  return rc;
+}
+</pre></blockquote>
+
+<p>Many examples of complete and working loadable extensions can be seen in the
+SQLite source tree in the
+<a href="http://www.sqlite.org/src/tree?name=ext/misc&ci=trunk">ext/misc</a>
+subdirectory.</p>
+
+<h2>Statically Linking A Run-Time Loadable Extension</h2>
+
+<p>The exact same source code can be used for both a run-time loadable
+shared library or DLL and as a module that is statically linked with your
+application.  This provides flexibility and allows you to reuse the same
+code in different ways.</p>
+
+<p>To statically link your extension, simply add the -DSQLITE_CORE
+compile-time option.  The SQLITE_CORE macro causes the SQLITE_EXTENSION_INIT1
+and SQLITE_EXTENSION_INIT2 macros to become no-ops.  Then modify your
+application to invoke the entry point directly, passing in a NULL pointer
+as the third "pApi" parameter.</p>
+
+<p>It is particularly important to use an entry point name that is
+based on the extension filename, rather than the generic
+"sqlite3_extension_init" entry point name, if you will be statically
+linking two or more extensions.  If you use the generic name, there
+will be multiple definitions of the same symbol and the link will fail.</p>
+
+<p>If you will be opening multiple database connections in your application,
+rather than invoking the extension entry points for each database
+connection separately, you might want to consider using the
+<a href="c3ref/auto_extension.html">sqlite3_auto_extension()</a> interface to register your extensions and
+to cause them to be automatically started as each database connection
+is opened.  You only have to register each extension once, and you can
+do so near the beginning of your main() routine.  Using the
+<a href="c3ref/auto_extension.html">sqlite3_auto_extension()</a> interface to register your extensions makes
+your extensions work as if they were built into the core SQLite - they
+are automatically there whenever you open a new database connection
+without needing to be initialized.  Just be sure to complete any
+configuration you need to accomplish using <a href="c3ref/config.html">sqlite3_config()</a> before
+registering your extensions, since the <a href="c3ref/auto_extension.html">sqlite3_auto_extension()</a>
+interface implicitly calls <a href="c3ref/initialize.html">sqlite3_initialize()</a>.</p>
+
+<h2>Implementation Details</h2>
+
+<p>SQLite implements run-time extension loading using the
+xDlOpen(), xDlError(), xDlSym(), and xDlClose() methods of the
+<a href="c3ref/vfs.html">sqlite3_vfs</a> object.  These methods are implemented using
+the dlopen() library on unix (which explains why SQLite commonly
+need to be linked against the "-ldl" library on unix systems)
+and using LoadLibrary() API on Windows.  In a custom <a href="vfs.html">VFS</a> for
+unusual systems, these methods can all be omitted, in which case
+the run-time extension loading mechanism will not work (though
+you will still be able to statically link the extension code, assuming
+the entry pointers are uniquely named).
+SQLite can be compiled with
+<a href="compile.html#omit_load_extension">SQLITE_OMIT_LOAD_EXTENSION</a> to omit the extension loading code
+from the build.
+

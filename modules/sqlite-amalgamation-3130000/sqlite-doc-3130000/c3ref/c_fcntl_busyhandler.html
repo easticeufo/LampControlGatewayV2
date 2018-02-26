@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Standard File Control Opcodes</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Standard File Control Opcodes</h2><blockquote><pre>#define SQLITE_FCNTL_LOCKSTATE               1
+#define SQLITE_FCNTL_GET_LOCKPROXYFILE       2
+#define SQLITE_FCNTL_SET_LOCKPROXYFILE       3
+#define SQLITE_FCNTL_LAST_ERRNO              4
+#define SQLITE_FCNTL_SIZE_HINT               5
+#define SQLITE_FCNTL_CHUNK_SIZE              6
+#define SQLITE_FCNTL_FILE_POINTER            7
+#define SQLITE_FCNTL_SYNC_OMITTED            8
+#define SQLITE_FCNTL_WIN32_AV_RETRY          9
+#define SQLITE_FCNTL_PERSIST_WAL            10
+#define SQLITE_FCNTL_OVERWRITE              11
+#define SQLITE_FCNTL_VFSNAME                12
+#define SQLITE_FCNTL_POWERSAFE_OVERWRITE    13
+#define SQLITE_FCNTL_PRAGMA                 14
+#define SQLITE_FCNTL_BUSYHANDLER            15
+#define SQLITE_FCNTL_TEMPFILENAME           16
+#define SQLITE_FCNTL_MMAP_SIZE              18
+#define SQLITE_FCNTL_TRACE                  19
+#define SQLITE_FCNTL_HAS_MOVED              20
+#define SQLITE_FCNTL_SYNC                   21
+#define SQLITE_FCNTL_COMMIT_PHASETWO        22
+#define SQLITE_FCNTL_WIN32_SET_HANDLE       23
+#define SQLITE_FCNTL_WAL_BLOCK              24
+#define SQLITE_FCNTL_ZIPVFS                 25
+#define SQLITE_FCNTL_RBU                    26
+#define SQLITE_FCNTL_VFS_POINTER            27
+#define SQLITE_FCNTL_JOURNAL_POINTER        28
+</pre></blockquote><p>
+These integer constants are opcodes for the xFileControl method
+of the <a href="../c3ref/io_methods.html">sqlite3_io_methods</a> object and for the <a href="../c3ref/file_control.html">sqlite3_file_control()</a>
+interface.</p>
+
+<p><ul>
+<li><a name="sqlitefcntllockstate"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntllockstate">SQLITE_FCNTL_LOCKSTATE</a> opcode is used for debugging.  This
+opcode causes the xFileControl method to write the current state of
+the lock (one of <a href="../c3ref/c_lock_exclusive.html">SQLITE_LOCK_NONE</a>, <a href="../c3ref/c_lock_exclusive.html">SQLITE_LOCK_SHARED</a>,
+<a href="../c3ref/c_lock_exclusive.html">SQLITE_LOCK_RESERVED</a>, <a href="../c3ref/c_lock_exclusive.html">SQLITE_LOCK_PENDING</a>, or <a href="../c3ref/c_lock_exclusive.html">SQLITE_LOCK_EXCLUSIVE</a>)
+into an integer that the pArg argument points to. This capability
+is used during testing and is only available when the SQLITE_TEST
+compile-time option is used.</p>
+
+<p><li><a name="sqlitefcntlsizehint"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlsizehint">SQLITE_FCNTL_SIZE_HINT</a> opcode is used by SQLite to give the VFS
+layer a hint of how large the database file will grow to be during the
+current transaction.  This hint is not guaranteed to be accurate but it
+is often close.  The underlying VFS might choose to preallocate database
+file space based on this hint in order to help writes to the database
+file run faster.</p>
+
+<p><li><a name="sqlitefcntlchunksize"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlchunksize">SQLITE_FCNTL_CHUNK_SIZE</a> opcode is used to request that the VFS
+extends and truncates the database file in chunks of a size specified
+by the user. The fourth argument to <a href="../c3ref/file_control.html">sqlite3_file_control()</a> should
+point to an integer (type int) containing the new chunk-size to use
+for the nominated database. Allocating database file space in large
+chunks (say 1MB at a time), may reduce file-system fragmentation and
+improve performance on some systems.</p>
+
+<p><li><a name="sqlitefcntlfilepointer"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlfilepointer">SQLITE_FCNTL_FILE_POINTER</a> opcode is used to obtain a pointer
+to the <a href="../c3ref/file.html">sqlite3_file</a> object associated with a particular database
+connection.  See also <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntljournalpointer">SQLITE_FCNTL_JOURNAL_POINTER</a>.</p>
+
+<p><li><a name="sqlitefcntljournalpointer"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntljournalpointer">SQLITE_FCNTL_JOURNAL_POINTER</a> opcode is used to obtain a pointer
+to the <a href="../c3ref/file.html">sqlite3_file</a> object associated with the journal file (either
+the <a href="../lockingv3.html#rollback">rollback journal</a> or the <a href="../wal.html">write-ahead log</a>) for a particular database
+connection.  See also <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlfilepointer">SQLITE_FCNTL_FILE_POINTER</a>.</p>
+
+<p><li><a name="sqlitefcntlsyncomitted"></a>
+
+No longer in use.</p>
+
+<p><li><a name="sqlitefcntlsync"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlsync">SQLITE_FCNTL_SYNC</a> opcode is generated internally by SQLite and
+sent to the VFS immediately before the xSync method is invoked on a
+database file descriptor. Or, if the xSync method is not invoked
+because the user has configured SQLite with
+<a href="../pragma.html#pragma_synchronous">PRAGMA synchronous=OFF</a> it is invoked in place
+of the xSync method. In most cases, the pointer argument passed with
+this file-control is NULL. However, if the database file is being synced
+as part of a multi-database commit, the argument points to a nul-terminated
+string containing the transactions master-journal file name. VFSes that
+do not need this signal should silently ignore this opcode. Applications
+should not call <a href="../c3ref/file_control.html">sqlite3_file_control()</a> with this opcode as doing so may
+disrupt the operation of the specialized VFSes that do require it.</p>
+
+<p><li><a name="sqlitefcntlcommitphasetwo"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlcommitphasetwo">SQLITE_FCNTL_COMMIT_PHASETWO</a> opcode is generated internally by SQLite
+and sent to the VFS after a transaction has been committed immediately
+but before the database is unlocked. VFSes that do not need this signal
+should silently ignore this opcode. Applications should not call
+<a href="../c3ref/file_control.html">sqlite3_file_control()</a> with this opcode as doing so may disrupt the
+operation of the specialized VFSes that do require it.</p>
+
+<p><li><a name="sqlitefcntlwin32avretry"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlwin32avretry">SQLITE_FCNTL_WIN32_AV_RETRY</a> opcode is used to configure automatic
+retry counts and intervals for certain disk I/O operations for the
+windows <a href="../vfs.html">VFS</a> in order to provide robustness in the presence of
+anti-virus programs.  By default, the windows VFS will retry file read,
+file write, and file delete operations up to 10 times, with a delay
+of 25 milliseconds before the first retry and with the delay increasing
+by an additional 25 milliseconds with each subsequent retry.  This
+opcode allows these two values (10 retries and 25 milliseconds of delay)
+to be adjusted.  The values are changed for all database connections
+within the same process.  The argument is a pointer to an array of two
+integers where the first integer i the new retry count and the second
+integer is the delay.  If either integer is negative, then the setting
+is not changed but instead the prior value of that setting is written
+into the array entry, allowing the current retry settings to be
+interrogated.  The zDbName parameter is ignored.</p>
+
+<p><li><a name="sqlitefcntlpersistwal"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpersistwal">SQLITE_FCNTL_PERSIST_WAL</a> opcode is used to set or query the
+persistent <a href="../wal.html">Write Ahead Log</a> setting.  By default, the auxiliary
+write ahead log and shared memory files used for transaction control
+are automatically deleted when the latest connection to the database
+closes.  Setting persistent WAL mode causes those files to persist after
+close.  Persisting the files is useful when other processes that do not
+have write permission on the directory containing the database file want
+to read the database file, as the WAL and shared memory files must exist
+in order for the database to be readable.  The fourth parameter to
+<a href="../c3ref/file_control.html">sqlite3_file_control()</a> for this opcode should be a pointer to an integer.
+That integer is 0 to disable persistent WAL mode or 1 to enable persistent
+WAL mode.  If the integer is -1, then it is overwritten with the current
+WAL persistence setting.</p>
+
+<p><li><a name="sqlitefcntlpowersafeoverwrite"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpowersafeoverwrite">SQLITE_FCNTL_POWERSAFE_OVERWRITE</a> opcode is used to set or query the
+persistent "powersafe-overwrite" or "PSOW" setting.  The PSOW setting
+determines the <a href="../c3ref/c_iocap_atomic.html">SQLITE_IOCAP_POWERSAFE_OVERWRITE</a> bit of the
+xDeviceCharacteristics methods. The fourth parameter to
+<a href="../c3ref/file_control.html">sqlite3_file_control()</a> for this opcode should be a pointer to an integer.
+That integer is 0 to disable zero-damage mode or 1 to enable zero-damage
+mode.  If the integer is -1, then it is overwritten with the current
+zero-damage mode setting.</p>
+
+<p><li><a name="sqlitefcntloverwrite"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntloverwrite">SQLITE_FCNTL_OVERWRITE</a> opcode is invoked by SQLite after opening
+a write transaction to indicate that, unless it is rolled back for some
+reason, the entire database file will be overwritten by the current
+transaction. This is used by VACUUM operations.</p>
+
+<p><li><a name="sqlitefcntlvfsname"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlvfsname">SQLITE_FCNTL_VFSNAME</a> opcode can be used to obtain the names of
+all <a href="../vfs.html">VFSes</a> in the VFS stack.  The names are of all VFS shims and the
+final bottom-level VFS are written into memory obtained from
+<a href="../c3ref/free.html">sqlite3_malloc()</a> and the result is stored in the char* variable
+that the fourth parameter of <a href="../c3ref/file_control.html">sqlite3_file_control()</a> points to.
+The caller is responsible for freeing the memory when done.  As with
+all file-control actions, there is no guarantee that this will actually
+do anything.  Callers should initialize the char* variable to a NULL
+pointer in case this file-control is not implemented.  This file-control
+is intended for diagnostic use only.</p>
+
+<p><li><a name="sqlitefcntlvfspointer"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlvfspointer">SQLITE_FCNTL_VFS_POINTER</a> opcode finds a pointer to the top-level
+<a href="../vfs.html">VFSes</a> currently in use.  The argument X in
+sqlite3_file_control(db,SQLITE_FCNTL_VFS_POINTER,X) must be
+of type "<a href="../c3ref/vfs.html">sqlite3_vfs</a> **".  This opcodes will set *X
+to a pointer to the top-level VFS.
+When there are multiple VFS shims in the stack, this opcode finds the
+upper-most shim only.</p>
+
+<p><li><a name="sqlitefcntlpragma"></a>
+
+Whenever a <a href="../pragma.html#syntax">PRAGMA</a> statement is parsed, an <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a>
+file control is sent to the open <a href="../c3ref/file.html">sqlite3_file</a> object corresponding
+to the database file to which the pragma statement refers. The argument
+to the <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a> file control is an array of
+pointers to strings (char**) in which the second element of the array
+is the name of the pragma and the third element is the argument to the
+pragma or NULL if the pragma has no argument.  The handler for an
+<a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a> file control can optionally make the first element
+of the char** argument point to a string obtained from <a href="../c3ref/mprintf.html">sqlite3_mprintf()</a>
+or the equivalent and that string will become the result of the pragma or
+the error message if the pragma fails. If the
+<a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a> file control returns <a href="../rescode.html#notfound">SQLITE_NOTFOUND</a>, then normal
+<a href="../pragma.html#syntax">PRAGMA</a> processing continues.  If the <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a>
+file control returns <a href="../rescode.html#ok">SQLITE_OK</a>, then the parser assumes that the
+VFS has handled the PRAGMA itself and the parser generates a no-op
+prepared statement if result string is NULL, or that returns a copy
+of the result string if the string is non-NULL.
+If the <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a> file control returns
+any result code other than <a href="../rescode.html#ok">SQLITE_OK</a> or <a href="../rescode.html#notfound">SQLITE_NOTFOUND</a>, that means
+that the VFS encountered an error while handling the <a href="../pragma.html#syntax">PRAGMA</a> and the
+compilation of the PRAGMA fails with an error.  The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlpragma">SQLITE_FCNTL_PRAGMA</a>
+file control occurs at the beginning of pragma statement analysis and so
+it is able to override built-in <a href="../pragma.html#syntax">PRAGMA</a> statements.</p>
+
+<p><li><a name="sqlitefcntlbusyhandler"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlbusyhandler">SQLITE_FCNTL_BUSYHANDLER</a>
+file-control may be invoked by SQLite on the database file handle
+shortly after it is opened in order to provide a custom VFS with access
+to the connections busy-handler callback. The argument is of type (void **)
+- an array of two (void *) values. The first (void *) actually points
+to a function of type (int (*)(void *)). In order to invoke the connections
+busy-handler, this function should be invoked with the second (void *) in
+the array as the only argument. If it returns non-zero, then the operation
+should be retried. If it returns zero, the custom VFS should abandon the
+current operation.</p>
+
+<p><li><a name="sqlitefcntltempfilename"></a>
+
+Application can invoke the <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntltempfilename">SQLITE_FCNTL_TEMPFILENAME</a> file-control
+to have SQLite generate a
+temporary filename using the same algorithm that is followed to generate
+temporary filenames for TEMP tables and other internal uses.  The
+argument should be a char** which will be filled with the filename
+written into memory obtained from <a href="../c3ref/free.html">sqlite3_malloc()</a>.  The caller should
+invoke <a href="../c3ref/free.html">sqlite3_free()</a> on the result to avoid a memory leak.</p>
+
+<p><li><a name="sqlitefcntlmmapsize"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlmmapsize">SQLITE_FCNTL_MMAP_SIZE</a> file control is used to query or set the
+maximum number of bytes that will be used for memory-mapped I/O.
+The argument is a pointer to a value of type sqlite3_int64 that
+is an advisory maximum number of bytes in the file to memory map.  The
+pointer is overwritten with the old value.  The limit is not changed if
+the value originally pointed to is negative, and so the current limit
+can be queried by passing in a pointer to a negative number.  This
+file-control is used internally to implement <a href="../pragma.html#pragma_mmap_size">PRAGMA mmap_size</a>.</p>
+
+<p><li><a name="sqlitefcntltrace"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntltrace">SQLITE_FCNTL_TRACE</a> file control provides advisory information
+to the VFS about what the higher layers of the SQLite stack are doing.
+This file control is used by some VFS activity tracing <a href="../vfs.html#shim">shims</a>.
+The argument is a zero-terminated string.  Higher layers in the
+SQLite stack may generate instances of this file control if
+the <a href="../compile.html#use_fcntl_trace">SQLITE_USE_FCNTL_TRACE</a> compile-time option is enabled.</p>
+
+<p><li><a name="sqlitefcntlhasmoved"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlhasmoved">SQLITE_FCNTL_HAS_MOVED</a> file control interprets its argument as a
+pointer to an integer and it writes a boolean into that integer depending
+on whether or not the file has been renamed, moved, or deleted since it
+was first opened.</p>
+
+<p><li><a name="sqlitefcntlwin32sethandle"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlwin32sethandle">SQLITE_FCNTL_WIN32_SET_HANDLE</a> opcode is used for debugging.  This
+opcode causes the xFileControl method to swap the file handle with the one
+pointed to by the pArg argument.  This capability is used during testing
+and only needs to be supported when SQLITE_TEST is defined.</p>
+
+<p><li><a name="sqlitefcntlwalblock"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlwalblock">SQLITE_FCNTL_WAL_BLOCK</a> is a signal to the VFS layer that it might
+be advantageous to block on the next WAL lock if the lock is not immediately
+available.  The WAL subsystem issues this signal during rare
+circumstances in order to fix a problem with priority inversion.
+Applications should <em>not</em> use this file-control.</p>
+
+<p><li><a name="sqlitefcntlzipvfs"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlzipvfs">SQLITE_FCNTL_ZIPVFS</a> opcode is implemented by zipvfs only. All other
+VFS should return SQLITE_NOTFOUND for this opcode.</p>
+
+<p><li><a name="sqlitefcntlrbu"></a>
+
+The <a href="../c3ref/c_fcntl_busyhandler.html#sqlitefcntlrbu">SQLITE_FCNTL_RBU</a> opcode is implemented by the special VFS used by
+the RBU extension only.  All other VFS should return SQLITE_NOTFOUND for
+this opcode.
+</ul>
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

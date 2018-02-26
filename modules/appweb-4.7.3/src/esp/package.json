@@ -1,0 +1,75 @@
+{
+    "name": "esp",
+    "description": "Embedthis ESP, the amazingly fast C-Language web framework",
+    "title": "Embedthis ESP",
+    "version": "4.7.0",
+    "keywords": [
+        "esp",
+        "package"
+    ],
+    "homepage": "http://embedthis.com/esp",
+    "author": {
+        "name": "Embedthis Software",
+        "email": "dev@embedthis.com",
+        "url": "http://embedthis.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/esp.git"
+    },
+    "bugs": {
+        "url": "http://github.com/embedthis/esp/issues"
+    },
+    "pak": "~0.9",
+    "dependencies": {
+        "http": "~4.7",
+        "me-dev": "~0.8",
+        "mpr": "~4.7",
+        "osdep": "~0.8",
+        "pcre": "*"
+    },
+    "optionalDependencies": {
+        "appweb": "~4",
+        "est": "~0.6",
+        "me-ssl": "~0.8",
+        "sqlite": "~1"
+    },
+    "devDependencies": {
+        "appweb": "*",
+        "me": ">0.8.0"
+    },
+    "directories": {
+        "paks": "src/paks",
+        "client": "client"
+    },
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        },
+        {
+            "type": "Commercial",
+            "url": "http://embedthis.com/licensing/"
+        }
+    ],
+    "paks": {
+        "appweb": {
+            "noblend": true,
+            "noexport": true,
+            "nodeps": true
+        },
+        "esp-server": {
+            "noblend": true,
+            "noexport": true
+        },
+        "esp-mvc": {
+            "noblend": true,
+            "noexport": true
+        },
+        "esp-html-mvc": {
+            "noblend": true,
+            "noexport": true
+        }
+    },
+    "frozen": true,
+}

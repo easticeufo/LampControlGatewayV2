@@ -1,0 +1,143 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt;<a href="index.html">Source Code</a> &gt;<a href="building.html">Building from Source Code</a>
+            &gt;<b>OpenWrt Platform</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            
+<!-- BeginDsi "dsi/sourceSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/source/index.html">Working with Source</a></li>
+                <li><a href="../../../guide/appweb/source/building.html">Building From Source</a></li>
+                <li><a href="../../../guide/appweb/source/porting.html">Porting Guide</a></li>
+
+                <li><a href="../../../ref/appweb/index.html">Programmers Reference</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+                <li><a href="../../../api/native.html">Native APIs</a></li>
+
+                <li><a href="../../../guide/appweb/programmers/embedding.html">Embedding Appweb</a></li>
+                <li><a href="../../../guide/appweb/programmers/modules.html">Appweb Modules</a></li>
+                <li><a href="../../../guide/appweb/programmers/handlers.html">Appweb Handlers</a></li>
+                <li><a href="../../../guide/appweb/programmers/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/programmers/migrating.html">Migrating to Appweb 4</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">Users Guide</a></li>
+                <li><a href="../../../product/changeLog.html">Change Log</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Appweb for the OpenWrt Platform</h1>
+            <p><img src="../../../images/nslu2.jpg" class="wrapLeft shadow" alt="nslu2"/>This document 
+            describes the process to build Appweb for the OpenWrt platform. For other platforms and generic build
+            instructions, please read
+            <a href="building.html">Building from Source Code</a>.</p>
+            <h2>Background</h2>
+            <p>OpenWrt is a Linux project to create downloadable replacement firmware for consumer communications and
+            storage devices. It supports devices such as the Linksys WRT54G router and the Linksys NSLU2 storage
+            device.</p>
+            <p>The OpenWrt project provides a highly configurable environment with an active development forum. Most
+            code in OpenWrt is based on a GPL license. For more information about OpenWrt, please consult: <a href=
+            "http://en.wikipedia.org/wiki/OpenWrt">Wikipedia OpenWrt</a>, and <a href=
+            "http://www.nslu2-linux.org/">NSLU2-Linux Home Page</a>.</p>
+            <h2>Prerequisites</h2>
+            <p>You will need the following components:</p>
+            <ul>
+                <li>Linux development system</li>
+                <li>OpenWrt</li>
+                <li>Appweb source package (this will be automatically downloaded by OpenWrt)</li>
+            </ul>
+            <h2>Steps</h2>
+            <ol>
+                <li>Download OpenWrt.
+                    <pre>
+svn checkout svn://svn.openwrt.org/openwrt/trunk kamikaze
+</pre>
+                    <p>Please read <a href="http://kamikaze.openwrt.org/docs/openwrt.html#x1-390002">OpenWrt
+                        Documentation</a> and <a href="https://dev.openwrt.org/wiki/GetSource">Getting Source</a>
+                    for full details.</p>
+                </li>
+                <li>
+                <p>Check out the package/appweb/Makefile.</p> 
+                <pre>
+cd packages
+svn co svn://svn.openwrt.org/openwrt/packages/appweb
+cd ..
+</pre>
+                </li>
+                <li>Configure the OpenWrt Linux kernel. From the top OpenWrt directory run the menu configuration tool.
+                    <pre>
+make menuconfig
+</pre>
+                </li>
+                <li>Select Network and enable Appweb. You can either build Appweb into the base system or build it
+                as a loadable and installable package. Select "*" to integrate into the base system or "M" to build a
+                package.</li>
+                <li>Build the OpenWrt Linux kernel.
+<pre>make</pre>
+                </li>
+                <li>Flash the OpenWrt firmware to your device. This is highly device specific and you need to consult
+                the OpenWrt and your device documentation. The new firmware can be found under the <em>bin</em>
+                directory.</li>
+                <li>If you build Appweb as a package, it will be built as <em>bin/packages/*/appweb*.ipk</em>. You will
+                need to install on your target by logging onto your device using ssh and then typing:
+                    <pre>
+opkg install http://url_to_appweb_package"
+</pre>
+                </li>
+                <li>Once the firmware is loaded and Appweb installed, you can point your browser at the url:
+                    <pre>
+http://hostname:8000/appweb.html
+</pre>.
+                </li>
+            </ol>
+            <h2>Configuration</h2>
+            <p>The appweb source tree is built under the <em>build_dir/*/appweb*</em> directory. Appweb saves the
+            OpenWrt configuration so that you can use make at any time inside the Appweb source tree. WARNING: If you
+            modify the OpenWrt <em>package/appweb/Makefile</em>, OpenWrt will remove the Appweb source and re-download
+            and extract the source code. So save any changes you make!</p>
+            <p>The Appweb configuration for OpenWrt includes: Ejscript, Sqlite, Regular Expressions, Authentication,
+            Directory Listings, HTTP client, ranged and chunked transfers, error logging and file upload. You can
+            modify this configuration by editing the configure command in OpenWrt <em>packages/appweb/Makefile</em> and
+            the run <em>make</em> or <em>make package/appweb/compile</em> if you are selected to build Appweb as a
+            package.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,405 @@
+================================================================================
+采用HTTP协议(restful api)，数据内容为JSON格式，GET命令用于获取参数，PUT命令用于设置参数，
+DELETE命令用于删除，POST命令用于其他控制
+================================================================================
+--------------------------------------------------------------------------------
+灯相关协议
+--------------------------------------------------------------------------------
+获取灯列表：
+url:/api/lights
+Method:GET
+Response example:
+[
+	{
+		"id":256,
+		"type":"4IO",
+		"on":true,
+		"name":"Lamp 1"
+	},
+	{
+		"id":257,
+		"type":"4IO",
+		"on":false,
+		"name":"Lamp 2"
+	},
+	{
+		"id":41733,
+		"type":"8IO",
+		"on":true,
+		"name":""
+	}
+]
+
+获取单灯的参数：
+url:/api/lights/<id>
+Method:GET
+Response example:
+{
+	"type":"4IO",
+	"on":true,
+	"name":"Lamp 1"
+}
+
+设置单灯的参数：
+url:/api/lights/<id>
+Method:PUT
+Body:
+{
+	"on":false,
+	"name":"new name"
+}
+Response example:
+{
+	"id":256
+	"type":"4IO",
+	"on":false,
+	"name":"new name"
+}
+
+--------------------------------------------------------------------------------
+场景相关协议
+--------------------------------------------------------------------------------
+获取场景列表：
+url:/api/scenes
+Method:GET
+Response example:
+[
+	{
+		"id":1,
+		"name":"场景1",
+		"trigger_time":
+		{
+			"date":"2016-10-23",
+			"wday":[0,2,4],
+			"time":"18:33"
+		},
+		"lights":
+		[
+			{
+				"id":256,
+				"on":false
+			},
+			{
+				"id":257,
+				"on":true
+			},
+			{
+				"id":41733,
+				"on":true
+			}
+		]
+	},
+	{
+		"id":2,
+		"name":"",
+		"trigger_time":
+		{
+			"date":"",
+			"wday":[],
+			"time":""
+		},
+		"lights":
+		[
+			{
+				"id":256,
+				"on":true
+			},
+			{
+				"id":41733,
+				"on":true
+			}
+		]
+	}
+]
+
+新增场景：
+url:/api/scenes
+Method:POST
+Body:无
+Response example:
+{
+	"id":3,
+	"name":"",
+	"trigger_time":
+	{
+		"date":"",
+		"wday":[],
+		"time":""
+	},
+	"lights":[]
+}
+
+获取单场景的参数：
+url:/api/scenes/<id>
+Method:GET
+Response example:
+{
+	"name":"场景1",
+	"trigger_time":
+	{
+		"date":"2016-10-23",
+		"wday":[0,2,4],
+		"time":"18:33"
+	},
+	"lights":
+	[
+		{
+			"id":256,
+			"on":false
+		},
+		{
+			"id":257,
+			"on":true
+		},
+		{
+			"id":41733,
+			"on":true
+		}
+	]
+}
+
+设置单场景的参数(不存在则创建新场景)：
+url:/api/scenes/<id>
+Method:PUT
+Body:
+{
+	"name":"场景1",
+	"trigger_time":
+	{
+		"date":"2016-10-23",
+		"wday":[0,2,4],
+		"time":"18:33"
+	},
+	"lights":
+	[
+		{
+			"id":256,
+			"on":true
+		},
+		{
+			"id":257,
+			"on":true
+		}
+	]
+}
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+触发场景：
+url:/api/scenes/<id>/trigger
+Method:POST
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+删除场景：
+url:/api/scenes/<id>
+Method:DELETE
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+--------------------------------------------------------------------------------
+按键相关协议
+--------------------------------------------------------------------------------
+获取按键列表：
+url:/api/keys
+Method:GET
+Response example:
+[
+	{
+		"id":512,
+		"type":"4KEY",
+		"name":"key 1",
+		"bind":
+		{
+			"type":"light",
+			"id":257
+		}
+	},
+	{
+		"id":513,
+		"type":"4KEY",
+		"name":"key 2",
+		"bind":
+		{
+			"type":"scene",
+			"id":1
+		}
+	},
+	{
+		"id":768,
+		"type":"6KEY",
+		"name":"",
+		"bind":{}
+	}
+]
+
+获取单个按键的参数：
+url:/api/keys/<id>
+Method:GET
+Response example:
+{
+	"id":512,
+	"type":"4KEY",
+	"name":"key 1",
+	"bind":
+	{
+		"type":"light",
+		"id":257
+	}
+}
+
+设置单个按键的参数：
+url:/api/keys/<id>
+Method:PUT
+Body:
+{
+	"name":"new key",
+	"bind":
+	{
+		"type":"scene",
+		"id":2
+	}
+}
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+--------------------------------------------------------------------------------
+设备配置相关协议
+--------------------------------------------------------------------------------
+获取系统信息：
+url:/api/config/system
+Method:GET
+Response example:
+{
+	"gwversion":"V1.0.0 build 20160704"
+}
+
+获取用户列表：
+url:/api/config/users
+Method:GET
+Response example:
+[
+	{
+		"id":1,
+		"username":"admin",
+		"level":0
+	},
+	{
+		"id":2,
+		"username":"user",
+		"level":2
+	}
+]
+
+获取单用户信息：
+url:/api/config/users/1
+Method:GET
+Response example:
+{
+	"username":"admin",
+	"level":0
+}
+
+设置单用户信息：
+url:/api/config/users/1
+Method:PUT
+Body:
+{
+	"username":"admin",
+	"password":"827ccb0eea8a706c4c34a16891f84e7b",
+	"level":0
+}
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+获取设备时间：
+url:/api/config/time
+Method:GET
+Response example:
+{
+	"utcTime":"2016-07-28T19:05:05Z"
+}
+
+设置设备时间：
+url:/api/config/time
+Method:PUT
+Body:
+{
+	"utcTime":"2016-07-28T19:05:05Z"
+}
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+--------------------------------------------------------------------------------
+设备控制相关协议
+--------------------------------------------------------------------------------
+设备登录：
+url:/api/login
+Method:POST
+Body:
+{
+	"username":"admin",
+	"password":"827ccb0eea8a706c4c34a16891f84e7b"
+}
+
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+说明：密码password为用户输入的密码经过MD5加密后的值
+
+设备登出：
+url:/api/logout
+Method:POST
+Body:
+无
+
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+设备固件升级：
+url:/api/upgrade
+Method:POST
+Body:
+firmware文件内容
+
+Response example:
+{
+	"success":true,
+	"msg":"success!"
+}
+
+设备重启：
+url:/api/reboot
+Method:POST
+Response example:
+{
+	"success":false,
+	"msg":"reboot failed!"
+}
+
+说明：
+重启成功不返回任何信息

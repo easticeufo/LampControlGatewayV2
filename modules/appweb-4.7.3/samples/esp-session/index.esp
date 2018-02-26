@@ -1,0 +1,29 @@
+<% {
+    if (smatch(param("submit"), "New Session")) {
+        /* Re-create the session */
+        createSession();
+    }
+    /* Save the user entered data */
+    setSessionVar("data", param("new"));
+} %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">  
+</head>
+<body>
+    <h3>Session Details</h3>
+        <table border="1">
+            <tr><td>Session ID</td><td><pre><%= httpGetSessionID(getConn()) %></pre></td></tr>
+            <tr><td>Session Data</td><td><pre><%= session("data") %></pre></td></tr>
+        </table>
+
+    <form name="details" method="post" action="">
+        <p>Set Session Data: <input type="text" name="new" value=''></p>
+        <p>
+            <input type="submit" name="submit" value="OK">
+            <input type="submit" name="submit" value="New Session">
+        </p>
+    </form>
+</body>
+</html>

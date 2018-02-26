@@ -1,0 +1,166 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="gettingStarted.html">Getting Started</a> &gt; <b>Starting and Stopping</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#commandLine">Appweb Command Line</a></li>
+                <li><a href="#appwebOptions">Appweb Options</a></li>
+                <li><a href="#noconfig">No Config File</a></li>
+            </ul>
+<!-- BeginDsi "dsi/gettingSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/overview.html">Appweb Overview</a></li>
+                <li><a href="../../../guide/appweb/features.html">Appweb Features</a></li>
+                <li><a href="../../../product/releaseNotes.html">Release Notes</a></li>
+                <li><a href="../../../product/install/index.html">Installation Overview</a></li>
+                <li><a href="../../../guide/appweb/users/gettingStarted.html">Getting Started</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">Users Guide</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/lang.html">Multi-Language Support</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authentication</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+            <!-- EndDsi -->
+            <!-- EndDsi -->
+            <!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Starting and Stopping Appweb (Manually)</h1>
+            <p>After installation, Appweb is started automatically as a system service or daemon. You can change this
+            behavior and start Appweb manually if you wish.</p>
+            <p>This page gives information about starting and stopping Appweb manually. Before you can run Appweb
+            manually, you must first stop it running as a system service. See <a href="service.html">Running as a
+            service</a> for how to stop Appweb running as a system service.</p><a id="programs"></a>
+            <a id="commandLine"></a>
+            <h2 class="section">Appweb Command Line</h2>
+            <p>The Appweb command line options are:</p>
+            <pre>
+appweb [options]
+</pre><a id="appwebOptions"></a>
+            <h2>Appweb Command Options</h2>
+            <table title="options">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--config filename</td>
+                        <td>Specify an alternative configuration file instead of appweb.conf.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">--chroot directory</td>
+                        <td>Change the system root directory for Appweb. This creates a chroot jail so that the Appweb
+                        process cannot access any files outside the given directory.</td>
+                    </tr>
+                    <tr>
+                        <td>--debugger</td>
+                        <td>Disable timeouts to make it easier to debug.</td>
+                    </tr>
+                    <tr>
+                        <td>--log logSpec</td>
+                        <td>Specify a file to log messages. This will override the ErrorLog directive in the
+                        configuration file. The logSpec syntax is logName[:logLevel][.maxSize]. When the maximum size
+                        is exceeded, the log file will be rotated to logName.old and a new log file will be started.
+                        The log level is a number between 0 and 9 where 0 is the least verbose. The -l option is an
+                        alias for --log.</td>
+                    </tr>
+                    <tr>
+                        <td>--home directory</td>
+                        <td>Specify the starting directory for the root of the server. This directory contains the Appweb
+                        configuration file.</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">--name uniqueName</td>
+                        <td>Set the program name. Useful to have unique command line names for multiple appweb
+                            instances.</td>
+                    </tr>
+                    <tr>
+                        <td>--threads</td>
+                        <td>Specify the number of threads to allocate for the appweb thread pool. This overrides the
+                        threads configuration file directive.</td>
+                    </tr>
+                    <tr>
+                        <td>--verbose</td>
+                        <td>Shorthand for --log stderr:2. The -v option is an alias for --verbose.</td>
+                    </tr>
+                    <tr>
+                        <td>--version</td>
+                        <td>Display the appweb version number</td>
+                    </tr>
+                </tbody>
+            </table><a id="noconfig"></a>
+            <h2 class="section">No Config File</h2>
+            <p>Appweb normally reads the "appweb.conf" file for configuration directives. However, if appweb is invoked
+            with an IP address or port number on the command line, Appweb will not read the configuration file. Rather, 
+            it will listen for requests on the specified IP:PORT address. Usage:</p>
+            <pre>
+appweb [IP]:[PORT] [documents]
+</pre>For example:
+            <pre>
+appweb localhost
+</pre>If the PORT component is omitted, Appweb will listen on port 80. If the IP address is omitted and a port is
+supplied, Appweb will listen on all network interfaces. An optional document root directory can be supplied for the location 
+of the web pages.
+            <p>When Appweb is run without a configuration file, it performs minimal configuration. 
+             This configuration cannot be altered. If you need a different setup, use a
+            configuration file.</p>
+            <ul>
+                <li>Load the auth filter and the cgi, ejs and file handlers.</li>
+                <li>Load and configure the net and send connectors.</li>
+                <li>Create a /cgi-bin/ location block set to the cgi-bin directory in the server root.</li>
+            </ul>
+            <a name="signals"></a>
+            <h2 class="section">Signals</h2>
+            <p>Appweb responds to the SIGUSR2 signal to toggle the trace level from 2 to 4 and vice-versa. Appweb responds
+            to the SIGINFO on Mac OSX and SIGPWR on Unix to emit some operational stats to the trace log.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Users Guide</a> &gt; <b>Uploading</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#enabling">Enabling</a></li>
+                <li><a href="#directives">Directives</a></li>
+                <li><a href="#details">File Details</a></li>
+                <li><a href="#post">POST Upload</a></li>
+            </ul>
+<!-- BeginDsi "dsi/usersGuideSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/users/index.html">User Guide Overview</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/lang.html">Multi-Language Support</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authorization</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../guide/appweb/users/ssl.html">SSL</a></li>
+                <li><a href="../../../guide/appweb/users/modules.html">Appweb Modules</a></li>
+                <li><a href="../../../guide/appweb/users/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/users/client.html">HTTP Client</a></li>
+                <li><a href="../../../guide/appweb/users/webSockets.html">WebSockets</a></li>
+                <li><a href="../../../guide/appweb/users/frameworks.html">Web Frameworks</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>File Upload</h1>
+            <p>Appweb has an integrated file upload filter that accepts and processes file upload requests.
+            The Appweb upload filter intercepts uploaded files, saves them to disk and passes details about the 
+            uploaded file to the request handler for processing.</p>
+            <p>File upload uses multi-part mime encoding to transport files over HTTP POST requests. This is specified in
+            the IETF standard <a href="http://www.ietf.org/rfc/rfc2388.txt">RFC 2388</a>. </p>
+            <a id="overview"></a>
+            <h2>Overview</h2>
+            <p>Because uploaded files can be very large, Appweb uses specialized handling for the receipt, storage and
+            processing of uploaded files. When an upload request is received, Appweb will accept and store the 
+            uploaded file before starting the request handler to respond to the request. The request handler does not
+            directly receive the uploaded file. Rather, Appweb passes the name of the temporary file holding the uploaded
+            file.
+            Appweb expects that the handler will process, copy or move the temporary file before completing the request.
+            Once the handler has completed, Appweb will remove any remaining upload temporary files.</p>
+            <a id="enabling"></a>
+            <h2>Enabling File Upload</h2>
+            <p>To enable the upload filter, you need to add it to the request pipeline via the
+            <a href="dir/route.html#addInputFilter">AddInputFiler</a> directive. For example:
+            <pre>
+&lt;Route /upload-uri&gt;
+    <b>AddInputFilter uploadFilter</b>
+    UploadDir /tmp
+    UploadAutoDelete on
+&lt;/Route&gt;
+</pre>
+            <p>It is good practice to define the uploadFilter within a qualifying route. This minimizes the
+            security attack surface.</p>
+            <a id="directives"></a>
+            <h2>Appweb Upload Directives</h2>
+            <p>There are three other appweb.conf directives that relate specifically to upload filter.</p>
+            <ul>
+                <li><a href="dir/sandbox.html#limitUpload">LimitUpload</a> &mdash; This specifies the maximum size an
+                    uploaded file may be.</li>
+                <li><a href="dir/route.html#uploadDir">UploadDir</a> &mdash; This specifies the directory to hold
+                    uploaded files.</li>
+                <li><a href="dir/route.html#uploadAutoDelete">UploadAutoDelete</a> &mdash; This specifies if the 
+                    uploaded files should be automatically deleted from the upload directory after the handler has
+                    completed processing the request.</li>
+            </ul>
+            <a id="details"></a>
+            <h2>Upload File Details</h2>
+            <p>Once a file is uploaded, the Appweb handler responsible for processing the request will receive details about
+            uploaded files via the request parameters. 
+            Different request handlers expose these request parameters 
+            in different ways. </p>
+            
+            <h3>ESP Uploads</h3>
+            <p>ESP provides direct access to the internal Appweb uploaded files structure. Each uploaded file is described
+            by a <a href="../../../api/http.html#group___http_upload_file">HttpUploadFile</a> structure. 
+            These structures are stored in an MprHash table indexed by their HTML file upload ID.</p>
+            <p>The <a href="../../../api/http.html#group___http_upload_file">HttpUploadFile</a> structure is defined as:
+            <pre>
+typedef HttpUploadFile {
+    cchar *filename;        /* Local (temp) name of the file */
+    cchar *clientFilename;  /* Client side name of the file */
+    cchar *contentType;     /* Content type */
+    ssize size;             /* Uploaded file size */
+} HttpUploadFile;
+</pre>
+            <p>You can access uploaded files via:</p>
+<pre>
+HttpConn        *conn;
+HttpUploadFile  *file;
+MprKey          *kp;
+conn = getConn();
+for (ITERATE_KEY_DATA(conn-&gt;rx-&gt;files, kp, file)) {
+    render("FILENAME %s\n", file-&gt;filename);
+    render("CLIENT_NAME %s\n", file-&gt;clientFilename);
+    render("TYPE %s\n", file-&gt;contentType);
+    render("SIZE %d\n", file-&gt;size);
+}
+</pre>
+            <h3>Ejscript Uploads</h3>
+            <p>Ejscript stores uploaded files in the <em><a
+                    href="http://www.ejscript.org/products/ejs/doc-2/api/ejscript/ejs.web-Request.html">request.files</a></em> property. Files is an object hash
+            of files indexed by the HTML ID. Each file is represented by an instance of the 
+            <a href="http://www.ejscript.org/products/ejs/doc-2/api/ejscript/ejs.web-UploadFile.html">UploadFile</a> class.
+            <a id="post"></a>
+            <h2>Alternative Upload Technique</h2>
+            <p>File upload using POST requests is one way to upload files. Another is to use the HTTP PUT method.
+            This uploads a file without encoding and can offer higher performance. The HTTP DELETE method can then
+            be used to delete files from the server.</p>
+            <h3>CGI Upload</h3>
+            <p>CGI provides them to applications via environment variables that start with <em>FILE_</em>. The variables
+            end with an <em>ID</em> which is a sequential index for the file beginning at <em>0</em> for the first file.</p>
+            <ul>
+                <li>FILE_CLIENT_FILENAME_ID &mdash; the client specified filename </li>
+                <li>FILE_CONTENT_TYPE_ID &mdash; the file mime content type</li>
+                <li>FILE_FILENAME_ID &mdash; the local temporary filename containing the data</li>
+                <li>FILE_SIZE_ID &mdash; the size of the uploaded file</li>
+            </ul>
+            <h3>PHP Uploads</h3>
+            <p>PHP has its own file upload handler and should not be confused with the higher performing Appweb 
+            upload filter. If you wish to use the PHP upload mechanism, you must disable the upload filter for 
+            your PHP requests. Do this by removing the <em>AddInputFilter uploadFilter</em> in the appweb.conf
+            configuration file.</p>
+            <p>If you wish to use the Appweb upload filter with PHP, you will see environment variables in the
+            _POST collection. The naming is the same as that for the CGI handler described above.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

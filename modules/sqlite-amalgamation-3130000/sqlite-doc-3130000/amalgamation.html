@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>The SQLite Amalgamation</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h2>1.0 The SQLite Amalgamation</h2>
+
+<p>The SQLite library consists of 102 files of C code
+(as of <a href="releaselog/3_9_0.html">Version 3.9.0</a>) in the core with 32 additional files that
+implement the <a href="fts3.html">FTS3</a>, <a href="fts5.html">FTS5</a>, <a href="rtree.html">RTREE</a>, <a href="dbstat.html">DBSTAT</a>, <a href="json1.html">JSON1</a>, and
+<a href="rbu.html">RBU</a> extensions.
+Most of these are "source" files in the sense that they are stored 
+in the <a href="https://www.sqlite.org/src">SQLite version control system</a>
+and are maintained directly. 
+But some of the C files are generated automatically using scripts
+or auxiliary programs during the compilation process.  Of the 102 
+main source files, about 75% are C code and about 25% are C header files.</p>
+
+<p>The standard makefiles for SQLite have a target for building
+an object we call the "amalgamation".  
+The amalgamation is a single C code file, named "sqlite3.c",
+that contains all C code 
+for the core SQLite library and the <a href="fts3.html">FTS3</a>, <a href="fts5.html">FTS5</a>, <a href="rtree.html">RTREE</a>,
+<a href="dbstat.html">DBSTAT</a>, <a href="json1.html">JSON1</a>, and <a href="rbu.html">RBU</a> extensions.
+This file contains about 184K lines of code 
+(113K if you omit blank lines and comments) and is over 6.4 megabytes
+in size.
+Though the the various extensions are included in the
+"sqlite3.c" amalgamation file, they are disabled using #ifdef statements.
+Activate the extensions using <a href="compile.html">compile-time options</a> like:
+
+<ul>
+<li> <a href="compile.html#enable_fts3">-DSQLITE_ENABLE_FTS3</a>
+<li> <a href="compile.html#enable_fts5">-DSQLITE_ENABLE_FTS5</a>
+<li> <a href="compile.html#enable_rtree">-DSQLITE_ENABLE_RTREE</a>
+<li> <a href="compile.html#enable_dbstat_vtab">-DSQLITE_ENABLE_DBSTAT_VTAB</a>
+<li> <a href="compile.html#enable_json1">-DSQLITE_ENABLE_JSON1</a>
+<li> <a href="compile.html#enable_rbu">-DSQLITE_ENABLE_RBU</a>
+</ul>
+
+<p>The amalgamation contains everything you need to integrate SQLite 
+into a larger project.  Just copy the amalgamation into your source 
+directory and compile it along with the other C code files in your project.
+(A <a href="howtocompile.html">more detailed discussion</a> of the compilation process is
+available.)
+You may also want to make use of the "sqlite3.h" header file that 
+defines the programming API for SQLite. 
+The sqlite3.h header file is available separately. 
+The sqlite3.h file is also contained within the amalgamation, in
+the first few thousand lines. So if you have a copy of 
+sqlite3.c but cannot seem to locate sqlite3.h, you can always 
+regenerate the sqlite3.h by copying and pasting from the amalgamation.</p>
+
+<p>In addition to making SQLite easier to incorporate into other
+projects, the amalgamation also makes it run faster. Many
+compilers are able to do additional optimizations on code when 
+it is contained with in a single translation unit such as it 
+is in the amalgamation. We have measured performance improvements
+of between 5 and 10% when we use the amalgamation to compile 
+SQLite rather than individual source files.  The downside of this
+is that the additional optimizations often take the form of 
+function inlining which tends to make the size of the resulting
+binary image larger.</p>
+
+<a name="amal32k"></a>
+
+<h2>2.0 The Split Amalgamation</h2>
+
+<p>Developers sometimes experience trouble debugging the
+185,000-line-long amalgamation source file because some debuggers
+are only able to handle source code line numbers less than 32,768.
+The amalgamation source code runs fine.  One just cannot single-step
+through it in a debugger.
+
+<p>To circumvent this limitation, the amalgamation is also available in
+a split form, consisting of files "sqlite3-1.c", "sqlite3-2.c", and
+so forth, where each file is less than 32,768 lines in length and
+where the concatenation of the files contain all of the code for the
+complete amalgamation.  Then there is a separate source file named
+"sqlite3-all.c" which basically consists of code like this:
+
+<blockquote><pre>
+#include "sqlite3-1.c"
+#include "sqlite3-2.c"
+#include "sqlite3-3.c"
+#include "sqlite3-4.c"
+#include "sqlite3-5.c"
+#include "sqlite3-6.c"
+#include "sqlite3-7.c"
+</pre></blockquote>
+
+<p>Applications using the split amalgamation simply compile against
+"sqlite3-all.c" instead of "sqlite3.c".  The two files work exactly
+the same.  But with "sqlite3-all.c", no single source file contains more
+than 32,767 lines of code, and so it is more convenient to use some
+debuggers.  The downside of the split amalgamation is that it consists
+of 6 C source code files instead of just 1.
+
+<h2>3.0 Download Copies Of The Amalgamation</h2>
+
+<p>The amalgamation and
+the sqlite3.h header file are available on
+the <a href="download.html">download page</a> as a file 
+named sqlite-amalgamation-X.zip
+where the X is replaced by the appropriate version number.</p>
+
+<a name="amalgbuild"></a>
+
+<h2>4.0 Building The Amalgamation From Canonical Source Code</h2>
+
+<p>To build the amalgamation (either the full amalgamation or the
+split amalgamation), first
+<a href="getthecode.html">get the canonical source code</a> from one of the three servers.
+Then, on both unix-like systems and on Windows systems that have the
+free <a href="http://mingw.org/wiki/msys">MinGW</a> development environment
+installed, the amalgamation can be built using the
+following commands:
+
+<blockquote><pre>
+sh configure
+make sqlite3.c
+</pre></blockquote>
+
+<p>To build using Microsoft Visual C++, run this command:
+
+<blockquote><pre>
+nmake /f makefile.msc sqlite3.c
+</pre></blockquote>
+
+<p>In both cases, the split amalgamation can be obtained by
+substituting "sqlite3-all.c" for "sqlite3.c" as the make target.
+
+<h3>4.1 Dependencies</h3>
+
+<p>The build process makes extensive use of the 
+<a href="http://www.tcl-lang.org/">Tcl</a> scripting language.  You will need to have a
+copy of TCL installed in order for the make targets above to work.
+Easy-to-use installers can be obtained from <a href="http://www.tcl-lang.org/">http://www.tcl-lang.org/</a>.
+Many unix workstations have Tcl installed by default.
+
+<h3>4.2 See Also</h3>
+
+<p>Additional notes on compiling SQLite can be found on the
+<a href="howtocompile.html">How To Compile SQLite</a> page.
+

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Name Of The Folder Holding Temporary Files</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Name Of The Folder Holding Temporary Files</h2><blockquote><pre>SQLITE_EXTERN char *sqlite3_temp_directory;
+</pre></blockquote><p>
+If this global variable is made to point to a string which is
+the name of a folder (a.k.a. directory), then all temporary files
+created by SQLite when using a built-in <a href="../c3ref/vfs.html">VFS</a>
+will be placed in that directory.  If this variable
+is a NULL pointer, then SQLite performs a search for an appropriate
+temporary file directory.</p>
+
+<p>Applications are strongly discouraged from using this global variable.
+It is required to set a temporary folder on Windows Runtime (WinRT).
+But for all other platforms, it is highly recommended that applications
+neither read nor write this variable.  This global variable is a relic
+that exists for backwards compatibility of legacy applications and should
+be avoided in new projects.</p>
+
+<p>It is not safe to read or modify this variable in more than one
+thread at a time.  It is not safe to read or modify this variable
+if a <a href="../c3ref/sqlite3.html">database connection</a> is being used at the same time in a separate
+thread.
+It is intended that this variable be set once
+as part of process initialization and before any SQLite interface
+routines have been called and that this variable remain unchanged
+thereafter.</p>
+
+<p>The <a href="../pragma.html#pragma_temp_store_directory">temp_store_directory pragma</a> may modify this variable and cause
+it to point to memory obtained from <a href="../c3ref/free.html">sqlite3_malloc</a>.  Furthermore,
+the <a href="../pragma.html#pragma_temp_store_directory">temp_store_directory pragma</a> always assumes that any string
+that this variable points to is held in memory obtained from
+<a href="../c3ref/free.html">sqlite3_malloc</a> and the pragma may attempt to free that memory
+using <a href="../c3ref/free.html">sqlite3_free</a>.
+Hence, if this variable is modified directly, either it should be
+made NULL or made to point to memory obtained from <a href="../c3ref/free.html">sqlite3_malloc</a>
+or else the use of the <a href="../pragma.html#pragma_temp_store_directory">temp_store_directory pragma</a> should be avoided.
+Except when requested by the <a href="../pragma.html#pragma_temp_store_directory">temp_store_directory pragma</a>, SQLite
+does not free the memory that sqlite3_temp_directory points to.  If
+the application wants that memory to be freed, it must do
+so itself, taking care to only do so after all <a href="../c3ref/sqlite3.html">database connection</a>
+objects have been destroyed.</p>
+
+<p><b>Note to Windows Runtime users:</b>  The temporary directory must be set
+prior to calling <a href="../c3ref/open.html">sqlite3_open</a> or <a href="../c3ref/open.html">sqlite3_open_v2</a>.  Otherwise, various
+features that require the use of temporary files may fail.  Here is an
+example of how to do this using C++ with the Windows Runtime:</p>
+
+<p><blockquote><pre>
+LPCWSTR zPath = Windows::Storage::ApplicationData::Current->
+&nbsp;     TemporaryFolder->Path->Data();
+char zPathBuf&#91;MAX_PATH + 1&#93;;
+memset(zPathBuf, 0, sizeof(zPathBuf));
+WideCharToMultiByte(CP_UTF8, 0, zPath, -1, zPathBuf, sizeof(zPathBuf),
+&nbsp;     NULL, NULL);
+sqlite3_temp_directory = sqlite3_mprintf("%s", zPathBuf);
+</pre></blockquote>
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite TH3</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h1 align="center">TH3: SQLite Test Harness #3</h1>
+
+<h2>1.0 Overview</h2>
+
+<p>SQLite Test Harness #3 (hereafter "TH3") is one of
+<a href="testing.html#harnesses">three test harnesses</a> used for testing SQLite.
+TH3 is designed to meet the following objectives:</p>
+
+<ul>
+<li><p> TH3 is able to run on embedded platforms that lack the support
+     infrastructure of workstations.</p></li>
+
+<li><p> TH3 tests SQLite in an as-deployed configuration using only
+     published and documented interfaces.
+     In other words, TH3 tests the compiled object code, not
+     the source code, thus verifying that no problems were introduced
+     by compiler bugs.  "Fly what you test and test what you fly."</p></li>
+
+<li><p> TH3 checks SQLite's response to out-of-memory errors, disk I/O
+     errors, and power loss during transaction commit. </p></li>
+
+<li><p> TH3 exercises SQLite in a variety of run-time configurations
+     (UTF8 vs UTF16, different pages sizes, varying journal modes, etc.)
+     </p></li>
+
+<li><p> TH3 achieves 100% branch test coverage (and 100% MC/DC)
+    over the SQLite core.
+    (Test coverage of the operating-system specific <a href="vfs.html">VFSes</a> and extensions
+    such as FTS and RTREE is less than 100%). </p></li>
+</ul>
+
+<p>TH3 was originally written for validation testing only, but has
+subsequently been used for development testing and debugging
+as well, and has proven very helpful in those roles.  A full-coverage
+test takes less than five minutes on a workstation and hence
+serves as a fast regression test during day-to-day maintenance
+of the SQLite code base.</p>
+
+<h2>2.0 Operation</h2>
+
+<p>TH3 is a test program generator.  The output of TH3 is a program
+implemented in C-code and intended to be
+linked against the SQLite library under test.  The generated test
+program is compiled and run on the target platform in order to verify
+correct operation of SQLite on that platform.</p>
+
+<p>The inputs to TH3 are test modules written in C or SQL and
+small configuration
+files that determine how to initialize SQLite.  The
+TH3 package includes over eleven hundred test
+modules and more than three dozen configuration files.
+New modules and configurations
+can be added to customize TH3 for specialized applications.
+Each time TH3 is run, it reads
+a subset of the available test modules and configuration files to generate
+a custom C program that performs all of the specified tests under all
+specified configurations.  A complete test of SQLite normally involves running
+TH3 multiple times to generate multiple test programs covering different
+aspects of SQLite's operation, then linking all test programs against
+a common SQLite library and running them separately on the target platform.
+SQLite will be found to work if all test programs pass.</p>
+
+<p>There are no arbitrary limits in TH3.  One could generate a
+single test program that contained all test modules and all configuration files.
+However, such a test program might be too large to deploy on embedded
+platforms.  Hence, TH3 provides the ability to break the library of test
+modules up into smaller, more easily digested pieces.</p>
+
+<p>Each individual test module might contain dozens, hundreds, or thousands
+of separate tests.  The test modules can be written in C or as scripts of
+SQL or a mixture of the two.  About two-thirds of the existing test modules are
+written SQL with the remainder either in pure C or a combination of C and SQL.
+</p>
+
+<p>Each test module file contains a header which describes the circumstances
+under which the test is valid.  For a particular configuration, only those
+modules that are compatible with the configuration are run.  </p>
+
+<h2>3.0 Generating A Test Program</h2>
+
+<p>The TH3 program generator is a TCL script named "<tt>mkth3.tcl</tt>".
+To generate a test program, one has merely to run this script and supply
+the names of files containing test modules and configurations on the
+command line.  Test modules are files that use the "<tt>.test</tt>" suffix
+and configurations are files that use the "<tt>.cfg</tt>" suffix.  A
+typical invocation of mkth3.tcl might look something like the following:</p>
+
+<blockquote><pre>
+tclsh mkth3.tcl *.test *.cfg &gt;testprog1.c
+</pre></blockquote>
+
+<p>The output from the mkth3.tcl script is a C program that contains
+everything needed to run the tests - everything that is except for
+the SQLite library itself.  The generated test program contains 
+implementations for all of the support interfaces used by the test
+modules and it contains the <tt>main()</tt> routine that drives the
+tests.  To convert the test program into a working executable, simply
+compile it against SQLite:</p>
+
+<blockquote><pre>
+cc -o testprog1 testprog1.c sqlite3.c
+</pre></blockquote>
+
+<p>The compilation step shown immediately above is merely representative.
+In a working installation, one would normally want
+to specify optimization parameters and compile-time switches on the
+compiler command line.</p>
+
+<p>For testing on embedded systems, the mkth3.tcl script and the compiler
+steps shown above are performed on an ordinary workstation using
+a cross-compiler, then the resulting test program is
+transfer onto the device to be run.</p>
+
+<p>Once the test program is generated, it is run with no arguments to
+perform the tests.  Progress information as well as error diagnostics
+appear on standard output.  (Alternative output arrangements can be made
+using a compile-time option for embedded devices that lack a standard
+output channel.) The program returns zero if there are no
+errors and non-zero if any problems were detected.</p>
+
+<p>Typical output from a single TH3 test program run looks like this:
+
+<blockquote><pre>
+With SQLite 3.8.11 2015-05-15 04:13:15 56ef98a04765c34c1c2f3ed7a6f03a732f3b886e
+-DSQLITE_COVERAGE_TEST
+-DSQLITE_NO_SYNC
+-DSQLITE_SYSTEM_MALLOC
+-DSQLITE_THREADSAFE=1
+Config-begin c1.
+Begin c1.pager08
+End c1.pager08
+Begin c1.build33
+End c1.build33
+Begin c1.orderby01
+End c1.orderby01
+<i>... 15014 lines of output omitted ....</i>
+Begin 64k.syscall01
+End 64k.syscall01
+Begin 64k.build01
+End 64k.build01
+Begin 64k.auth01
+End 64k.auth01
+Config-end 64k. TH3 memory used: 6373738
+Config-begin wal1.
+Begin wal1.wal37
+End wal1.wal37
+Config-end wal1. TH3 memory used: 100961
+All 226 VDBE coverage points reached
+th3: 0 errors out of 1442264 tests in 213.741 seconds. 64-bit little-endian
+th3: SQLite 3.8.11 2015-05-15 04:13:15 56ef98a04765c34c1c2f3ed7a6f03a732f3b886e
+</pre></blockquote>
+
+<p>The output begins with a report of the <a href="c3ref/c_source_id.html">SQLITE_SOURCE_ID</a>
+(cross-checked again <a href="c3ref/libversion.html">sqlite3_sourceid()</a>) for the
+SQLite under test and the compile-time options used as reported
+by <a href="c3ref/compileoption_get.html">sqlite3_compileoption_get()</a>.  The output concludes with a summary
+of the test results and a repeat of the <a href="c3ref/c_source_id.html">SQLITE_SOURCE_ID</a>.  If any
+errors are detected, additional lines detail the problem.  The error
+reporting lines always begin with a single space character so that they
+can be quickly extracted from large output files using:
+
+<blockquote><pre>
+grep "&#94; "
+</pre></blockquote>
+
+<p>The default output shows the beginning and end of each configuration
+and test module combination.  In the example above "c1" and "64k" are
+configurations and "pager08", "build33", "orderby01", etc. are test modules.
+Compile-time and run-time options are available to increase or decrease
+the amount of output.
+The output can be increased by showing each test case within each
+test module.  The output can be decreased
+by degrees: omitting test modules starts and stops,
+omitting configuration starts and stops, and finally by omitting all output.
+<h3>3.1 Test Automation Scripts</h3>
+
+<p>TH3 comes with additional TCL scripts that help automate the testing
+process on workstations.  The "th3make" script automatically runs "mkth3.tcl"
+and "gcc" and then runs the resulting test program and checks the results.
+Arguments to th3make include all of the "*.test" test modules and 
+"*.cfg" configurations that are to be included in the test.  Additional
+options to th3make can cause the test program to be compiled using different
+compilers (GCC, Clang, MSVC), to use different output verbosity levels, to
+run the test program under valgrind, to check the output for coverage using
+gcov, and so forth.  The th3make script also accepts "*.rc" filenames as
+arguments.  These *.rc files are just collections of other arguments that
+are commonly used together for a single purpose.  For example, the "quick.rc"
+file contains a set of eight arguments to th3make that run a fast (3-minute)
+full-coverage test.  This allows the operator to type "./th3make quick.rc" as
+a short-cut to typing out all of the required command-line options.  The
+following are a few of the more than 40 available *.rc files:
+
+<ul>
+<li><b>alignment</b><i>N</i><b>.rc</b> - 
+    These files contain -D options to the compiler that are used by
+    various notable downstreams.
+<li><b>cov.rc</b> - Options for measuring test coverage
+<li><b>extensions.rc</b> - Options to enable <a href="fts3.html#fts4">FTS4</a>, <a href="rtree.html">R-Trees</a>,
+    and <a href="fileformat2.html#stat4tab">STAT4</a>.
+<li><b>fast.rc</b> - Run mosts tests, including those not needed for
+    coverage, skipping only soak tests, using delivery compiler options
+    (ex: -O3)
+<li><b>memdebug.rc</b> - like test.rc but also enable
+    <a href="compile.html#memdebug">-DSQLITE_MEMDEBUG</a>.
+<li><b>min.rc</b> - Run the minimum set of tests needed for 100% coverage.
+<li><b>quick.rc</b> - Run all tests required for 100% coverage tests
+    using -Os and <a href="compile.html#debug">-DSQLITE_DEBUG</a>.
+<li><b>test.rc</b> - Run the same tests as in fast.rc but without
+    compiler optimization and enabling options like
+    <a href="compile.html#debug">-DSQLITE_DEBUG</a> and
+    -DSQLITE_ENABLE_EXPENSIVE_ASSERT.
+<li><b>test-ex.rc</b> - long-running soak tests.
+</ul>
+
+<p>The TH3 repository also includes the "multitest.tcl" script, another
+TCL script used to automate TH3 testing on workstations.  Multitest.tcl
+automatically compiles SQLite, then
+runs ./th3make repeatedly with a variety of alignments, and captures
+the output in a succinct summary screen.  A typical multitest.tcl run
+generates output that looks like this:
+
+<blockquote><pre>
+file mkdir sqlite3bld
+cd sqlite3bld
+exec sh /home/drh/sqlite/sqlite/configure
+file copy -force config.h ../config.h
+exec make clean sqlite3.c
+file rename sqlite3.c ../sqlite3.c
+aa4f0f90c9c77424943e026a2ecee4a6c7f9e0d3  ../sqlite3.c
+file rename sqlite3.h ../sqlite3.h
+exec make clean sqlite3.c OPTS=-DSQLITE_ENABLE_UPDATE_DELETE_LIMIT=1
+file rename sqlite3.c ../sqlite3udl.c
+0d3bbc92c433f940253bb2c7c19de7783133929d  ../sqlite3udl.c
+exec make clean sqlite3.c OPTS=-DSQLITE_SMALL_STACK=1
+file rename sqlite3.c ../sqlite3ss.c
+fcf6963e94096324461076d3b9e9dc1888e066e1  ../sqlite3ss.c
+cd ..
+*******************************************************************************
+t01: quick.rc.................................................. Ok   (00:04:00)
+t02: cov.rc.................................................... Ok   (00:04:40)
+t03: quick.rc extensions.rc -D_HAVE_SQLITE_CONFIG_H............ Ok   (00:05:22)
+t04: cov.rc -DSQLITE_ENABLE_STAT4 -D_HAVE_SQLITE_CONFIG_H...... Ok   (00:05:20)
+t05: test.rc ../th3private/*.test.............................. Ok   (00:00:17)
+t06: test.rc ../th3private/*.test -DSQLITE_ENABLE_STAT4........ Ok   (00:00:43)
+t07: quick.rc -DSQLITE_TEST_REALLOC_STRESS -funsigned-char..... Ok   (00:04:56)
+t08: quick.rc -DSQLITE_THREADSAFE=0 -fsigned-char.............. Ok   (00:03:12)
+t09: quick.rc sqlite3ss.c -DSQLITE_MAX_ATTACHED=125............ Ok   (00:04:04)
+t10: quick.rc -DSQLITE_RUNTIME_BYTEORDER....................... Ok   (00:03:58)
+t11: quick.rc -DSQLITE_DIRECT_OVERFLOW_READ.................... Ok   (00:04:01)
+t12: fast.rc................................................... Ok   (00:14:19)
+t13: fast.rc alignment1.rc -m32................................ Ok   (00:20:51)
+t14: fast.rc alignment2.rc sqlite3udl.c........................ Ok   (00:16:06)
+t15: fast.rc alignment4.rc..................................... Ok   (00:12:55)
+t16: fast.rc alignment5.rc..................................... Ok   (00:14:58)
+t17: fast.rc alignment6.rc..................................... Ok   (00:14:31)
+t18: fast.rc alignment7.rc..................................... Ok   (00:16:06)
+t19: fast.rc alignment8.rc sqlite3udl.c........................ Ok   (00:24:09)
+t20: test.rc alignment1.rc..................................... Ok   (00:49:27)
+t21: test.rc alignment2.rc sqlite3udl.c........................ Ok   (00:38:43)
+t22: test.rc alignment4.rc -m32 CC=clang....................... Ok   (00:39:49)
+t23: test.rc alignment5.rc..................................... Ok   (00:36:33)
+t24: test.rc alignment6.rc..................................... Ok   (00:33:53)
+t25: test.rc alignment7.rc..................................... Ok   (00:42:16)
+t26: test.rc alignment8.rc sqlite3udl.c........................ Ok   (01:05:22)
+t27: memdebug.rc extensions.rc................................. Ok   (01:35:56)
+t28: fast.rc -fsanitize=undefined.............................. Ok   (00:15:09)
+t29: min.rc -O3 -valgrind...................................... Ok   (01:26:10)
+t30: min.rc -O3 -valgrind extensions.rc........................ Ok   (01:47:12)
+t31: test-ex.rc................................................ Ok   (03:20:18)
+*******************************************************************************
+0 failures on 31 th3make runs and 166721387 tests in (16:25:29)
+SQLite 3.8.10 2015-05-05 18:52:54 04afa3febee32854fbb09ef8d4ffffd432119716
+</pre></blockquote>
+
+<p>As can be seen above, a single run
+of multitest.tcl invokes th3make dozens times and takes between 12 and 24
+hours.  The middle section of the output shows the arguments to each individual
+th3make run and the result and elapse time for that th3make.
+All build products and output for the separate th3make runs are
+captures in subdirectories for post-test analysis.
+The two-line summary at the bottom shows the total number of errors and tests
+over all th3make runs and the total elapse time, together with the 
+<a href="c3ref/c_source_id.html">SQLITE_SOURCE_ID</a> information for the version of SQLite that was
+tested.  This summary information is recorded in the
+<a href="https://www.sqlite.org/checklists/3081000/index#c6">release
+checklist</a> during testing.
+
+<h2>4.0 Test Coverage</h2>
+
+<p>Using one particular subset of the available TH3 test modules (the "cov1"
+tests) SQLite obtained 
+<a href="testing.html#coverage">100% branch test coverage</a> and 100% <a href="testing.html#mcdc">MC/DC</a> as measured
+by <a href="http://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a>
+on Linux x86 and x86_64 hardware.  All releases of SQLite since
+<a href="releaselog/3_6_17.html">version 3.6.17</a> (circa 2009-08-10) have been tested to this standard. 
+The SQLite developers 
+are committed to maintaining 100% branch coverage and MC/DC for all 
+future releases of SQLite.</p>
+
+<p>The cov1 test set used to obtain 100% branch test coverage are only a
+subset of the tests currently implemented using TH3.  New test modules are
+added on a regular basis.</p>
+
+<h2>5.0 TH3 License</h2>
+
+<p>SQLite itself is in the <a href="copyright.html">public domain</a> and
+can be used for any purpose.  But TH3 is proprietary and requires a license.
+</p>
+
+<p>Even though open-source users do not have direct access to TH3, all
+users of SQLite benefit from TH3 indirectly since each version of SQLite is
+validated running TH3 on multiple platforms (Linux, Windows, WinRT, Mac,
+OpenBSD, Solaris Sparc) prior to release.  So anyone using an official release
+of SQLite can deploy their application with the confidence of knowing that
+it has been tested using TH3.  They simply cannot rerun those tests
+themselves without purchasing a TH3 license.</p>
+

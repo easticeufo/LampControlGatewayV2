@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>Class Esp</title>
+
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+</head>
+
+<body>
+<div class='body'>
+
+<div class="content">
+
+<a name='top'></a>
+<h1 class='className'>Esp</h1>
+<div class='classBlock'>
+<table class='classHead' summary='Esp'>
+   <tr><td><strong>Module</strong></td><td>esp.angular</td></tr>
+   <tr><td><strong>Definition</strong></td><td> class Esp</td></tr>
+   <tr><td><strong>Inheritance</strong></td><td>Esp <img src='images/inherit.gif' alt='inherit'/> <a href='Object.html'>Object</a><tr><td><strong>Stability</strong></td><td>Prototype.</td></tr>
+       </td></tr>
+</table>
+
+<p class='classBrief'>Esp Angular service object that provides support for ESP applications.</p>
+
+<p class='classDescription'>As an Angular service, there is only one instance of "Esp". 
+The Esp service may be injected (imported) via the Angular injector. It is also aliased as $rootScope.Esp.<br/><br/>The Esp object provides utility function and state properties that may be accessed directly from 
+the Esp service object. The Esp service performs background activities to smooth the execution of Esp 
+applications. Specifically:
+<ul>
+<li>The Esp service will track the browser referrer and store it in Esp.referrer. </li>
+<li>The Esp service will assist in managing the user feedback service. Whenever a browser click event is received the transient feedback message area will be cleared.</li>
+<li>The Esp service will manage client side sessions. While the ultimate arbiter of user sessions is 
+done on the server side, the Esp service will mirror a client side understanding of the server 
+side service. The Esp service will warn the user when a session is about to expire and will 
+provide details of the authenticated user via the Esp.user.name and the Esp.user.abilities 
+properties.</li>
+<li>The Esp service wraps the Angular <a href='#http'>http</a> service and intercepts responses to provide 
+uniform error handling. Responses with a 401 HTTP_UNAUTHORIZED status code are handled with 
+the browser redirected to the login page if required. Responses are monitored and feedback 
+messages are intercepted and sent to the feedback area for display.</li>
+<li>The Esp service provides a checkAuth routine that can be called when resolving routes. This 
+routine tests if the authenticated user has the requisite abilities to be granted access.</li>
+</ul></p>
+
+</div>
+
+
+<hr />
+<a name='Properties'></a>
+<h2 class='classSection'>Properties</h2>
+<table class='itemTable' summary='properties'>
+   <tr><th>Qualifiers</th><th>Property</th><th>Type</th><th width='95%'>Description</th></tr>
+<a name='config'></a>
+   <tr><td nowrap align='center'> static </td><td>config</td><td><a href='Object.html'>Object</a></td><td>null </td></tr>
+<a name='referrer'></a>
+   <tr><td nowrap align='center'> static </td><td>referrer</td><td><a href='String.html'>String</a></td><td>Prior client URL. </td></tr>
+<a name='user'></a>
+   <tr><td nowrap align='center'> static </td><td>user</td><td><a href='Object.html'>Object</a></td><td>Authenticated user information. </td></tr>
+</table>
+
+<p class='inheritedLink'><a href='Object.html#Properties'><i>Inherited Properties</i></a></p>
+
+<hr />
+<a name='ClassMethods'></a>
+<h2 class='classSection'>Esp Class Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#can'><b>can</b></a>(task: <a href='String.html'>String</a>): <a href='Boolean.html'>Boolean</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Determine if the user authorized to perform the given task.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#error'><b>error</b></a>(msg: <a href='String.html'>String</a>): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Set an error feedback message.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#inform'><b>inform</b></a>(msg: <a href='String.html'>String</a>): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Set an information feedback message.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#loadScript'><b>loadScript</b></a>(script: <a href='Uri.html'>Uri</a>, callback: <a href='Function.html'>Function</a>): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Load a script
+This routine loads the requested script and executes it in the browser by appending a script DOM
+element to the document body.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#login'><b>login</b></a>(user): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Login as a user
+This performs a client-side registration of a server-authenticated user.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#logout'><b>logout</b></a>(): <a href='Void.html'>Void</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Logout the current user.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#titlecase'><b>titlecase</b></a>(str: <a href='String.html'>String</a>): <a href='String.html'>String</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Map a string to TitleCase.</td></tr>
+   <tr class='apiDef'><td class='apiType'> static </td><td><a href='#url'><b>url</b></a>(uri: <a href='Uri.html'>Uri</a>): <a href='String.html'>String</a></tr><tr class='apiBrief'><td>&nbsp;</td><td>Return a qualified client URI 
+This routine supports hosting an application using an application URI prefix.</td></tr>
+</table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<a name='InstanceMethods'></a>
+<h2 class='classSection'>Esp Instance Methods</h2>
+<table class='apiIndex' summary='methods'>
+   <tr><th>Qualifiers</th><th width='95%'>Method</th></tr>
+   <p>(No own instance methods defined)</p></table>
+
+<p class='inheritedLink'><a href='Object.html#InstanceMethods'><i>Inherited Methods</i></a></p>
+
+<hr />
+<h2>Method Detail</h2>
+<a name='can'></a>
+<div class='api'>
+<div class='apiSig'>static     can(task: <a href='String.html'>String</a>): <a href='Boolean.html'>Boolean</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Determine if the user authorized to perform the given task. The user's abilities are defined by the server and passed to the client when the user logs in.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>task: <a href='String.html'>String</a> </td><td>Required task string.</td></tr></table></dd>
+</dl><dl><dt>Returns</dt>
+<dd>True if the user has the ability to perform the requested task.</dd></dl>
+</div>
+</div>
+<hr />
+<a name='error'></a>
+<div class='api'>
+<div class='apiSig'>static     error(msg: <a href='String.html'>String</a>): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Set an error feedback message. By default, error messages are persistent and are only cleared when the user performs a 
+new operation in the application.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>msg: <a href='String.html'>String</a> </td><td>Message to display.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<a name='inform'></a>
+<div class='api'>
+<div class='apiSig'>static     inform(msg: <a href='String.html'>String</a>): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Set an information feedback message. By default, informational messages are cleared wherenver a user clicks or navigates in the application.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>msg: <a href='String.html'>String</a> </td><td>Message to display.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<a name='loadScript'></a>
+<div class='api'>
+<div class='apiSig'>static     loadScript(script: <a href='Uri.html'>Uri</a>, callback: <a href='Function.html'>Function</a>): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Load a script
+This routine loads the requested script and executes it in the browser by appending a script DOM
+element to the document body. </dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>script: <a href='Uri.html'>Uri</a> </td><td>URL of script to load.</td></tr><tr class='param'><td class='param'>callback: <a href='Function.html'>Function</a> </td><td>Optional callback to invoke when the script is loaded. X.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<a name='login'></a>
+<div class='api'>
+<div class='apiSig'>static     login(user): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Login as a user
+This performs a client-side registration of a server-authenticated user. The user details are saved in Esp.user. After this routine, Esp will monitor the user session 
+and warn when the session is due to expire.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>user </td><td>Object containing a 'name' property for the username.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<a name='logout'></a>
+<div class='api'>
+<div class='apiSig'>static     logout(): <a href='Void.html'>Void</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Logout the current user. This removes the client-side user registration. The local session is discarded.
+Note: this does not logout the user from the server. Rather, after logging out from the server, the 
+application should call Esp.logout to allow the client to provide visual feedback to the user.</dd></dl>
+</div>
+</div>
+<hr />
+<a name='titlecase'></a>
+<div class='api'>
+<div class='apiSig'>static     titlecase(str: <a href='String.html'>String</a>): <a href='String.html'>String</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Map a string to TitleCase. </dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>str: <a href='String.html'>String</a> </td><td>String to convert.</td></tr></table></dd>
+</dl><dl><dt>Returns</dt>
+<dd>A titlecase string where the first letter of each word is capitalized.</dd></dl>
+</div>
+</div>
+<hr />
+<a name='url'></a>
+<div class='api'>
+<div class='apiSig'>static     url(uri: <a href='Uri.html'>Uri</a>): <a href='String.html'>String</a>
+</div>
+<div class='apiDetail'>
+<dl><dt>Description</dt></dd><dd>Return a qualified client URI 
+This routine supports hosting an application using an application URI prefix. This returns a fully qualified URI including the application URI prefix by prepending the
+application prefix from Esp.config.appPrefix.</dd></dl>
+<dl><dt>Parameters</dt>
+<dd><table class='parameters' summary ='parameters'>
+<tr class='param'><td class='param'>uri: <a href='Uri.html'>Uri</a> </td><td>The client URI for a template or script without the application URI prefix.</td></tr></table></dd>
+</dl></div>
+</div>
+<hr />
+<div class="terms">
+   <p class="terms">
+       <a href="http://embedthis.com/">       Embedthis Software LLC, 2003-2014. All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+   </p>
+</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.DS_Store
+.svn/
+._*
+build/
+package/LampControlGateway
+package/firmware*
+test/test_daemon
+

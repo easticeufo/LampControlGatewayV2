@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.8.8.2 On 2015-01-30</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.8.8.2 On 2015-01-30</h2><p><ul>
+<li>Enhance <a href="../c3ref/wal_checkpoint_v2.html">sqlite3_wal_checkpoint_v2(TRUNCATE)</a> interface so that it truncates the
+    WAL file even if there is no checkpoint work to be done.
+
+<li>SQLITE_SOURCE_ID: "2015-01-30 14:30:45 7757fc721220e136620a89c9d28247f28bbbc098"
+<li>SHA1 for sqlite3.c: 85ce79948116aa9a087ec345c9d2ce2c1d3cd8af
+
+
+</ul></p>
+<p><b>Changes carried forward from version 3.8.8.1 (2015-01-20):</b></p>
+<p><ul>
+<li>Fix a bug in the sorting logic, present since version 3.8.4, that can cause
+    output to appear in the wrong order on queries that contains an ORDER BY clause,
+    a LIMIT clause, and that have approximately 60 or more columns in the result set.
+    Ticket <a href="https://www.sqlite.org/src/tktview?name=f97c4637102a3ae72b79">f97c4637102a3ae72b79</a>.
+
+
+</ul></p>
+<p><b>Changes carried forward from version 3.8.8 (2015-01-16):</b></p>
+<p><ul>
+<p><b>New Features:</b>
+<li>Added the <a href="../pragma.html#pragma_data_version">PRAGMA data_version</a> command that can be used to determine if
+    a database file has been modified by another process.
+<li>Added the <a href="../c3ref/c_checkpoint_full.html">SQLITE_CHECKPOINT_TRUNCATE</a> option to the
+    <a href="../c3ref/wal_checkpoint_v2.html">sqlite3_wal_checkpoint_v2()</a> interface, with corresponding enhancements
+    to <a href="../pragma.html#pragma_wal_checkpoint">PRAGMA wal_checkpoint</a>.
+<li>Added the <a href="../c3ref/stmt_scanstatus.html">sqlite3_stmt_scanstatus()</a> interface, available only when
+    compiled with <a href="../compile.html#enable_stmt_scanstatus">SQLITE_ENABLE_STMT_SCANSTATUS</a>.
+<li>The <a href="../c3ref/table_column_metadata.html">sqlite3_table_column_metadata()</a> is enhanced to work correctly on
+    <a href="../withoutrowid.html">WITHOUT ROWID</a> tables and to check for the existence of a
+    a table if the column name parameter is NULL.  The interface is now
+    also included in the build by default, without requiring
+    the <a href="../compile.html#enable_column_metadata">SQLITE_ENABLE_COLUMN_METADATA</a> compile-time option.
+<li>Added the <a href="../compile.html#enable_api_armor">SQLITE_ENABLE_API_ARMOR</a> compile-time option.
+<li>Added the <a href="../compile.html#reverse_unordered_selects">SQLITE_REVERSE_UNORDERED_SELECTS</a> compile-time option.
+<li>Added the <a href="../compile.html#sorter_pmasz">SQLITE_SORTER_PMASZ</a> compile-time option and <a href="../c3ref/c_config_covering_index_scan.html#sqliteconfigpmasz">SQLITE_CONFIG_PMASZ</a>
+    start-time option.
+<li>Added the <a href="../c3ref/c_config_covering_index_scan.html#sqliteconfigpcachehdrsz">SQLITE_CONFIG_PCACHE_HDRSZ</a> option to <a href="../c3ref/config.html">sqlite3_config()</a>
+    which makes it easier for applications to determine the appropriate
+    amount of memory for use with <a href="../c3ref/c_config_covering_index_scan.html#sqliteconfigpagecache">SQLITE_CONFIG_PAGECACHE</a>.
+<li>The number of rows in a <a href="../lang_select.html#values">VALUES clause</a> is no longer limited by
+    <a href="../c3ref/c_limit_attached.html#sqlitelimitcompoundselect">SQLITE_LIMIT_COMPOUND_SELECT</a>.
+<li>Added the <a href="https://www.sqlite.org/src/artifact/f971962e92ebb8b0">eval.c</a>
+    <a href="../loadext.html">loadable extension</a> that implements an eval() SQL function that will recursively
+    evaluate SQL.
+<p><b>Performance Enhancements:</b>
+<li>Reduce the number of memcpy() operations involved in balancing a b-tree,
+    for 3.2% overall performance boost.
+<li>Improvements to cost estimates for the <a href="../optoverview.html#skipscan">skip-scan optimization</a>.
+<li>The <a href="../optoverview.html#autoindex">automatic indexing</a> optimization is now capable of generating
+    a <a href="../partialindex.html">partial index</a> if that is appropriate.
+<p><b>Bug fixes:</b>
+<li>Ensure durability following a power loss with
+    "PRAGMA journal_mode=TRUNCATE" by calling fsync() right after truncating
+    the journal file.
+<li>The query planner now recognizes that any column in the right-hand
+    table of a LEFT JOIN can be NULL, even if that column has a NOT NULL
+    constraint.  Avoid trying to optimize out NULL tests in those cases.
+    Fix for ticket
+    <a href="https://www.sqlite.org/src/info/6f2222d550f5b0ee7ed">6f2222d550f5b0ee7ed</a>.
+<li>Make sure ORDER BY puts rows in ascending order even if the DISTINCT
+    operator  is implemented using a descending index.  Fix for ticket
+    <a href="https://www.sqlite.org/src/info/c5ea805691bfc4204b1cb9e">c5ea805691bfc4204b1cb9e</a>.
+<li>Fix data races that might occur under stress when running with many threads
+    in <a href="../sharedcache.html">shared cache mode</a> where some of the threads are opening and
+    closing connections.
+<li>Fix obscure crash bugs found by
+    <a href="http://lcamtuf.coredump.cx/afl/">american fuzzy lop</a>.  Ticket
+    <a href="https://www.sqlite.org/src/info/a59ae93ee990a55">a59ae93ee990a55</a>.
+<li>Work around a GCC optimizer bug (for gcc 4.2.1 on MacOS 10.7) that caused the 
+    <a href="../rtree.html">R-Tree extension</a> to compute incorrect results when compiled with -O3.
+<p><b>Other changes:</b>
+<li>Disable the use of the strchrnul() C-library routine unless it is
+    specifically enabled using the -DHAVE_STRCHRNULL compile-time option.
+<li>Improvements to the effectiveness and accuracy of the
+    <a href="../lang_corefunc.html#likelihood">likelihood()</a>, <a href="../lang_corefunc.html#likely">likely()</a>, and <a href="../lang_corefunc.html#unlikely">unlikely()</a> SQL hint functions.
+
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

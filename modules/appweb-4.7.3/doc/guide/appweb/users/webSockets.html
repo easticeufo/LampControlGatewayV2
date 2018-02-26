@@ -1,0 +1,425 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Users Guide</a> &gt; <b>WebSockets</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            
+<!-- BeginDsi "dsi/usersGuideSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/users/index.html">User Guide Overview</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/lang.html">Multi-Language Support</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authorization</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../guide/appweb/users/ssl.html">SSL</a></li>
+                <li><a href="../../../guide/appweb/users/modules.html">Appweb Modules</a></li>
+                <li><a href="../../../guide/appweb/users/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/users/client.html">HTTP Client</a></li>
+                <li><a href="../../../guide/appweb/users/webSockets.html">WebSockets</a></li>
+                <li><a href="../../../guide/appweb/users/frameworks.html">Web Frameworks</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>WebSockets</h1>
+            <p><a href="http://en.wikipedia.org/wiki/WebSocket">WebSockets</a> is a technology providing 
+            interactive communication between a server and client. It is an IETF standard defined by <a
+                href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+            <p>Normal HTTP connections follow a request/response paradigm and do not easily support asynchronous
+            communications or unsolicited data pushed from the server to the client. WebSockets solves this 
+            by supporting bidirectional, full-duplex communications over persistent connections. A WebSocket
+            connection is established over a standard HTTP connection and is then upgraded without impacting the
+            original connection. This means it will work with existing networking infrastructure including firewalls and
+            proxies.</p>
+            <p>WebSockets is currently supported in the current releases of all major browsers, including:
+            Chrome, Firefox, IE, Opera and Safari.</p>
+            <h2>Appweb Implementation</h2>
+            <p>Appweb implements WebSockets as an optional pipeline filter called <i>WebSockFilter</i>. 
+            The filter implements the WebSockets protocol, handshaking and provides a C language API. The 
+            WebSock filter observes the WebSockets HTTP headers and manages the connection handshaking with the
+            client. It also manages the framing and encoding/decoding of message data.</p>
+            <p>The WebSock filter is configured into the pipeline using the 
+            <a href="dir/route.html#addInputFilter">AddInputFilter</a> directive.</p>
+            <h2>WebSocket Handshake</h2>
+            <p>A WebSocket connection begins life as a normal HTTP request and is upgraded to the WebSocket protocol. 
+            The WebSocketFilter is activated by a set of WebSocket HTTP headers from the client that describes 
+            a desired WebSocket connection. Here is a typical client HTTP request requiring a WebSocket upgrade:</p>
+            <pre>
+GET /websock/proto/msg HTTP/1.1
+Host: example.com
+<b>Connection: Upgrade
+Upgrade: websocket
+Sec-WebSocket-Protocol: chat, better-chat
+Sec-WebSocket-Key: 50cLrugr7h3yAbe5Kpc52Q==
+Sec-WebSocket-Version: 13
+Origin: http://example.com</b>
+</pre>
+            <p>The WebSocket filter constructs a handshake response that includes an accepted key and selected
+            protocol. For example:</p>
+<pre>
+HTTP/1.1 101 Switching Protocols
+Server: Embedthis-http
+Date: Sat, 06 Oct 2014 05:10:15 GMT
+<b>Connection: Upgrade
+Upgrade: WebSocket
+Sec-WebSocket-Accept: 58ij/Yod1NTjzqcyjkZbZk6V6v0=
+Sec-WebSocket-Protocol: chat</b>
+X-Inactivity-Timeout: 600
+X-Request-Timeout: 600
+</pre>
+            <p>After the handshake message has been sent, the server is free to send messages to the client.
+            Once the client receives the handshake, it can send messages to the server. Either side can send
+            at anytime thereafter. Communications are thus full-duplex.</p>
+            <h2>Message Types</h2>
+            <p>WebSockets supports several message types:</p>
+            <ul>
+                <li>Text in UTF-8</li>
+                <li>Binary</li>
+                <li>Close</li>
+                <li>Ping/Pong</li>
+            </ul>
+            <h3>Text Messages</h3>
+            <p>Text messages must be valid UTF-8 strings. The receiving peer will validate and reject non-conforming
+            strings. However, Appweb can be configured to accept invalid UTF-8 strings via the
+                <a href="dir/route.html#ignoreEncodingErrors">IgnoreEncodingErrors</a> Appweb directive.</p>
+            <h3>Binary Messages</h3>
+            <p>Binary message allow the transmission of any content. Messages can be an arbitrary length up to the maximum
+            specified by the <a href="dir/sandbox.html#limitWebSocketsMessage">LimitWebSocketsMessage</a> appweb.conf 
+            directive.</p>
+            <p>When messages are transmitted, they may be broken into frames of no more than the length specified by the 
+            <a href="dir/sandbox.html#limitWebSocketsFrame">LimitWebSocketsFrame</a> directive. Incoming message frames
+            are not subject to this limit. The WebSockets filter will aggregate message frames into complete messages
+            before passing to the user callback. There are APIs provided to preserve frame boundaries if you wish to 
+            manage frame boundaries manually.</p>
+            <p>The <a href="dir/sandbox.html#limitWebSocketsPacket">LimitWebSocketsPacket</a> directive defines what 
+            is the largest packet size that will be passed to the user callback receiving incoming WebSocket 
+            messages. If this is set to a value as large as the largest message, then complete messages will be passed
+            to the user callback. If it is smaller than the message size, the message will be broken into packets
+            and the last packet will have the HttpPacket.last field set to true. Note these packet boundaries do not
+            correspond to frame boundaries.</p>
+            <p>Frame boundaries can be preserved by setting PreserveFrames directive or by calling
+            the 
+            <a href="../../../api/http.html#group___http_web_socket_1ga31d43df04a526af4103c41d0deecedc1">
+                httpSetWebSocketPreserveFrames</a> API. If enabled, each frame is passed as-is to the user callback without
+            splitting or aggregating with other frames. Note that if enabled, some text messages may not have their UTF-8
+            fully validated if UTF code points span message frames.</p>
+            <h3>Close Message</h3>
+            <p>Ordinarily, WebSocket communications are terminated by sending a <i>Close</i> message. The close
+            message includes a status code and an optional <i>reason</i> string to explain why the connection is being closed. The
+            <i>reason</i> string must be less than 124 bytes in length so as to fit into a single WebSocket frame. When the
+            server receives a close message, it responds with a close message to the peer. This happens internally in the
+            WebSockFilter.</p>
+            <h3>Ping/Pong Messages</h3>
+            <p>To keep a communications channel alive, it is sometimes necessary to send regular messages to indicate
+            the channel is still being used. Some servers, browsers or proxies may close an
+            idle connection. The Ping/Pong WebSockets messages are designed to send non-application level traffic
+            that will prevent the channel from being prematurely closed.</p>
+            <p>A ping message may be sent by either side and the peer will reply with <i>pong</i>
+            message response. The pong message is generated internally by the WebSockets layer and is similarly
+            consumed by the WebSockets layer at the peer. The application layer may initiate the peer message, but
+            it will never see the pong response.</p>
+            <p>Appweb has a <a href="dir/route.html#webSocketsPing">WebSocketsPing</a> appweb.conf directive that can be 
+            used to automatically send ping messages at a specified interval. Note: use of this directive defeats the Appweb 
+            InactivityTimeout for an idle WebSockets connection.</p>
+            <h2>Timeouts</h2>
+            <p>The standard Appweb request and inactivity timeouts can be used for WebSocket communications.
+            Typically, a route will be defined in the appweb.conf file for WebSockets and it will include
+            appropriate request and inactivity timeout directives. 
+            The <a href="dir/sandbox.html#requestTimeout">RequestTimeout</a> gives the total time a WebSocket connection 
+            may remain open.  The <a href="dir/sandbox.html#requestTimeout">InactivityTimeout</a> specifies the 
+            maximum time a WebSocket connection may be completely idle. Note that ping/pong messages will reset an 
+            inactivity timeout.</p>
+            <h2>Configuration</h2>
+            <p>It is typically necessary to create a dedicated <a href="dir/route.html#route">Route</a> for WebSockets communications. 
+            Such a route should define a unique URI prefix for WebSocket communications and configure the WebSocket filter.
+            Any number of WebSocket routes can be defined. For example:</p>
+<pre>
+&lt;Route ^/websock/{controller}$&gt;
+    WebSocketsProtocol  chat            # Use the chat application protocol
+    AddFilter           webSocketFilter # Add the WebSockets filter
+    AddHandler          espHandler      # Run an ESP controller
+    Source              test.c          # Code is in test.c
+    Target              run $1          # Use {controller}
+    RequestTimeout      2hrs            # Maximum connection time
+    InactivityTimeout   5mins           # Maximum idle time
+&lt;/Route&gt;
+</pre>
+            <p>This creates a route for URIs beginning with <i>"/websock"</i> for WebSockets communications.
+                It uses an ESP controller to respond to incoming messages. See below for sample ESP
+                WebSocket code.</p>
+                
+            <h2>WebSockets Directives</h2>
+            <p>The following directives are supported for controlling WebSocket communications within a route.</p>
+            <table title="directives">
+                <thead><tr><th>Directive</th><th>Purpose</th></tr>
+                <tbody>
+                    <tr><td>IgnoreEncodingErrors</td><td>Ignore UTF-8 text message encoding errors.</td></tr>
+                    <tr><td>InactivityTimeout</td><td>Maximum idle time before closing a connection.</td></tr>
+                    <tr><td>RequestTimeout</td><td>Maximum duration before closing a connection.</td></tr>
+                    <tr><td>LimitWebSockets</td><td>Maximum number of simultaneous WebSocket sessions.</td></tr>
+                    <tr><td>LimitWebSocketsFrame</td><td>Maximum WebSockets message frame size for sent messages.</td></tr>
+                    <tr><td>LimitWebSocketsMessage</td><td>Maximum WebSockets message size </td></tr>
+                    <tr><td>LimitWebSocketsPacket</td><td>Maximum WebSockets message size passed to the
+                            callback in one transaction.</td></tr>
+                    <tr><td>WebSocketsProtocol</td><td>Application level protocol supported by this route.</td></tr>
+                    <tr><td>WebSocketsPing</td><td>Frequency to generate a ping message.</td></tr>
+                </tbody>
+            </table>
+            <h2>WebSockets APIs</h2>
+            <p>Appweb provides a simple but powerful API for interaction with WebSockets.</p>
+            <table title="API">
+                <thead><tr><th>Directive</th><th>Purpose</th></tr></thead>
+                <tbody>
+                    <tr><td><a href="../../../api/http.html#group___http_queue_1ga289893521c40788edc06280530167a85">httpGetPacket</a></td><td>Get the next message</td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1a6c1a4a4b4d9cfc2ce626bb5fd005e6ac">httpGetWebSocketCloseReason</a></td><td>Get the close reason supplied 
+                        by the peer</td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1ad908e15f337a359e0f90258621d1329b">httpGetWebSocketProtocol</a></td><td> Get the selected web 
+                        socket protocol selected by the server</td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1a038d5c42a1ef5bce910dc617987a222c">httpSend</a></td><td>Send a UTF-8 text message to 
+                        the web socket peer</td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1ae7ef3ebbb7bbbbd701bdf84ab10cb6c1">httpSendBlock</a></td><td>Send a message of a given type to 
+                        the web socket peer</td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1adb22d418a67109b699890888ca66053a">httpSendClose</a></td><td>Send a close message to the web 
+                        socket peer</td></tr>
+                    <tr><td><a href="../../../api/http.html#group___http_conn_1ga6c39eab8e8b50e632f7e5620fce05318">httpSetConnNotifier</a></td><td>Define a connection callback notifier function</td></tr>
+                    <tr><td><a
+                                href="../../../api/http.html#group___http_web_socket_1ga31d43df04a526af4103c41d0deecedc1 ">httpSetWebSocketPreserveFrames</a></td><td>Preserve
+                            frame boundaries and do not split or aggregate frames. </td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1a96f8cb3db541d8a1340caf0d2afbbb1f">httpSetWebSocketProtocols</a></td><td>Set the list of 
+                        application-level protocols supported by the client. This is a client-only API. </td></tr>
+                    <tr><td><a href="../../../api/http.html#http_8h_1acb7184072bfb15ebf2c95f9ef6d0ba8c">httpWebSocketOrderlyClosed</a></td><td>Test if a close was orderly</td></tr>
+                    <tr><td><a href="../../../api/esp.html#group___esp_req_1ga0ea346bbee09c401e90f0b908e7476ba">
+                            espSetNotifier</a></td><td>Define a connection callback notifier function for ESP applications.</td></tr>
+                </tbody>
+            </table>
+            <h2>Using WebSockets API with ESP</h2>
+            <p>ESP is an ideal web framework for use with WebSockets. ESP provides a very low latency connection
+            between a client request and execution of C functions. A dedicated ESP controller can be created
+            for the WebSocket that responds to the incoming WebSocket request. The controller then defines
+            a connection callback  that is notified when incoming WebSockets messages arrive. This callback will 
+            also be invoked for close or error events. For example:</p>
+            <pre>
+#include "esp.h"
+static void testCallback(HttpConn *conn, int event, int arg)
+{
+    if (event == <b>HTTP_EVENT_READABLE</b>) {
+        HttpPacket *packet = <b>httpGetPacket</b>(conn-&gt;readq);
+        printf("Message %s\n", mprGetBufStart(packet-&gt;content));
+        /* Send a reply message */
+        <b>httpSend</b>(conn, "Reply message at %s", mprGetDate(0));
+        /* No need to free buffer, the garbage collector will free */
+    } else if (event == HTTP_EVENT_APP_CLOSE) {
+    } else if (event == HTTP_EVENT_ERROR) {
+    }
+}
+/*
+    Action run when the client connects
+ */
+static void test() {
+    /* This keep the connection open */
+    dontAutoFinalize();
+    /* Define a callback for connection and I/O events */
+    espSetNotifier(getConn(), testCallback);
+}
+/* One-time ESP loadable module initialization */
+ESP_EXPORT int esp_controller_websock(HttpRoute *route, MprModule *module) {
+    espDefineAction(route, "test", test);
+    return 0;
+}
+</pre>
+            <h3>Reading Messages</h3>
+            <p>WebSocket messages are received by reading data from the packet read queue in response to an
+            HTTP_EVENT_READABLE event. WebSocket messages are composed of one or more frames. Each packet typically 
+            contains one frame, provided the frame is smaller than the configured maximum packet size (LimitWebSocketsPacket).</p>
+            
+            <p>The packet is retrieved via the
+            <a href="../../../api/http.html#group___http_queue_1ga289893521c40788edc06280530167a85">
+                httpGetPacket</a> API. This removes the first packet from the given read queue.</p>
+            <pre>HttpPacket *packet = httpGetPacket(conn-&gt;readq);</pre>
+            <p>The packet contains information about the message and the message contents. Packet fields of interest are:</p>
+            <ul>
+                <li>packet-&gt;type &mdash; WebSocket message type</li>
+                <li>packet-&gt;last &mdash; True if this packet corresponds to the last frame in a message</li>
+                <li>packet-&gt;content &mdash; WebSocket message content. Instance of MprBuf.</li>
+            </ul>
+            <p>The WebSocket frame types are:</p>
+            <ul>
+                <li> WS_MSG_CONT     &mdash; Continuation frame</li>
+                <li> WS_MSG_TEXT     &mdash; UTF-8 text message</li>
+                <li> WS_MSG_BINARY   &mdash; Binary message</li>
+                <li> WS_MSG_CLOSE    &mdash; Close message</li>
+                <li> WS_MSG_PING     &mdash; Ping message</li>
+                <li> WS_MSG_PONG     &mdash; Pong message</li>
+            </ul>
+            <p>The message contents is stored in the packet-&gt;content buffer. This is an instance of the 
+            <a href="../../../api/mpr.html#group___mpr_buf">MprBuf</a> buffer object. A pointer to
+            the start of the message can be retrieved via:</p>
+            <pre><a href="../../../api/mpr.html#group___mpr_buf_1gac982291efef3d49cce4bc2ecec6566e5"
+                >mprGetBufStart(packet-&gt;content)</a></pre>
+            <p>The length of the message can be determined via:</p>
+            <pre><a href="../../../api/mpr.html#group___mpr_buf_1gaa543b610b67691faf917b4b79229fc34"
+                >mprGetBufLength(packet-&gt;content)</a></pre>
+            <p>Note TEXT messages are null terminated and you can use the start reference as a c-string reference.</p>
+            <h3>Sending Messages</h3>
+            <p>Appweb provides two APIs for sending messages:</p>
+            <ul>
+                <li>httpSend &mdash; for simple formatted text messages</li>
+                <li>httpSendBlock &mdash; a lower-level API for maximal control over message transmission</li>
+            </ul>
+            <p>To send messages of type TEXT, Appweb provides a simple API: 
+            <a href="../../../api/http.html#group___http_web_socket_1ga038d5c42a1ef5bce910dc617987a222c">httpSend</a>.</p>
+            <pre>ssize httpSend (HttpConn *conn, cchar *fmt, ...)</pre>
+            <p>This API sends UTF-8 messages to the client. Messages are fully buffered, i.e. the call will always accept the
+            given data. The call returns the number of bytes accepted. For example:</p>
+            <pre>httpSend(conn, "The temperature today is: %d", temp);</pre>
+            <h4>httpSendBlock</h4>
+            <p>The WebSockFilter also provides a lower-level and more powerful API: 
+                <a href="file:///Users/mob/git/appweb/doc/api/http.html#group___http_web_socket_1ga01475cb98667018a573c4347c847217f"
+                    >httpSendBlock</a> for sending messages.</p>
+            <pre>ssize httpSendBlock(HttpConn *conn, int type, cchar *msg, ssize len, int flags)</pre>
+            <p>This API can send messages and can control how messages are framed, buffered or whether the API should wait
+            for completion.</p>
+            <h4>Modes</h4>
+            <p>The httpSendBlock API supports several modes for sending data that can be controlled via the httpSendBlock
+            flags:</p>
+            <ul>
+                <li>Buffered &mdash; HTTP_BUFFER</li>
+                <li>Blocking &mdash; HTTP_BLOCK</li>
+                <li>Non-blocking &mdash; HTTP_NON_BLOCK</li>
+            </ul>
+            <h4>Buffered Mode</h4>
+            <p>In buffered mode, the entire message provided to httpSendBlock is accepted and buffered in the Appweb pipeline. 
+            The call will never return having written less than requested. If the message is very large, this will consume 
+            memory sufficient to buffer the message. This mode is simple and fast, but may increase the memory footprint of
+            Appweb. It is ideal for smaller messages.</p>
+            <pre>
+char *msg;
+msg = sfmt("The temperature today is: %d", temp);
+httpSendBlock(conn, WS_MSG_BINARY, msg, slen(msg), HTTP_BUFFER);</pre>
+            <h4>Blocking Mode</h4>
+            <p>In blocking mode, the message is not buffered, but rather the call blocks until the entire message has been sent 
+            down the Appweb pipeline. This call will consume a thread while the call blocks. This mode is simple, uses minimal 
+            memory, but will consume a thread. This mode is suitable for small messages, or occasional use for larger
+            messages on lower-volume web sites. In this mode, the call may block for up to the inactivity timeout defined by
+            the InactivityTimeout directive.</p>
+            <pre>
+char buf[1000 * 1000];
+memset(buf, 0x10, sizeof(buf));
+httpSendBlock(conn, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
+            <h4>Non-Blocking Mode</h4>
+            <p>In non-blocking mode, the httpSendBlock call will only accept data that can be absorbed by the pipeline
+            without exceeding the queue buffer limits. The call may return "short" having written less than
+            requested. It is then the callers responsibility to resend the remaining portion of data at a later time. 
+            If this occurs the next call to httpSendBlock should set the message type to WS_MSG_CONT to indicate a continued 
+            message. This is the highest performance mode and consumes minimal memory. However it is more complex when the
+            all returns having written less than requested. There is a sample that demonstrates this at:</p>
+            
+            <pre><a href="https://github.com/embedthis/appweb/tree/master/samples/websockets-output"
+                    >https://github.com/embedthis/appweb/tree/master/samples/websockets-output</a></pre>
+            <h4>Message Framing</h4>
+            <p>The WebSockFilter may split the message into frames such that no frame is larger than the limits specified by
+            the LimitWebSocketsFrame directive. However, if the HTTP_MORE flag is specified to indicate there is more data to
+            complete the current message, the data provided will not be split into frames and will not be aggregated with
+            previous or subsequent messages.  i.e. frame boundaries will be preserved and sent as-is to the peer.</p>
+            <h2>WebSocket Samples</h2>
+            <p>See the Appweb samples for some specific WebSockets samples</p>
+            <pre><a href="https://github.com/embedthis/appweb/tree/dev/samples">https://github.com/embedthis/appweb/tree/dev/samples</a></pre>
+            <h2>WebSocket References</h2>
+            <table title="Standards" class="width">
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a></td>
+                    <td>The WebSockets Protocol</td>
+                </tr>
+                <tr>
+                    <td><a href="http://dev.w3.org/html5/websockets/">WebSocket API</a></td>
+                    <td>The Javascript WebSockets API</td>
+                </tr>
+                <tr>
+                    <td><a href="http://en.wikipedia.org/wiki/WebSocket">WebSockets Wikipedia</a></td>
+                    <td>WebSockets Wikipedia</td>
+                </tr>
+                <tr>
+                    <td><a href="http://lucumr.pocoo.org/2012/9/24/websockets-101/">WebSockets 101</a></td>
+                    <td>WebSockets 101</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.websocket.org/index.html">WebSocket.org</a></td>
+                    <td>WebSockets background and demo</td>
+                </tr>
+                <tr>
+                    <td><a href="http://html5demos.com/web-socket">WebSocket Online Demo</a></td>
+                    <td>The WebSockets online test site</td>
+                </tr>
+                <tr>
+                    <td><a
+                            href="http://blog.kaazing.com/2012/05/09/inspecting-websocket-traffic-with-chrome-developer-tools/">Chrome
+                    WebSocket Tools</a></td>
+                    <td>Chrome browser developer tools guide</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.rlgsc.com/blog/ruminations/websocket-rediscovered-travails.html">WebSocket Protocol</a></td>
+                    <td>The WebSocket Protocol - Past Travails are to be avoided</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.adobe.com/devnet/html5/articles/real-time-data-exchange-in-html5-with-websockets.html">Real-time Data Exchange</a></td>
+                    <td>Real-time data exchange in HTML5 and WebSockets</td>
+                </tr>
+                <tr>
+                    <td><a
+                            href="http://www.lenholgate.com/blog/2011/07/websockets-is-a-stream-not-a-message-based-protocol.html">WebSockets Streams</a></td>
+                    <td>WebSockets is a stream not a message based protocol....</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

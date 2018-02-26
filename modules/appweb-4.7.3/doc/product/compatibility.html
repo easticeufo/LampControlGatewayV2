@@ -1,0 +1,113 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <b>Compatibility</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#api">API Compatibility</a></li>
+                <li><a href="#r4">Appweb 4</a></li>
+                <li><a href="#r2">Appweb 2</a></li>
+            </ul>
+<!-- BeginDsi "dsi/genSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../guide/appweb/overview.html">Appweb Overview</a></li>
+                <li><a href="../guide/appweb/features.html">Appweb Features</a></li>
+                <li><a href="../product/releaseNotes.html">Release Notes</a></li>
+                <li><a href="../product/changeLog.html">Change Log</a></li>
+                <li><a href="../product/roadmap.html">Roadmap</a></li>
+                <li><a href="../product/compatibility.html">Compatibility</a></li>
+                <li><a href="../licenses/index.html">Licensing</a></li>
+                <li><a href="../product/install/index.html">Installation Overview</a></li>
+                <li><a href="../guide/appweb/users/gettingStarted.html">Getting Started</a></li>
+                <li><a href="../guide/appweb/users/index.html">Users Guide</a></li>
+                <li><a href="../product/project.html">Project Resources</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Compatibility</h1>
+            <p>Appweb is provided in two supported versions:</p>
+            <ul>
+                <li><b>Appweb Long Term Support (LTS)</b> &mdash; The goal of LTS versions is stability and compatibility. 
+                Bugs and security issues will be fixed, but no feature updates will be issued for LTS versions. 
+                Appweb 4.5.X is head of the LTS stream and it will be maintained with security updates and fixes until 
+                the end of 2015.</li>
+                <li><b>Appweb Development Versions (DEV)</b> &mdash; The goal of DEV versions is ongoing feature development. 
+                New features will be issued for DEV versions and APIs will evolve. Appweb 5 is the next DEV version and it will be released in Q1 2014.</li>
+            </ul>
+            <a id="api"></a>
+            <h2 class="section">API Compatibility</h2>
+            <p>In the development stream (Appweb 5.X) the Appweb APIs may evolve, and are thus subject to change 
+            between minor releases. The Appweb documentation
+            provides a <a href="../api/stability.html">Stability Classification</a> for each API group that reflects
+            their stability with respect to forward changes.</p>
+            
+            <a id="r4"></a>
+            <h2>Migrating to Appweb 5</h2>
+            <p>Appweb 4 and 5 are highly compatible. Code written for Appweb 4 should migrate to Appweb 5 with little or
+            no changes required.</p>
+            <p>If you are migrating from Appweb 2 or 3, you should regard Appweb 5.X as a next generation web server.
+            You can migrate code from Appweb 2 or 3 to Appweb 5, however, you should anticipate significant refactoring 
+            work in the transition.</p>
+            <a id="r4"></a>
+            <h2>Appweb 4</h2>
+            <p>Appweb 4 is an evolutionary release relative to Appweb 3. Many APIs have changed since Appweb 3
+           and new APIs have been added for increased functionality. Appweb 4 uses a new memory allocator that does not require a
+            memory context as the first argument to most APIs. So many APIs have changed signature, while the underlying
+            functionality remains largely similar. The memory allocator uses garbage collection and this eliminates
+            the need to manually free up memory. You can migrate code from Appweb 3 to Appweb 4 with refactoring.</p>
+            <a id="r2"></a>
+            <h2>Appweb 2 and 3</h2>
+            <p>Appweb versions 2 and 3 are now officially deprecated. Support is only available under special arrangements
+            via custom dev services programs.</p>
+            <h2>Standards</h2>
+            <p>Appweb supports the following standards:</p>
+            <ul>
+                <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">HTTP/1.1</a></li>
+                <li><a href="http://www.w3.org/CGI/">CGI 1.1</a></li>
+                <li><a href="http://www.ietf.org/rfc/rfc1867.txt">Form-based File Upload in HTML</a></li>
+                <li><a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262 for server
+                side JavaScript if using Ejscript</a></li>
+            </ul>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

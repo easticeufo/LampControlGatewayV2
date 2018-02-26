@@ -1,0 +1,271 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt;<a href="index.html">Users Guide</a> &gt;
+            <b>Embedded Server Pages</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#why">Why Cache?</a></li>
+                <li><a href="#options">Caching Options</a></li>
+                <li><a href="#server">Server Caching</a></li>
+                <li><a href="#configuring">Configuring</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#criteria">Deciding Criteria</a></li>
+            </ul>
+<!-- BeginDsi "dsi/webFrameSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/users/frameworks.html">Web Frameworks</a></li>
+                <li><a href="../../../guide/appweb/users/action.html">Action Handler</a></li>
+                <li><a href="../../../guide/appweb/users/cgi.html">CGI</a></li>
+                <li><a href="../../../guide/esp/users/index.html">ESP</a></li>
+                <li><a href="../../../guide/appweb/users/ejs.html">Ejscript</a></li>
+                <li><a href="../../../guide/appweb/users/php.html">PHP</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">User Guide Overview</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authorization</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../guide/appweb/users/ssl.html">SSL</a></li>
+                <li><a href="../../../guide/appweb/users/modules.html">Appweb Modules</a></li>
+                <li><a href="../../../guide/appweb/users/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/users/client.html">HTTP Client</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Appweb Response Caching</h1>
+            <p>Appweb Response Caching is an ideal technique for speeding up a wide variety of web applications. 
+            Frequently used pages are cached and therefore served faster than the normal approach of generating
+            the web page each and every time the user visits the page. However, caching can be a complex topic
+            as there are several places to locate the cached content and many ways to configure the overall caching
+            architecture. This document provides a basic overview of Appweb
+            caching and how to configure its caching capabilities.</p> 
+            <a id="why"></a>
+            <h2>Why Cache?</h2>
+            <p>When a browser issues an HTTP request to a server, that request must be transmitted and received. Then the 
+            response must be computed, delivered and finally rendered in the browser. This process may take from fractions of a 
+            second up to many seconds to complete. The delays are comprised of the many steps the request and 
+            response must traverse from the browser to the server and back. These steps all impart delay. The key
+            delays are:</p>
+            <ul>
+                <li>Network travel time for the request to travel from the browser to the server</li>
+                <li>Processing time to run the request and to prepare a response</li>
+                <li>Network travel time for the response to travel from the server to the browser</li>
+            </ul>
+            <p>Network travel time for the request and response can be highly variable depending on network congestion. 
+            On a fast network with little traffic, the delay can be small (less than 1/10 second). On slow networks, it 
+            can be upwards of many seconds. Request processing time for complex web pages can easily be several seconds.
+            Response Caching can greatly assist by reducing these delays. By caching the response at the 
+            client, the network delay can be reduced or eliminated altogether. By caching at the server, the time
+            to generate the response can be eliminated.</p>
+            
+            <a id="options"></a>
+            <h2 class="section">Caching Options</h2>
+            <p>When responding to a client request, there are four alternative ways to utilize Appweb caching:</p>
+            <p><img class="xbare-screen" src="../../../images/caching/caching-steps.jpg" alt="steps"/></p>
+            <h3>Options</h3>
+            <ol>
+                <li>Use the client cache and don't contact the server at all.</li>
+                <li>Use the client cache but first check with the server to determine whether the client cache is acceptable.</li>
+                <li>Use the server cache because the client doesn't have a usable response.</li> 
+                <li>Don't use any cache and generate a new response</li>
+            </ol>
+            <p>There are pros/cons and tradeoffs with each option. The best solution is often a blend of all approaches.</p>
+            <h3>Client Cache With No Server Contact</h3>
+            <p>Caching in the client is the fastest. It eliminates network delays and can respond to client requests in
+            milliseconds. However, it is impossible to know if the server has updated data that renders the cached
+            response stale. This kind of caching is best for static content that is rarely updated and for which 
+            the consequences of serving stale content are non-critical.</p>
+            <h3>Client Cache With Server Verification</h3>
+            <p>The downside of client caching without server contact can be offset by contacting the server and
+            verifying that the client-cached data is current. In this mode, both the client and server retain cached 
+            copies of the response. When the client makes a request, it submits the unique Etag and modification date
+            of the response. The server checks these two fields against its cached copy and if they match, the server
+            responds to the client immediately without regenerating the response. This eliminates the delay in
+            generating the response. Furthermore, the server can respond with a <em>304 Not-Modified</em> header and
+            omit the response content itself. So the response is very small and will travel quickly over the network.</p>
+            <p>If the client cache does not match the server cache, the response must contain the full response
+            data.</p>
+            <p>The advantage of this mode, is that the server keeps control and can immediately update cached content. It 
+            eliminates the delay in generating the response and can greatly reduce network traffic. The downside is that
+            the server must be contacted by the client with the associated network latency. </p>
+            <p>If the client cache either does not contain a response, or the client cache has a stale response, the
+            server must transmit the full response data back to the client. In this case, the cost of generating
+            the response is eliminated, but the full response data must be sent over the network to the client. </p>
+            <P>This kind of caching is best for dynamic web pages that are viewed more often than the data on which they
+            depend is updated.</p>
+            <a id="server"></a>
+            <h2 class="section">Caching on the Server</h2>
+            <p>On the server, there are three paradigms for how and when to update cached responses.</p>
+            <ol>
+                <li>Pull-Through</li>
+                <li>Manual Verification</li>
+                <li>Event Driven</li>
+            </ol>
+            <h3>Pull-Through Caching</h3>
+            <p>Pull-through caching is mostly transparent. If caching has been configured for a request, the first time
+            a request is received for a resource, the Appweb cacheFilter automatically captures the response headers and
+            data and saves it for future requests.  When a subsequent request for the same resource is received, the
+            Appweb request router examines the cache and if the cached data is current, it will be returned to the
+            client without running the request handler and regenerating the response. This paradigm is useful when it is
+            acceptable (within limits) to serve a stale page to the client. The configured lifespan of cached responses
+            effectively controls "how stale" the cached response may be, before it will be automatically removed from
+            the cache. </p>
+            <h3>Manual Verification</h3>
+            <p>In Manual Verification mode, the Appweb request handler is always invoked, so it can determine if any
+            server state has changed that would require regenerating the response. The handler will manually send the cached
+            response (if it is current) by using the 
+            
+            <a href="../../../api/esp.html#group___esp_req_1ga94594750521ce6621691dcec43a2d670"><em>espRenderCached</em></a>
+            API. If the response is stale, it will generate a new response. In both cases, the
+            Appweb cacheFilter will automatically capture the response and save it to the cache for future requests.
+            This paradigm is useful when a stale page must <i>never</i> be sent to the client and the handler must
+            retain absolute control.</p>
+            <h3>Event Driven</h3>
+            <p>In Event Driven mode, the web page is not generated in response to a client request, but rather in
+            response to some state change on the server system. The pre-generated web page is then manually stored in
+            the cache by calling the
+            <a href="../../../api/esp.html#group___esp_req_1ga2d10fdd68ab00d306d344c815f7655e7"><em>espUpdateCache</em></a>
+            API.  When the client request is subsequently received, the response is retrieved from the cache without
+            running a request handler. This paradigm is effective if the delay in creating a response web page is large.
+            In that case, pre-computing the web page in the background means that the client request can be serviced very
+            quickly without waiting for the page to be generated.</p>
+            <a id="configuring"></a>
+            <h2 class="section">Configuring Caching</h2>
+            <p>Appweb caching is configured via the <a href="dir/route.html#cache"><em>Cache</em></a> configuration
+            directive. This directive specifies: </p>
+            <ol>
+                <li>Whether the client should contact the server to verify content</li>
+                <li>How long the client should cache the response</li> 
+                <li>What requests to cache</li> 
+                <li>How to handle request parameters</li> 
+            </ol>
+            <p>Here are a few examples:</p>
+<pre>
+Cache 86000
+Cache client=86400 ext="gif,jpg,png,ico"
+Cache server methods="GET"
+Cache server methods="GET,POST" /status.esp /inventory.esp
+Cache server all /user/login.esp
+Cache server only /user/login.esp?first=1
+Cache server unique /user/login.esp
+Cache server manual /dashboard.esp
+</pre>
+            <p>The <em>Cache 8600</em> directive defines a default cache lifespan for the current route. If subsequent
+            Cache directives do not define a lifespan, this default will be used.</p>
+            <p>The <em>Cache client=86400 ext="gif,jpg,png,ico"</em> directive will cache images with the specified
+            extensions at the client-side for one day (86400 seconds). The client will not contact the server to refresh
+            these images unless <em>reload</em> is clicked on the browser.</p>
+            <p>The <em>Cache server methods="GET"</em> directive will cause all requests using the HTTP GET method to be
+            cached at the server with the default lifespan. Note, such global caching of all requests is typically not what
+            is desired.</p>
+            <p>The <em>Cache server methods="GET,POST" /status.esp /inventory.esp</em>
+                directive will cache the /status.esp and /inventory.esp URIs if the requests use the GET or POST HTTP
+                methods.</p>
+            <p>The <em>Cache server all /user/login.esp</em> directive will cache all requests that have the given URI
+            regardless of any additional query, POST data or route parameters. i.e. this means the request
+            "/users/login.esp?fast" will use the same cached response as "/users/login.esp".
+            <p>The <em>Cache server only /user/login.esp?first=1</em> directive will cache "only" this exact request.
+            When matching a request with this cache record, the request parameters (query, POST data and route
+            parameters) will be added to the request URI to form a sorted www-urlencoded URI. This means that different
+            request parameters will not be cached and only the exact form specified will be cached.</p>
+            <p>The <em>Cache server unique /user/login.esp</em> directive will cache all requests with a matching
+            request pathInfo regardless of the request parameters. However, each request with different request
+            parameters will be cached uniquely. This means that the URI "/users/login.esp?first" will be cached
+            differently to the URI "/usrs/login.esp?second". Note that this applies to POST data and route parameters as
+            well as request query information.</p>
+            <p>The <em>Cache server manual /dashboard.esp</em> directive will invoke manual mode where the Appweb
+            handlers must manually send the cached response to the client. The response will then be automatically
+            cached by the cacheFilter for subsequent requests.</p>
+            <p>See the <a href="dir/route.html#cache"><em>Cache</em></a> directive documentation for full details.</p>
+            <h3>Inheriting Caching Configuration</h3>
+            <p>Each Cache directive creates a cache record that applies to the current route in the appweb.conf
+            configuration file. Requests that match the current route will consider the caching records in the order in
+            which they are defined in the configuration file. The first matching cache record will be used for the
+            request.</p>
+            <p>Caching records, like most other configuration file settings, are inherited by inner routes. Consequently, if
+            you define a caching record at the default server level, all subsequent routes will inherit that caching
+            definition.</p>
+            <a id="performance"></a>
+            <h2 class="section">Performance Considerations</h2>
+            <h3>Cache Lifespans</h3>
+            <p>When selecting a lifespan for a resource, ask the questions:
+            <ul>
+                <li>How stale is it acceptable for this resource to be?</li>
+                <li>How often is this resource updated?</li>
+                <li>How often is this resource viewed?</li> 
+            </ul>
+            <p>If it is acceptable to display a stale resource, then select a client-side lifespan that is set toward the
+            maximum acceptable staleness. If a resource is present on every page, such as a logo or banner, it is very
+            beneficial to use client-side caching, even if the lifespan is set to as little as 60 seconds.
+            <h3>LimitMemory</h3>
+            <p>Server-side caching consumes memory for every request that is cached. As memory is a limited resource,
+            you may wish to limit the memory that Appweb may consume via the
+            
+            <a href="dir/sandbox.html#limitMemory">LimitMemory</a> configuration file directive. This will put an upper
+            limit on the amount of memory that can be used for caching. When Appweb exceeds 85% of this memory limit, it
+            will start to prune cached resources from the cache. Setting a higher memory limit, will enable more
+            resources to be cached and Appweb to run faster.</p>
+          
+            <h3>Debugging and Trace Logs</h3>
+            <p>If the caching is not operating as expected, run Appweb with trace at level 4. This will trace critical
+            details about how Appweb is processing the request. It will display the selected route and also trace 
+            information about whether cached responses have been found and are suitable for use.</p>
+            <pre>appweb --log stdout:4</pre>
+            <a id="criteria"></a>
+            <h2 class="section">Deciding Criteria</h2>
+            <p>In summary, here are some rules of thumb to assist in designing your caching strategy.</p>
+            <ul>
+                <li>If a resource is accessed frequently, use server-side caching.</li>
+                <li>If it is acceptable to serve stale content and the content is rarely updated, 
+                    use client-side caching.</li>
+                <li>If it is not acceptable to serve stale content, use manual server-side caching.</li>
+                <li>If the web page is very expensive to generate, consider event-driven pre-rendering.</li>
+            </ul>
+            <p>Appweb caching can deliver great performance gains, even if using slower page rendering
+            technologies like PHP or CGI.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

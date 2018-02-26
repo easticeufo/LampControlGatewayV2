@@ -1,0 +1,26 @@
+{
+    '_EspMigrations': {
+        hints: {
+            ncols: 2
+        },
+        schema: {
+            'id': { type: 'int', autoinc: true, index: true, key: true },
+            'version': { type: 'string' },
+        },
+        data: [
+            [ 1,'201402051511090',],
+        ],
+    },
+    'post': {
+        hints: {
+            ncols: 3
+        },
+        schema: {
+            'id': { type: 'int', autoinc: true, index: true, key: true },
+            'title': { type: 'string' },
+            'body': { type: 'text' },
+        },
+        data: [
+        ],
+    },
+}

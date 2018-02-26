@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>esp-input Directive</title>
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+   <link rel="stylesheet" type="text/css" href="api.css" />
+</head>
+
+<body>
+<div class='body'>
+	<div class="content">
+		<a name='top'></a>
+		<h1 class='className'>Directive: esp-input</h1>
+		<div class='api'>
+			<div class='prototype'>
+				&lt;esp-input ...&gt;
+			</div>
+			<div class='apiDetail'>
+				<dl>
+					<dt>Synopsis</dt>
+				    <dd>&lt;esp-input type="TYPE" ng-model="NAME" format="FORMAT" label="LABEL"&gt;</dd>
+				</dl>
+				<dl>
+					<dt>Description</dt>
+					<dd>
+						<p>The esp-input generates an appropriate input element based on the type of the input field
+						as determined from the database schema. The esp-input directive can generate "input", "textarea", "checkbox", "radio" and
+						"select" form elements.</p>
+						<p>The esp-input directive supports the named attributes below. In addition, it will pass unknown 
+						attributes through to the input element.</p>
+						<p>If a label is not specified, the name of the field is used.</p>
+					</dd>
+				</dl>
+				<dl>
+					<dt>Attributes</dt>
+					<dd>
+						<table class='parameters' summary ='parameters'>
+						    <tr class='param'><td class='param'>filter: String </td><td>Angular filter to apply to the value before display.
+						    	This is useful to format dates or numbers.</td></tr>
+						    <tr class='param'><td class='param'>inputClass: String </td><td>CSS style to use for the input.</td></tr>
+						    <tr class='param'><td class='param'>label: String </td><td>Label text for the input field.</td></tr>
+						    <tr class='param'><td class='param'>labelClass: String </td><td>CSS style to use for the label.</td></tr>
+						    <tr class='param'><td class='param'>ng-model: String </td><td>Name of the model field to input.</td></tr>
+						    <tr class='param'><td class='param'>type: String </td><td>Type of control to render, 
+						    	(checkbox, text, textarea, date, email, tel, url, search, color, number, range).</td></tr>
+						    <tr class='param'><td class='param'>value: String </td><td>Default input value.</td></tr>
+					    </table>
+				    </dd>
+				</dl>
+				<dl>
+					<dt>Example</dt>
+			        <dd>&lt;esp-input ng-model="event.id"&gt;&lt;/esp-input&gt;</dd>
+			        <dd>&lt;esp-input type="text" ng-model="event.date" filter="date:'yyyy-MM-dd HH:mm:ss'"&gt;&lt;/esp-input&gt;</dd>
+			        <dd>&lt;esp-input type="textarea" ng-model="event.message" rows="6"&gt;&lt;/esp-input&gt;</dd>
+			        <dd>&lt;esp-input ng-model="event.title"&gt;&lt;/esp-input&gt;</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="terms">
+	   		<p class="terms">
+	       		<a href="http://embedthis.com/">Embedthis Software LLC, 2003-2014. 
+	       			All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+	   		</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

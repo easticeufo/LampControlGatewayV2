@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+      <PropertyGroup Label="Globals">
+        <ProjectGuid>{e385f812-4cec-495c-88dd-1ce8b4f24d62}</ProjectGuid>
+        <RootNamespace />
+        <Keyword>Win32Proj</Keyword>
+      </PropertyGroup>
+
+      <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+          <Configuration>Debug</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+          <Configuration>Release</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+          <Configuration>Debug</Configuration>
+          <Platform>x64</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+          <Configuration>Release</Configuration>
+          <Platform>x64</Platform>
+        </ProjectConfiguration>
+  </ItemGroup>
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+        <ConfigurationType></ConfigurationType>
+        <CharacterSet>NotSet</CharacterSet>
+        <PlatformToolset>v120</PlatformToolset>
+      </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+        <ConfigurationType></ConfigurationType>
+        <CharacterSet>NotSet</CharacterSet>
+        <PlatformToolset>v120</PlatformToolset>
+      </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+        <ConfigurationType></ConfigurationType>
+        <CharacterSet>NotSet</CharacterSet>
+        <PlatformToolset>v120</PlatformToolset>
+      </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+        <ConfigurationType></ConfigurationType>
+        <CharacterSet>NotSet</CharacterSet>
+        <PlatformToolset>v120</PlatformToolset>
+      </PropertyGroup>
+
+      <Import Project="$(VCTargetsPath)Microsoft.Cpp.Default.props" />
+      <Import Project="$(VCTargetsPath)Microsoft.Cpp.props" />
+
+      <ImportGroup Label="PropertySheets" />
+      <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+        <Import Project="product.props" />
+        <Import Project="debug.props" />
+        <Import Project="x86.props" />
+      </ImportGroup>
+      <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+        <Import Project="product.props" />
+        <Import Project="release.props" />
+        <Import Project="x86.props" />
+      </ImportGroup>
+      <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+        <Import Project="product.props" />
+        <Import Project="debug.props" />
+        <Import Project="x64.props" />
+      </ImportGroup>
+      <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+        <Import Project="product.props" />
+        <Import Project="release.props" />
+        <Import Project="x64.props" />
+      </ImportGroup>
+
+      <PropertyGroup>
+        <_ProjectFileVersion>10</_ProjectFileVersion>
+
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(BinDir)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ObjDir)\esp-paks\</IntDir>
+        <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PreBuildEvent</CustomBuildBeforeTargets>
+
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(BinDir)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ObjDir)\esp-paks\</IntDir>
+        <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PreBuildEvent</CustomBuildBeforeTargets>
+
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(BinDir)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ObjDir)\esp-paks\</IntDir>
+        <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PreBuildEvent</CustomBuildBeforeTargets>
+
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(BinDir)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ObjDir)\esp-paks\</IntDir>
+        <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+
+      <ItemDefinitionGroup>
+      <Link>
+        <AdditionalDependencies>;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalLibraryDirectories>$(OutDir);;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      </Link>
+
+      <CustomBuildStep>
+        <Command>cd ..\..
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3"
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client"
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\assets" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\assets"
+copy /Y /B paks\esp-html-mvc\client\assets\favicon.ico+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\assets\favicon.ico $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\css" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\css"
+copy /Y /B paks\esp-html-mvc\client\css\all.css+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\css\all.css $(LOG)
+copy /Y /B paks\esp-html-mvc\client\css\all.less+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\css\all.less $(LOG)
+copy /Y /B paks\esp-html-mvc\client\index.esp+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\client\index.esp $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\css" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\css"
+copy /Y /B paks\esp-html-mvc\css\app.less+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\css\app.less $(LOG)
+copy /Y /B paks\esp-html-mvc\css\theme.less+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\css\theme.less $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate"
+copy /Y /B paks\esp-html-mvc\generate\appweb.conf+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate\appweb.conf $(LOG)
+copy /Y /B paks\esp-html-mvc\generate\controller.c+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate\controller.c $(LOG)
+copy /Y /B paks\esp-html-mvc\generate\controllerSingleton.c+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate\controllerSingleton.c $(LOG)
+copy /Y /B paks\esp-html-mvc\generate\edit.esp+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate\edit.esp $(LOG)
+copy /Y /B paks\esp-html-mvc\generate\list.esp+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\generate\list.esp $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\layouts" md "build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\layouts"
+copy /Y /B paks\esp-html-mvc\layouts\default.esp+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\layouts\default.esp $(LOG)
+copy /Y /B paks\esp-html-mvc\package.json+modified build\windows-x86-static\esp\paks\esp-html-mvc\4.7.3\package.json $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3"
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate"
+copy /Y /B paks\esp-legacy-mvc\generate\appweb.conf+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\appweb.conf $(LOG)
+copy /Y /B paks\esp-legacy-mvc\generate\controller.c+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\controller.c $(LOG)
+copy /Y /B paks\esp-legacy-mvc\generate\edit.esp+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\edit.esp $(LOG)
+copy /Y /B paks\esp-legacy-mvc\generate\list.esp+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\list.esp $(LOG)
+copy /Y /B paks\esp-legacy-mvc\generate\migration.c+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\migration.c $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\src" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\src"
+copy /Y /B paks\esp-legacy-mvc\generate\src\app.c+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\generate\src\app.c $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\layouts" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\layouts"
+copy /Y /B paks\esp-legacy-mvc\layouts\default.esp+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\layouts\default.esp $(LOG)
+copy /Y /B paks\esp-legacy-mvc\package.json+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\package.json $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static"
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\css" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\css"
+copy /Y /B paks\esp-legacy-mvc\static\css\all.css+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\css\all.css $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\images" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\images"
+copy /Y /B paks\esp-legacy-mvc\static\images\banner.jpg+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\images\banner.jpg $(LOG)
+copy /Y /B paks\esp-legacy-mvc\static\images\favicon.ico+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\images\favicon.ico $(LOG)
+copy /Y /B paks\esp-legacy-mvc\static\images\splash.jpg+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\images\splash.jpg $(LOG)
+copy /Y /B paks\esp-legacy-mvc\static\index.esp+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\index.esp $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\js" md "build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\js"
+copy /Y /B paks\esp-legacy-mvc\static\js\jquery.esp.js+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\js\jquery.esp.js $(LOG)
+copy /Y /B paks\esp-legacy-mvc\static\js\jquery.js+modified build\windows-x86-static\esp\paks\esp-legacy-mvc\4.7.3\static\js\jquery.js $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-mvc\4.7.3" md "build\windows-x86-static\esp\paks\esp-mvc\4.7.3"
+if not exist "build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate" md "build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate"
+copy /Y /B paks\esp-mvc\generate\appweb.conf+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\appweb.conf $(LOG)
+copy /Y /B paks\esp-mvc\generate\controller.c+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\controller.c $(LOG)
+copy /Y /B paks\esp-mvc\generate\migration.c+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\migration.c $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\src" md "build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\src"
+copy /Y /B paks\esp-mvc\generate\src\app.c+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\generate\src\app.c $(LOG)
+copy /Y /B paks\esp-mvc\LICENSE.md+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\LICENSE.md $(LOG)
+copy /Y /B paks\esp-mvc\package.json+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\package.json $(LOG)
+copy /Y /B paks\esp-mvc\README.md+modified build\windows-x86-static\esp\paks\esp-mvc\4.7.3\README.md $(LOG)
+if not exist "build\windows-x86-static\esp\paks\esp-server\4.7.3" md "build\windows-x86-static\esp\paks\esp-server\4.7.3"
+if not exist "build\windows-x86-static\esp\paks\esp-server\4.7.3\generate" md "build\windows-x86-static\esp\paks\esp-server\4.7.3\generate"
+copy /Y /B paks\esp-server\generate\appweb.conf+modified build\windows-x86-static\esp\paks\esp-server\4.7.3\generate\appweb.conf $(LOG)
+copy /Y /B paks\esp-server\package.json+modified build\windows-x86-static\esp\paks\esp-server\4.7.3\package.json $(LOG)
+cd projects\appweb-windows-static</Command>
+        <Outputs>..\..\build\$(Cfg)\esp</Outputs>
+      </CustomBuildStep>
+  </ItemDefinitionGroup>
+
+  <Import Project="$(VCTargetsPath)Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+
+</Project>

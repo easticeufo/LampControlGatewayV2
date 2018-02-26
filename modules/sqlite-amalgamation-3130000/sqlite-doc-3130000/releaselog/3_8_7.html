@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.8.7 On 2014-10-17</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.8.7 On 2014-10-17</h2><p><ul>
+<p><b>Performance Enhancements:</b>
+<li>Many micro-optimizations result in 20.3% more work for the same number
+    of CPU cycles relative to the previous release. 
+    The cumulative performance increase since <a href="../releaselog/3_8_0.html">version 3.8.0</a> is 61%.
+    (Measured using 
+    <a href="http://valgrind.org/docs/manual/cg-manual.html">cachegrind</a> on the
+    <a href="http://www.sqlite.org/src/artifact/83f6b3318f7ee">speedtest1.c</a> workload on
+    Ubuntu 13.10 x64 with gcc 4.8.1 and -Os. Your performance may vary.)
+<li>The sorter can use auxiliary helper threads to increase real-time response.
+    This feature is off by default and may be
+    enabled using the <a href="../pragma.html#pragma_threads">PRAGMA threads</a> command or the <a href="../compile.html#default_worker_threads">SQLITE_DEFAULT_WORKER_THREADS</a>
+    compile-time option.
+<li>Enhance the <a href="../optoverview.html#skipscan">skip-scan</a> optimization so that it is able to skip index terms that
+    occur in the middle of the index, not just as the left-hand side of the index.
+<li>Improved optimization of <a href="../lang_expr.html#castexpr">CAST</a> operators.
+<li>Various improvements in how the query planner uses <a href="../fileformat2.html#stat4tab">sqlite_stat4</a>
+    information to estimate plan costs.
+<p><b>New Features:</b>
+<li>Added new interfaces with 64-bit length parameters:
+    <a href="../c3ref/free.html">sqlite3_malloc64()</a>,
+    <a href="../c3ref/free.html">sqlite3_realloc64()</a>,
+    <a href="../c3ref/bind_blob.html">sqlite3_bind_blob64()</a>,
+    <a href="../c3ref/result_blob.html">sqlite3_result_blob64()</a>,
+    <a href="../c3ref/bind_blob.html">sqlite3_bind_text64()</a>, and
+    <a href="../c3ref/result_blob.html">sqlite3_result_text64()</a>.
+<li>Added the new interface <a href="../c3ref/free.html">sqlite3_msize()</a> that returns the size of a memory allocation
+    obtained from <a href="../c3ref/free.html">sqlite3_malloc64()</a> and its variants.
+<li>Added the <a href="../c3ref/c_limit_attached.html#sqlitelimitworkerthreads">SQLITE_LIMIT_WORKER_THREADS</a> option to <a href="../c3ref/limit.html">sqlite3_limit()</a> and
+    <a href="../pragma.html#pragma_threads">PRAGMA threads</a> command for configuring the number of available worker threads.
+<li>The <a href="../spellfix1.html">spellfix1</a> extension allows the application to optionally specify the rowid for
+    each INSERT.
+<li>Added the <a href="http://www.sqlite.org/src/doc/trunk/ext/userauth/user-auth.txt">User Authentication</a>
+    extension.
+<p><b>Bug Fixes:</b>
+<li>Fix a bug in the <a href="../partialindex.html">partial index</a> implementation that might result in an incorrect
+    answer if a partial index is used in a subquery or in a <a href="../lang_createview.html">view</a>.
+    Ticket <a href="http://www.sqlite.org/src/info/98d973b8f5">98d973b8f5</a>.
+<li>Fix a query planner bug that might cause a table to be scanned in the wrong direction
+    (thus reversing the order of output) when a DESC index is used to implement the ORDER BY
+    clause on a query that has an identical GROUP BY clause.
+    Ticket <a href="http://www.sqlite.org/src/info/ba7cbfaedc7e6">ba7cbfaedc7e6</a>.
+<li>Fix a bug in <a href="../c3ref/profile.html">sqlite3_trace()</a> that was causing it to sometimes fail to print
+    an SQL statement if that statement needed to be re-prepared.
+    Ticket <a href="http://www.sqlite.org/src/info/11d5aa455e0d98f3c1e6a08">11d5aa455e0d98f3c1e6a08</a>
+<li>Fix a faulty assert() statement.
+    Ticket <a href="http://www.sqlite.org/src/info/369d57fb8e5ccdff06f1">369d57fb8e5ccdff06f1</a>
+<p><b>Test, Debug, and Analysis Changes:</b>
+<li>Show ASCII-art abstract syntax tree diagrams using the ".selecttrace"
+    and ".wheretrace" commands in the 
+    <a href="../cli.html">command-line shell</a> when compiled with <a href="../compile.html#debug">SQLITE_DEBUG</a>, SQLITE_ENABLE_SELECTTRACE,
+    and SQLITE_ENABLE_WHERETRACE.  Also provide the sqlite3TreeViewExpr() and
+    sqlite3TreeViewSelect() entry points that can be invoked from with the
+    debugger to show the parse tree when stopped at a breakpoint.
+<li>Drop support for SQLITE_ENABLE_TREE_EXPLAIN.  The SELECTTRACE mechanism provides
+    more useful diagnostics information.
+<li>New options to the <a href="../cli.html">command-line shell</a> for configuring auxiliary
+    memory usage: --pagecache, --lookaside, and --scratch.
+<li>SQLITE_SOURCE_ID: "2014-10-17 11:24:17 e4ab094f8afce0817f4074e823fabe59fc29ebb4"
+<li>SHA1 for sqlite3.c: 56dcf5e931a9e1fa12fc2d600cd91d3bf9b639cd
+
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

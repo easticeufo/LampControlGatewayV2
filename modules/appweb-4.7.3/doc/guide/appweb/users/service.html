@@ -1,0 +1,143 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Users Guide</a> &gt; <b>Running as a System Service</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul class="nav">
+                <li><a href="#generic">Generic Instructions</a></li>
+                <li><a href="#windows">Windows Instructions</a></li>
+            </ul>
+<!-- BeginDsi "dsi/gettingSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/overview.html">Appweb Overview</a></li>
+                <li><a href="../../../guide/appweb/features.html">Appweb Features</a></li>
+                <li><a href="../../../product/releaseNotes.html">Release Notes</a></li>
+                <li><a href="../../../product/install/index.html">Installation Overview</a></li>
+                <li><a href="../../../guide/appweb/users/gettingStarted.html">Getting Started</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">Users Guide</a></li>
+                <li><a href="../../../guide/appweb/users/configuration.html">Configuring Appweb</a></li>
+                <li><a href="../../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../../guide/appweb/users/lang.html">Multi-Language Support</a></li>
+                <li><a href="../../../guide/appweb/users/authentication.html">User Authentication</a></li>
+                <li><a href="../../../guide/appweb/users/logFiles.html">Log Files</a></li>
+                <li><a href="../../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+                <li><a href="../../../guide/appweb/users/security.html">Security Considerations</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Running as a System Service or Daemon</h1>
+            <p>After installation, Appweb is started automatically as a system service or daemon. You can change this
+            behavior and only start Appweb manually if you wish.</p>
+            <p>This page gives generic and windows -specific information about starting and stopping the Appweb service.</p>
+            <ul>
+                <li><a href="#generic">Generic Instructions</a></li>
+                <li><a href="#windows">Windows Instructions</a></li>
+            </ul>
+            
+            <a id="generic"></a>
+            <h2 class="section">Generic Instructions</h2>
+            <p>Appweb includes a manager program called <em>appman</em>. This program is used to configure the running 
+            of Appweb as service. Appman provides a generic way to install/uninstall, enable/disable, start/stop, and
+            run the Appweb service regardless of the Operating System.</p>
+            <p>The Appman command takes the form:</p>
+            <pre>appman commands...</pre>
+            <p>Where commands can be:</p>
+            <table title="commands">
+                <thead><tr><th>Command</th><th>Details</th></tr></thead>
+                <tbody>
+                    <tr><td>install</td><td>Install Appweb service</td></tr>
+                    <tr><td>uninstall</td><td>Uninstall Appweb service</td></tr>
+                    <tr><td>enable</td><td>Enable Appweb to start automatically on system boot</td></tr>
+                    <tr><td>disable</td><td>Disable Appweb from automatically starting</td></tr>
+                    <tr><td>start</td><td>Start Appweb manually</td></tr>
+                    <tr><td>stop</td><td>Stop Appweb</td></tr>
+                    <tr><td>run</td><td>Run Appweb and monitor its execution. Restart if it fails.</td></tr>
+                </tbody>
+            </table>
+            <h3>Stopping Appweb as a Service</h3>
+            <p>Use the following command to stop Appweb running as a service permanently:</p>
+            <pre>
+appman disable
+</pre>
+            <p>Run the following commands to restore Appweb running as a service:</p>
+            <pre>
+appman enable
+appman start
+</pre>
+            <a id="windows"></a>
+            <h2 class="section">Windows Instructions</h2>
+            <p>On Windows, Appweb is managed by two programs:</p>
+            <ul>
+                <li><a href="#appman">The Appweb Manager</a></li>
+                <li><a href="#monitor">The Appweb Monitor</a></li>
+            </ul><a id="appman"></a>
+            <p>The Appman manager program is installed as a windows service that starts, 
+            manages and restarts Appweb. If Appweb fails, Appman will automatically restart it.</p>
+            <p>Windows services run in the background with little interaction with the user. So to provide more
+            convenient access to manage Appweb, the <a href="#monitor">Appweb Monitor</a> program runs and is
+            accessible from the windows system tray (taskbar notification area). You can start and stop Appweb using
+            either the manager or Monitor programs.</p>
+            <h3>Appman &mdash; Appweb Manager Service</h3>
+            <p>You can interface with the Appman program via the Windows Services Applet. To invoke the applet select:</p>
+            <pre>
+Start -&gt; Control Panel -&gt; Administrative Tools -&gt; Services
+</pre>
+            <p>Then select and double click on the <b>Embedthis Appweb</b> service. A dialog panel will be displayed
+            from which you can start and stop the manager (appman) process.</p><img src="../../../images/services.jpg" 
+            alt="services" class="bare-screen" />
+            <p>When started or stopped, the manager will first do the same operation on the real Appweb instance. Pausing
+            the manager will have no effect on Appweb, but will pause the manager itself.</p>
+            <p>Once installed, you will need to start the service via the Services control applet.</p>
+            <a id="monitor"></a>
+            <h3>Appweb Monitor</h3>
+            <p>The Windows Appweb Monitor is launched when you log in. It a quick and easy way to start, stop, and
+            restart Appweb. You can also launch a browser to display the documentation or the Appweb management console
+            (future feature).</p><img src="../../../images/tray.jpg" alt="tray" class="bare-screen" />
+            <p>When you select 'stop' Appweb, you actually stop the manager process which in turn stops Appweb. Similarly,
+            when you select 'start' Appweb, you are really starting the manager which detects that Appweb is not running
+            and automatically launches it. </p>
+            
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

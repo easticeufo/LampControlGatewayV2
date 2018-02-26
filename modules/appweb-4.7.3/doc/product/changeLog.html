@@ -1,0 +1,2538 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <b>Change Log</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#4.6.2">Release 4.6.2</a></li>
+                <li><a href="#3.4.1">Release 3.4.1</a></li>
+                <li><a href="#2.4.4">Release 2.4.4</a></li>
+            </ul>
+<!-- BeginDsi "dsi/genSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../guide/appweb/overview.html">Appweb Overview</a></li>
+                <li><a href="../guide/appweb/features.html">Appweb Features</a></li>
+                <li><a href="../product/releaseNotes.html">Release Notes</a></li>
+                <li><a href="../product/changeLog.html">Change Log</a></li>
+                <li><a href="../product/roadmap.html">Roadmap</a></li>
+                <li><a href="../product/compatibility.html">Compatibility</a></li>
+                <li><a href="../licenses/index.html">Licensing</a></li>
+                <li><a href="../product/install/index.html">Installation Overview</a></li>
+                <li><a href="../guide/appweb/users/gettingStarted.html">Getting Started</a></li>
+                <li><a href="../guide/appweb/users/index.html">Users Guide</a></li>
+                <li><a href="../product/project.html">Project Resources</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Appweb Change Log</h1>
+            <p>The change log is now provided on GitHub at:
+                <a href="https://github.com/embedthis/appweb/releases">GitHub Appweb Releases</a>.</p>
+            <h2>Historical Change Log</h2>
+            <p>Brief Appweb change log of the the major features and changes for each release.</p>
+            <h4>Note to security researchers:</h4>
+            <p>Please do not mine this list and create security advisories.
+            Please see the <a href="http://github.com/embedthis/appweb/issues">Appweb Issue Database</a> 
+            for the official product issue list and for comprehensive CVE dispositions.</p>
+        
+            <a id="4.6.3"></a>
+            <h2 class="section">Changes in 4.6.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>ESP_VERSION setting update to match current version
+                    <a href="https://github.com/embedthis/appweb/issues/378">[issue 378]</a>.</li>
+            </ul>
+            <a id="4.6.2"></a>
+            <h2 class="section">Changes in 4.6.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Client initiated disconnect not setting HttpTx.responded.
+                    <a href="https://github.com/embedthis/appweb/issues/365">[issue 365]</a>.</li>
+                <li>Add OpenSSL SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER option
+                    <a href="https://github.com/embedthis/appweb/issues/375">[issue 375]</a>.</li>
+                <li>Require MakeMe 0.8.2
+                    <a href="https://github.com/embedthis/appweb/issues/376">[issue 376]</a>.</li>
+                <li>Negative timeouts in httpWait for client HTTP requests causing delays.
+                    <a href="https://github.com/embedthis/appweb/issues/377">[issue 377]</a>.</li>
+            </ul>
+            <a id="4.6.1"></a>
+            <h2 class="section">Changes in 4.6.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix old reference to bit in package/service.es
+                    <a href="https://github.com/embedthis/appweb/issues/356">[issue 356]</a>.</li>
+                <li>Fix esp -V to display just a pure version number
+                    <a href="https://github.com/embedthis/appweb/issues/357">[issue 357]</a>.</li>
+                <li>Fix ESP package.json "app.http.keep" property
+                    <a href="https://github.com/embedthis/appweb/issues/358">[issue 358]</a>.</li>
+                <li>Fix exporting ESP paks to have version numbers that match Appweb
+                    <a href="https://github.com/embedthis/appweb/issues/359">[issue 359]</a>.</li>
+                <li>Fix finding appweb.conf when executing outside the Appweb installation directory.
+                    <a href="https://github.com/embedthis/appweb/issues/361">[issue 361]</a>.</li>
+                <li>Fix loading the esp module when appesp is run inside /etc/appweb or appweb binary installation directory.
+                    <a href="https://github.com/embedthis/appweb/issues/362">[issue 362]</a>.</li>
+                <li>Fix EST write blocking 
+                    <a href="https://github.com/embedthis/appweb/issues/363">[issue 363]</a>.</li>
+                <li>Fix printf format strings. Enable compiler printf format checking.
+                    <a href="https://github.com/embedthis/appweb/issues/364">[issue 364]</a>.</li>
+            </ul>
+            <a id="4.6.0"></a>
+            <h2 class="section">Changes in 4.6.0</h2>
+            <h3>Minor Changes</h3>
+            <ul>
+                <li>The format for ESP applications package.json has been upgraded for compatibility 
+                    with the <a href="http://wiki.commonjs.org/wiki/Packages/1.1">CommonJS Package</a>
+                    specification and the <a href="http://embedthis.com/pak/">Pak</a> package manager.</li>
+                <li>The <em>esp</em> utility has been upgraded to support the simpler "make dir and install"
+                    paradigm for creating applications instead of "generate app".</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Switch to use MakeMe, previously called Bit. See the GitHub issue for details of the change.
+                    <a href="https://github.com/embedthis/appweb/issues/343">[issue 343]</a>.</li>
+                <li>UploadFilter with packet-spanning boundary in the last packet.
+                    <a href="https://github.com/embedthis/appweb/issues/348">[issue 348]</a>.</li>
+                <li>Redirection for virtual hosts to HTTPS
+                    <a href="https://github.com/embedthis/appweb/issues/349">[issue 349]</a>.</li>
+                <li>Static linking on linux
+                    <a href="https://github.com/embedthis/appweb/issues/350">[issue 350]</a>.</li>
+                <li>MprJoinPaths fails on windows
+                    <a href="https://github.com/embedthis/appweb/issues/351">[issue 351]</a>.</li>
+            </ul>
+            <h3>Incompatible Changes</h3>
+            <ul>
+                <li><p>ESP MVC applications will need to to have their package.json upgraded. The following
+                    package.json properties have been moved or modified:</p>
+                    <ul>
+                        <li>A top level <em>app</em> collection contains all non <a
+                            href="http://wiki.commonjs.org/wiki/Packages/1.1">CommonJS</a> properties.</li>
+                        <li><em>client-scripts</em> has been renamed to <em>app.client.scripts</em>.</li>
+                        <li>Most properties under <em>esp</em> have been moved to the <em>app.http</em> collection.</li>
+                        <li>The <em>esp</em> property has been renamed <em>app.esp</em>.</li>
+                        <li>The <em>mode</em> and <em>modes</em> properties have been moved under the <em>app</em>
+                            collection.</li>
+                        <li>The <em>auth</em> property is renamed <em>app.http.auth.store</em>.</li>
+                    </ul>
+                    <p>See the <a href="https://github.com/embedthis/esp/blob/dev/samples/esp-configuration/package.json">esp-configuration 
+                        Sample</a> for details of all supported configuration file properties.</p>
+                </li>
+                <li>The esp-angular-mvc, esp-angular and angular packs have been removed from the product and are
+                now available from the <a href="https://embedthis.com/catalog/#/?keywords=angular">Pak Catalog</a>.</li>
+            </ul>
+            <a id="4.5.6"></a>
+            <h2 class="section">Changes in 4.5.6</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Remove unwanted assert for WebSockets Ping requests in httpSendBlock
+                    <a href="https://github.com/embedthis/appweb/issues/328">[issue 328]</a>.</li>
+                <li>Supplemental group membership on Unix when using UserAccount
+                    <a href="https://github.com/embedthis/appweb/issues/329">[issue 329]</a>.</li>
+                <li>Add mp4 mime type
+                    <a href="https://github.com/embedthis/appweb/issues/330">[issue 330]</a>.</li>
+                <li>Fix hang on exit
+                    <a href="https://github.com/embedthis/appweb/issues/334">[issue 334]</a>.</li>
+                <li>Add "mov" mime type to defaults.
+                    <a href="https://github.com/embedthis/appweb/issues/335">[issue 335]</a>.</li>
+                <li>XP compilation fails
+                    <a href="https://github.com/embedthis/appweb/issues/336">[issue 336]</a>.</li>
+                <li>Must flush session state earlier
+                    <a href="https://github.com/embedthis/appweb/issues/338">[issue 338]</a>.</li>
+                <li>Range filter not handling bad range values
+                    <a href="https://github.com/embedthis/appweb/issues/339">[issue 339]</a>.</li>
+                <li>CgiProgram content length overflow
+                    <a href="https://github.com/embedthis/appweb/issues/333">[issue 333]</a>.</li>
+            </ul>
+            <a id="4.5.5"></a>
+            <h2 class="section">Changes in 4.5.5</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Shutdown timeout was not terminating appweb.
+                    <a href="https://github.com/embedthis/appweb/issues/325">[issue 325]</a>.</li>
+                <li>Fix monitor client banning all-clear message.
+                    <a href="https://github.com/embedthis/appweb/issues/326">[issue 326]</a>.</li>
+                <li>Optimize memory footprint
+                    <a href="https://github.com/embedthis/appweb/issues/327">[issue 327]</a>.</li>
+            </ul>
+            <a id="4.5.4"></a>
+            <h2 class="section">Changes in 4.5.4</h2>
+            <p>Notes:</p>
+            <ul>
+                <li>Requires Bit version 0.9.4 if using "bit install, package or generate"</li>
+                <li>ESP packs moved under /usr/local/lib/appweb/latest/esp</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>ESP generation will use only paks with compatible SemVer version numbers.
+                    <a href="https://github.com/embedthis/appweb/issues/322">[issue 322]</a>.</li>
+                <li>Fix ESP compilation handling of back-quoted characters.
+                    <a href="https://github.com/embedthis/appweb/issues/323">[issue 323]</a>.</li>
+                <li>Fix "make install" installation of ESP paks
+                    <a href="https://github.com/embedthis/appweb/issues/324">[issue 324]</a>.</li>
+            </ul>
+            <a id="4.5.3"></a>
+            <h2 class="section">Changes in 4.5.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix directory layout of binary installation ESP packs
+                    <a href="https://github.com/embedthis/appweb/issues/321">[issue 321]</a>.</li>
+                <li>Fix client cache header invalid max-age
+                    <a href="https://github.com/embedthis/appweb/issues/319">[issue 319]</a>.</li>
+            </ul>
+            <a id="4.5.2"></a>
+            <h2 class="section">Changes in 4.5.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>httpDigestParse incorrect parsing
+                    <a href="https://github.com/embedthis/appweb/issues/320">[issue 320]</a>.</li>
+            </ul>
+            <a id="4.5.1"></a>
+            <h2 class="section">Changes in 4.5.1</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add esp --debug and --release switches to control compilation mode for symbols or optimization</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>WebSockets default request timeout. 
+                    <a href="https://github.com/embedthis/appweb/issues/310">[issue 310]</a>.</li>
+                <li>Preserve HttpRx.originalUri when using ErrorDoc responses.
+                    <a href="https://github.com/embedthis/appweb/issues/311">[issue 311]</a>.</li>
+                <li>ESP package.json esp.redirectSecure property to apply only to ESP application.
+                    <a href="https://github.com/embedthis/appweb/issues/312">[issue 312]</a>.</li>
+                <li>httpCheckSecurityToken when token is defined but empty.
+                    <a href="https://github.com/embedthis/appweb/issues/313">[issue 313]</a>.</li>
+                <li>ESP package.json esp.login.name for auto-login in dev mode.
+                    <a href="https://github.com/embedthis/appweb/issues/314">[issue 314]</a>.</li>
+                <li>ESP scripts() and stylesheets() to emit cleaner relative URIs.
+                    <a href="https://github.com/embedthis/appweb/issues/315">[issue 315]</a>.</li>
+                <li>Revert naming of httpUri to previous httpLink. httpUri deprecated but supported.
+                    <a href="https://github.com/embedthis/appweb/issues/316">[issue 316]</a>.</li>
+                <li>httpGetCookie with multiple cookies of intersecting names.
+                    <a href="https://github.com/embedthis/appweb/issues/317">[issue 317]</a>.</li>
+                <li>WebSockets X-Inactivity-Timeout response header was replicating the Request Timeout.
+                    <a href="https://github.com/embedthis/appweb/issues/318">[issue 318]</a>.</li>
+            </ul>
+            <a id="4.5.0"></a>
+            <h2 class="section">Changes in 4.5.0</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Big upgrade for ESP application frameworks.
+                    <a href="https://github.com/embedthis/appweb/issues/237">[issue 237]</a>.
+                    Changes include:
+                    <ul>
+                        <li>Complete support for ESP <a href="http://angularjs.org">AngularJS</a> MVC applications.</li>
+                        <li>New simplified support for server-side ESP MVC (esp-html-mvc) applications.</li>
+                        <li>Add support for Pak extension packages</li>
+                        <li>Enhanced ESP application generator with install, uninstall and upgrade options.</li>
+                        <li>Universal configuration file for ESP applications in "package.json".</li>
+                        <li>Updated and extended samples.</li>
+                        <li>Simplify generated client-side controllers</li>
+                        <li>Add routePrefix to package.json and update esp.js to automatically parse and include in all routes</li>
+                        <li>Add esp-click attribute for elements without hrefs</li>
+                        <li>Add esp-resource to communicate with ESP server-side controllers</li>
+                        <li>Add esp-confirm for modal confirmations</li>
+                        <li>New JSON parser</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>VirtualHost directives can now take multiple endpoints</li>
+                <li>Windows 8.1 support</li>
+                <li>Add CgiPrefix directive to use in front of URI parameters and form variables in CGI programs.
+                    <a href="https://github.com/embedthis/appweb/issues/282">[issue 282]</a></li>
+                <li>Add CgiEscape directive to escape shell special characters
+                    <a href="https://github.com/embedthis/appweb/issues/283">[issue 283]</a></li>
+                <li>Make DigestData struct public
+                    <a href="https://github.com/embedthis/appweb/issues/275">[issue 275]</a></li>
+                <li>MprStealConn - need more flexibility
+                    <a href="https://github.com/embedthis/appweb/issues/278">[issue 278]</a></li>
+                <li>Add more session hijack protection
+                    <a href="https://github.com/embedthis/appweb/issues/283">[issue 283]</a></li>
+                <li>Add IPv6 conditional directive IPv6
+                    <a href="https://github.com/embedthis/appweb/issues/284">[issue 284]</a></li>
+                <li>Shutdown Issues
+                    <a href="https://github.com/embedthis/appweb/issues/285">[issue 285]</a></li>
+                <li>Change SessionCookie to allow defining the cookie name
+                    <a href="https://github.com/embedthis/appweb/issues/291">[issue 291]</a></li>
+                <li>Add support for single-login enforcement.
+                    <a href="https://github.com/embedthis/appweb/issues/292">[issue 292]</a></li>
+                <li>Add MakeDir directive
+                    <a href="https://github.com/embedthis/appweb/issues/293">[issue 293]</a></li>
+                <li>Add httpBorrowConn and httpReleaseConn to make it easier to use mprCreateEventOutside
+                    <a href="https://github.com/embedthis/appweb/issues/302">[issue 302]</a></li>
+                <li>Increase default WebSockets inactivity timeout to five minutes
+                    <a href="https://github.com/embedthis/appweb/issues/307">[issue 307]</a></li>
+                <li>Add mprGetKey and mprSetKey APIs for generic object reference storage
+                    <a href="https://github.com/embedthis/appweb/issues/308">[issue 308]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Missing sendfile64 on on Linux 2.4 systems
+                    <a href="https://github.com/embedthis/appweb/issues/244">[issue 244]</a></li>
+                <li>Add Reroute directive. Revert Route directive to not open previously defined routes.
+                    <a href="https://github.com/embedthis/appweb/issues/238">[issue 238]</a></li>
+                <li>Add BIT_MPR_SSL_RENEGOTIATE option (config: mpr.ssl.renegotiate) to control SSL renegotiation.
+                    Renegotiation is enabled by default. 
+                    <a href="https://github.com/embedthis/appweb/issues/240">[issue 240]</a></li>
+                <li>JSON parser handling of embedded quotes and backslashes
+                <li>Mdb database saving of field values in JSON with embedded quotes and backslashes </li>
+                <li>Improve XSRF security token handling adding transparent regeneration if possible. </li>
+                <li>Early detection of bad characters in URIs. This tightens request URI validation 
+                    of invalid URIs that were previously permitted.</li>
+                <li>Add missing bower.json
+                    <a href="https://github.com/embedthis/appweb/issues/253">[issue 253]</a></li>
+                <li>Return 401 for bad authentication scheme
+                    <a href="https://github.com/embedthis/appweb/issues/254">[issue 254]</a></li>
+                <li>Add documentation on new httpWriteBlock behavior
+                    <a href="https://github.com/embedthis/appweb/issues/255">[issue 255]</a></li>
+                <li>Update conn-&gt;lastActivity in readEvent
+                    <a href="https://github.com/embedthis/appweb/issues/256">[issue 256]</a></li>
+                <li>Use 401 when user fails authorization
+                    <a href="https://github.com/embedthis/appweb/issues/257">[issue 257]</a></li>
+                <li>Return valid authentication domain
+                    <a href="https://github.com/embedthis/appweb/issues/258">[issue 258]</a></li>
+                <li>Fix off-by-one in httpFilterChunkData
+                    <a href="https://github.com/embedthis/appweb/issues/259">[issue 259]</a></li>
+                <li>Free Win32 resources on shutdown and error
+                    <a href="https://github.com/embedthis/appweb/issues/260">[issue 260]</a></li>
+                <li>Fixing crash on disconnect
+                    <a href="https://github.com/embedthis/appweb/issues/261">[issue 261]</a></li>
+                <li>Allow module-defined AuthStores
+                    <a href="https://github.com/embedthis/appweb/issues/262">[issue 262]</a></li>
+                <li>Reject unknown methods in fileHandler with 405
+                    <a href="https://github.com/embedthis/appweb/issues/263">[issue 263]</a></li>
+                <li>Use original URI to build trailing slash redirects
+                    <a href="https://github.com/embedthis/appweb/issues/264">[issue 264]</a></li>
+                <li>Don't chunk HTTP/1.0 responses
+                    <a href="https://github.com/embedthis/appweb/issues/265">[issue 265]</a></li>
+                <li>Use full URI path in dirHandler index titles
+                    <a href="https://github.com/embedthis/appweb/issues/266">[issue 266]</a></li>
+                <li>Send 404 from the errorHandler instead of 501
+                    <a href="https://github.com/embedthis/appweb/issues/267">[issue 267]</a></li>
+                <li>Always increment module refcount when loading
+                    <a href="https://github.com/embedthis/appweb/issues/268">[issue 268]</a></li>
+                <li>Use case-insensitive keys for the MIME types table
+                    <a href="https://github.com/embedthis/appweb/issues/269">[issue 269]</a></li>
+                <li>Fix arithmetic error in mprGetTicks (windows)
+                    <a href="https://github.com/embedthis/appweb/issues/270">[issue 270]</a></li>
+                <li>Fix mprWaitForCond with no timeout
+                    <a href="https://github.com/embedthis/appweb/issues/271">[issue 271]</a></li>
+                <li>Remove extra httpError format specifie
+                    <a href="https://github.com/embedthis/appweb/issues/272">[issue 272]</a></li>
+                <li>Fixing WNDPROC declaration
+                    <a href="https://github.com/embedthis/appweb/issues/273">[issue 273]</a></li>
+                <li>Windows mprWaitForSingleIO not returning event mask
+                    <a href="https://github.com/embedthis/appweb/issues/274">[issue 274]</a></li>
+                <li>Make DigestData struct public
+                    <a href="https://github.com/embedthis/appweb/issues/275">[issue 275]</a></li>
+                <li>Remove accesses to CRITICAL_SECTION's SpinCount
+                    <a href="https://github.com/embedthis/appweb/issues/276">[issue 276]</a></li>
+                <li>Document when and where mprYield will occur
+                    <a href="https://github.com/embedthis/appweb/issues/277">[issue 277]</a></li>
+                <li>Delay LimitRequestBody test after routing
+                    <a href="https://github.com/embedthis/appweb/issues/279">[issue 279]</a></li>
+                <li>Enable serving files outside document root
+                    <a href="https://github.com/embedthis/appweb/issues/280">[issue 280]</a></li>
+                <li>mprCreateEventOutside needs to work when MPR is shutting down
+                    <a href="https://github.com/embedthis/appweb/issues/281">[issue 281]</a></li>
+            </ul>
+            <h3>Fixes since RC3</h3>
+            <ul>
+                <li>Fix httpSetCookie for IPv6 addresses. Also add option to suppress domain by setting 
+                    cookieDomain parameter to an empty string.
+                    <a href="https://github.com/embedthis/appweb/issues/287">[issue 287]</a></li>
+                <li>Redirection for numerical IPv6 addresses broken
+                    <a href="https://github.com/embedthis/appweb/issues/288">[issue 288]</a></li>
+                <li>Fix the ESP package.json timeout.session property.
+                    <a href="https://github.com/embedthis/appweb/issues/289">[issue 289]</a></li>
+                <li>Fix and update samples
+                    <a href="https://github.com/embedthis/appweb/issues/290">[issue 290]</a></li>
+                <li>Fix signal handling for default and ignored signals
+                    <a href="https://github.com/embedthis/appweb/issues/294">[issue 294]</a></li>
+                <li>Fix ErrorDocument response request packet creation. 
+                    <a href="https://github.com/embedthis/appweb/issues/295">[issue 295]</a></li>
+                <li>Fix mprWarn to say warning instead of error
+                    <a href="https://github.com/embedthis/appweb/issues/296">[issue 296]</a></li>
+                <li>Fix memory exception handling
+                    <a href="https://github.com/embedthis/appweb/issues/297">[issue 297]</a></li>
+                <li>CONNECT verb IP address parsing
+                    <a href="https://github.com/embedthis/appweb/issues/299">[issue 299]</a></li>
+                <li>Compiling SDB with va_list
+                    <a href="https://github.com/embedthis/appweb/issues/300">[issue 300]</a></li>
+            </ul>
+            <h3>Fixes since RC4</h3>
+            <ul>
+                <li>Remove duplicate zlib code in ejsLib.c
+                    <a href="https://github.com/embedthis/appweb/issues/303">[issue 303]</a></li>
+                <li>Command line mode without an appweb.conf file.
+                    <a href="https://github.com/embedthis/appweb/issues/304">[issue 304]</a></li>
+                <li>Compiler unreachable code warnings.
+                    <a href="https://github.com/embedthis/appweb/issues/305">[issue 305]</a></li>
+                <li>mprGetPathFiles on Linux was sorting files in the wrong order.
+                    <a href="https://github.com/embedthis/appweb/issues/306">[issue 306]</a></li>
+                <li>Disable Secure-Transport as default for "Redirect secure"
+                    <a href="https://github.com/embedthis/appweb/issues/309">[issue 309]</a></li>
+            </ul>
+            <h3>Incompatible Changes</h3>
+            <ul>
+                <li>Rename libsqlite3 to libsql to avoid clashing with existing SQLite libraries.
+                    <a href="https://github.com/embedthis/appweb/issues/242">[issue 242]</a></li>
+                <li>Rename readRecsWhere to readWhere to be consistent with EDI API.
+                    <a href="https://github.com/embedthis/appweb/issues/236">[issue 236]</a></li>
+                <li>Add body argument to mprRunCmd to write data to spawned command.
+                    <a href="https://github.com/embedthis/appweb/issues/239">[issue 239]</a></li>
+                <li>Rename config.json to package.json
+                <li>Deprecate the prior ESP MVC skeleton. It is renamed to esp-legacy-mvc.  </li>
+                <li>Move views by default under client/app. The EspDir directive can be used to modify the views directory.</li>
+                <li>Move layouts under client/layouts. The Espdir directive can be used to modify the layouts directory.</li>
+                <li>Renamed the old ESP pack from angular-mvc to esp-angular-mvc. All ESP packs now take an "esp-" prefix.</li>
+                <li>Changed default generated application skeleton from "esp-legacy-mvc" to "server". This permits the generation 
+                    of non-MVC applications that consist only of server-side controllers.</li>
+                <li>Fix calls to renderFlash with incorrect arg count</li>
+                <li>Change ESP server-side controller entry point from esp_module_NAME, to esp_controller_APP_CONTROLLER.
+                    Also, ESP application source modules include the app name in the entry point. This is to resolve init 
+                    entry point name clashes when hosting multiple applications.</li>
+                <li>Rename APIs that send JSON from renderResult, renderGrid, renderRec to use a send prefix instead of render. 
+                    This is to clarify which APIs send HTML and which send JSON. The render* APIs send HTML and raw data. 
+                    The send* APIs send JSON.</li>
+                <li>The ESP compilation mode is renamed from "flat" to "combined". The two modes are: discrete and combined. When esp 
+                compiles applications it automatically reads the esp.combined property from the application's package.json 
+                file to determine the compilation mode. The esp --flat switch is removed.</li>
+                <li>The MprTerminator type has an additional parameter: MPR state. The terminators are invoked twice to
+                notify when the a shutdown is commenced and when the MPR is being destroyed. Terminators should test the
+                state argument against MPR_STOPPING and MPR_STOPPED.</li>
+                <li>Support for Windows XP and Vista deprecated. Contact support@embedthis.com if you require XP or Vista
+                    support.</li>
+                <li>Refactor mprDestroy, mprShutdown. The old mprTerminate has been replaced by mprShutdown.
+                    MprDestroy now has zero args. mprShutdown gains a timeout arg.
+                    The defines MPR_EXIT_IMMEDIATE and MPR_EXIT_GRACEFUL are now removed as all shutdowns are graceful
+                    depending on the exit timeout.
+                    <a href="https://github.com/embedthis/appweb/issues/301">[issue 301]</a></li>
+                <li>The HttpHost structure no longer contains an IP or Port fields. See the appropriate HttpEndpoint structure</li>
+                <li>Removed the Protocol directive to define HTTP/1.0 vs HTTP/1.1. This is now sensed from the client.
+                    Removed the httpSetHostProtocol API.</li>
+                <li>Reinstated httpFlush behaviour to only initiate flushing and not wait for completion. Use httpFlushAll
+                    to flush and wait for completion.</li>
+            </ul>
+            <a id="4.4.4"></a>
+            <h2 class="section">Changes in 4.4.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Windows directory traversal
+                    <a href="https://github.com/embedthis/appweb/issues/246">[issue 246]</a></li>
+                <li>Chunk filter for split boundary packets
+                    <a href="https://github.com/embedthis/appweb/issues/247">[issue 247]</a></li>
+                <li>Windows single core systems
+                    <a href="https://github.com/embedthis/appweb/issues/248">[issue 248]</a></li>
+                <li>Cache service initialization of "shared"
+                    <a href="https://github.com/embedthis/appweb/issues/249">[issue 249]</a></li>
+                <li>Linux 2.4 compilation
+                    <a href="https://github.com/embedthis/appweb/issues/245">[issue 245]</a></li>
+                <li>Legacy-mvc application fails to compile because default.esp uses renderFlash with too many args.
+                    <a href="https://github.com/embedthis/appweb/issues/251">[issue 251]</a></li>
+                <li>Fix httpStealConn freeing of connection socket.
+                    <a href="https://github.com/embedthis/appweb/issues/252">[issue 252]</a></li>
+            </ul>
+            <a id="4.4.3"></a>
+            <h2 class="section">Changes in 4.4.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix pipeline flow control and httpResizePacket. Was failing to set SUSPENDED when packet exactly fills
+                    queue.  <a href="https://github.com/embedthis/appweb/issues/243">[issue 243]</a></li>
+            </ul>
+            <a id="4.4.2"></a>
+            <h2 class="section">Changes in 4.4.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix esp migrations with SDB/SQLITE.
+                    <a href="https://github.com/embedthis/appweb/issues/241">[issue 241]</a></li>
+            </ul>
+            <a id="4.4.1"></a>
+            <h2 class="section">Changes in 4.4.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Installation location of esp generator component files
+                    <a href="https://github.com/embedthis/appweb/issues/235">[issue 235]</a></li>
+            </ul>
+            <a id="4.4.0"></a>
+            <h2 class="section">Changes in 4.4.0</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Major performance optimizations.
+                    <a href="https://github.com/embedthis/appweb/issues/224">[issue 224]</a></li>
+                <li>Added security defensive counter measures. Added Monitor and Defense directives.
+                    <a href="https://github.com/embedthis/appweb/issues/213">[issue 213]</a></li>
+                <li>Add Angularjs support in ESP.
+                    <a href="https://github.com/embedthis/appweb/issues/196">[issue 196]</a></li>
+                <li>Enhance "esp" generator application to generate application components including Angular applications.
+                    <a href="https://github.com/embedthis/appweb/issues/197">[issue 197]</a></li>
+                <li>Change password hashing algorithm to use Blowfish encryption
+                    <a href="https://github.com/embedthis/appweb/issues/198">[issue 198]</a></li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Update ESP jquery support
+                    <a href="https://github.com/embedthis/appweb/issues/179">[issue 179]</a></li>
+                <li>Update EspApp directive with new syntax.
+                    <a href="https://github.com/embedthis/appweb/issues/180">[issue 180]</a></li>
+                <li>Add ESP src/app.c. This is invoked at Appweb startup.
+                    <a href="https://github.com/embedthis/appweb/issues/181">[issue 181]</a></li>
+                <li>Add lessjs support for ESP. Replace old layout/theme style sheets with a theme.less.
+                    <a href="https://github.com/embedthis/appweb/issues/182">[issue 182]</a></li>
+                <li>Add ESP html5shiv for generated apps
+                    <a href="https://github.com/embedthis/appweb/issues/183">[issue 183]</a></li>
+                <li>Add support for multi-line strings in ESP templates via back-tick.
+                    <a href="https://github.com/embedthis/appweb/issues/185">[issue 185]</a></li>
+                <li>Add StreamInput directive to control request body input streaming or buffering.
+                    <a href="https://github.com/embedthis/appweb/issues/199">[issue 199]</a></li>
+                <li>Add Map directive for transparent content extension mapping. Deprecate Compress directive.
+                    <a href="https://github.com/embedthis/appweb/issues/200">[issue 200]</a></li>
+                <li>Add httpLogout API.
+                    <a href="https://github.com/embedthis/appweb/issues/201">[issue 201]</a></li>
+                <li>Add httpAddAuthStore and HttpAddAuthType APIs to permit overriding the password verification scheme.
+                    <a href="https://github.com/embedthis/appweb/issues/202">[issue 202]</a></li>
+                <li>Add httpAddParamsFromJsonBody API.
+                    <a href="https://github.com/embedthis/appweb/issues/203">[issue 203]</a></li>
+                <li>Enhanced MPR APIs for: mprGetRandomString, mprGetCacheStats, mprCryptPassword, mprMakeSalt,
+                        mprAddKeyWithType, mprQueryJsonString, mprQueryJsonValue, stitle, mprGlobPathFiles.
+                    <a href="https://github.com/embedthis/appweb/issues/204">[issue 204]</a></li>
+                <li>Replace Method, PutMethod and TraceMethod directives with AddMethods, RemoveMethods and SetMethods. 
+                    <a href="https://github.com/embedthis/appweb/issues/208">[issue 208]</a></li>
+                <li>Add SessionCookie directive to control the visibility of the session cookie. Default now is "httponly".
+                    <a href="https://github.com/embedthis/appweb/issues/210">[issue 210]</a></li>
+                <li>Rename EspShowErrors as ShowErrors to make available to all handlers.
+                    <a href="https://github.com/embedthis/appweb/issues/211">[issue 211]</a></li>
+                <li>Added Stealth directive to control stealth mode. Stealth mode hides the Server header in responses.
+                    <a href="https://github.com/embedthis/appweb/issues/212">[issue 212]</a></li>
+                <li>Added Header directive to define response headers. 
+                    <a href="https://github.com/embedthis/appweb/issues/215">[issue 215]</a></li>
+                <li>Used "Header set" to define important security directives to the default appweb.conf.
+                    <a href="https://github.com/embedthis/appweb/issues/216">[issue 216]</a></li>
+                <li>Optimized file upload. 
+                    <a href="https://github.com/embedthis/appweb/issues/218">[issue 218]</a></li>
+                <li>Tightened WebSockets compliance. Passing Autobahn test suite.
+                    <a href="https://github.com/embedthis/appweb/issues/217">[issue 217]</a></li>
+                <li>Add palloc APIs for permanent memory allocations
+                    <a href="https://github.com/embedthis/appweb/issues/226">[issue 226]</a></li>
+                <li>Add JSON query API
+                    <a href="https://github.com/embedthis/appweb/issues/230">[issue 230]</a></li>
+                <li>Enhance esp generator to generate applications using different client-side frameworks.
+                    <a href="https://github.com/embedthis/appweb/issues/231">[issue 231]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fixes for ESP controls.
+                    <a href="https://github.com/embedthis/appweb/issues/184">[issue 184]</a></li>
+                <li>Update ESP tabs to fix tab order
+                    <a href="https://github.com/embedthis/appweb/issues/186">[issue 186]</a></li>
+                <li>Update ESP flash messages - were not clearing.
+                    <a href="https://github.com/embedthis/appweb/issues/187">[issue 187]</a></li>
+                <li>Remove EspLoad directive. Now integrated into EspApp. 
+                    <a href="https://github.com/embedthis/appweb/issues/188">[issue 188]</a></li>
+                <li>Remove leading "-" from all ESP CSS classes.
+                    <a href="https://github.com/embedthis/appweb/issues/189">[issue 189]</a></li>
+                <li>Fix HTTP streaming request body input in http core engine.
+                    <a href="https://github.com/embedthis/appweb/issues/205">[issue 205]</a></li>
+                <li>Fix Http sessions. Aggregate all session state data in one object.
+                    <a href="https://github.com/embedthis/appweb/issues/206">[issue 206]</a></li>
+                <li>Make loading SSL provider thread-safe.
+                    <a href="https://github.com/embedthis/appweb/issues/207">[issue 207]</a></li>
+                <li>Make loading SSL provider thread-safe.
+                    <a href="https://github.com/embedthis/appweb/issues/207">[issue 207]</a></li>
+                <li>Fix Socket and SSL return codes when socket is full. 
+                    <a href="https://github.com/embedthis/appweb/issues/214">[issue 214]</a></li>
+                <li>Fix Source directive to be relative to route home rather than route documents.
+                    <a href="https://github.com/embedthis/appweb/issues/219">[issue 219]</a></li>
+                <li>Fix for windows when time goes backwards
+                    <a href="https://github.com/embedthis/appweb/issues/227">[issue 227]</a></li>
+                <li>Fix esp recompiling on windows
+                    <a href="https://github.com/embedthis/appweb/issues/228">[issue 228]</a></li>
+                <li>Modify ESP cache module naming to include the appname as an ingredient into the MD5 name.
+                    This is necessary to support multiple applications with controllers of the same name.
+                    <a href="https://github.com/embedthis/appweb/issues/234">[issue 234]</a></li>
+            </ul>
+            <h3>Incompatible Changes</h3>
+            <ul>
+                <li>The ESP HTML control generators are deprecated. The recommended approach is to use a client-side framework 
+                    like Angular for HTML controls.</li>
+                <li>The EspApp directive now has a new format. See the ESP documentation for details. The old format 
+                    is enabled but deprecated.</li>
+                <li>The ESP flash mechanism now preserves flash messages into the next controller and they are then erased before
+                the view after that. Flash should not be used for feedback into the view. </li>
+                <li>The ESP setFlash() function is now renamed flash(). </li> <li>The ESP flash() function is renamed
+                    renderFlash().  This is to be consistent with other render methods. </li>
+                <li>The ESP espGetFlashMessage() function is renamed espGetFlash()</li>
+                <li>ESP controller module initialization functions have a new naming convention: esp_controller_APP_NAME
+                    instead of esp_module_NAME. This permits multiple applications with controllers of the same name.</li>
+                <li>The ESP src/*.c files must now be named src/app.c</li>
+                <li>ESP cache modules names are different and now include the app name as an ingredient in the MD5 name.</li>
+                <li>The ESP function stylesheet() now generates by default a reference to "static/css/all.css" instead of
+                    "layout.css" and "theme/default.css". This is to support the use of Less and SCCS which aggregate style
+                    sheets.</li>
+                <li>If a Route directive uses the same pattern as a previously created route, it will open and modify the
+                    previous route.</li>
+                <li>The Header directive is renamed RequestHeader. Use SetHeader to set response headers.</li>
+                <li>The Compress directive is present but deprecated. Use "Map compressed" instead. Map is a more generalized
+                    facility that embraces compression.</li>
+                <li>The httpHandleOptionsTrace() function is deprecated. The API is present but deprecated.</li>
+                <li>LimitRequestBody does not file upload size. Use LimitUpload to limit file upload size.</li>
+                <li>Changed the field HttpRoute.dir to HttpRoute.documents. This is to avoid confusion with HttpRoute.home.</li>
+                <li>The Appweb default configuration is now secure-by-default. The security sandbox limits are set fairly
+                low and the default responses now include headers to limit cross-site-scripting vulnerabilities.
+                See <a href="../guide/appweb/users/security.html#securedefaults">Security Defaults</a> for more
+                information.</li>
+                <li>The httpAddResourceGroup, httpAddResource, httpAddClientRoute and httpAddRouteSet have changed signatures
+                    to accommodate a URI prefix for server-side controller URIs.</li>
+            </ul>
+            <a id="4.3.6"></a>
+            <h2 class="section">Changes in 4.3.6</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Add yield points to reduce memory footprint for back-to-back requests.
+                    <a href="https://github.com/embedthis/appweb/issues/232">[issue 232]</a></li>
+                <li>Fix route templates if a route has a trailing $.
+                    <a href="https://github.com/embedthis/appweb/issues/233">[issue 233]</a></li>
+            </ul>
+            <a id="4.3.5"></a>
+            <h2 class="section">Changes in 4.3.5</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix recalculating MDB index after deleting items.
+                    <a href="https://github.com/embedthis/appweb/issues/194">[issue 194]</a></li>
+                <li>Fix SSL write blocking with OpenSSL. Caused increased memory consumption for 
+                    large file downloads over SSL.
+                    <a href="https://github.com/embedthis/appweb/issues/195">[issue 195]</a></li>
+                <li>Content-Range end byte is one too big.
+                    <a href="https://github.com/embedthis/appweb/issues/178">[issue 178]</a></li>
+                <li>Fix parsing range header.
+                    <a href="https://github.com/embedthis/appweb/issues/209">[issue 209]</a></li>
+                <li>Fix WebSocket compliance with continuation frames
+                    <a href="https://github.com/embedthis/appweb/issues/209">[issue 223]</a></li>
+                <li>Fix mprYield and GC deadlock
+                    <a href="https://github.com/embedthis/appweb/issues/209">[issue 221]</a></li>
+                <li>Update License.md
+                    <a href="https://github.com/embedthis/appweb/issues/209">[issue 222]</a></li>
+            </ul>
+            <a id="4.3.4"></a>
+            <h2 class="section">Changes in 4.3.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix incorrect http session max exceeded limit message
+                    <a href="https://github.com/embedthis/appweb/issues/191">[issue 191]</a></li>
+                <li>Fix static compilation error in espHandler.
+                    <a href="https://github.com/embedthis/appweb/issues/192">[issue 192]</a></li>
+                <li>Update jquery and jquery.esp to support jQuery 1.9 
+                    <a href="https://github.com/embedthis/appweb/issues/193">[issue 193]</a></li>
+            </ul>
+            <a id="4.3.3"></a>
+            <h2 class="section">Changes in 4.3.3</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add ESP template directive @! to access C variables
+                    <a href="https://github.com/embedthis/appweb/issues/190">[issue 190]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix ESP MVC apps serving static/*.esp
+                    <a href="https://github.com/embedthis/appweb/issues/164">[issue 164]</a></li>
+                <li>ESP generate with SDB fails
+                    <a href="https://github.com/embedthis/appweb/issues/165">[issue 165]</a></li>
+                <li>Fix resolving appweb.conf relative to the appweb.conf file
+                    <a href="https://github.com/embedthis/appweb/issues/166">[issue 166]</a></li>
+                <li>Fix client HTTP Host header. Should not include :443.
+                    <a href="https://github.com/embedthis/appweb/issues/167">[issue 167]</a></li>
+                <li>Fix esp generate table | migration
+                    <a href="https://github.com/embedthis/appweb/issues/168">[issue 168]</a></li>
+                <li>Improve esp generated appweb.conf 
+                    <a href="https://github.com/embedthis/appweb/issues/169">[issue 169]</a></li>
+                <li>Fix EspApp to reuse suitable existing routes if possible
+                    <a href="https://github.com/embedthis/appweb/issues/170">[issue 170]</a></li>
+                <li>Fix ESP setting {controller} parameter for singleton resource routes
+                    <a href="https://github.com/embedthis/appweb/issues/171">[issue 171]</a></li>
+                <li>Generate dummy data favicon for error pages and ESP icon(0, 0)
+                    <a href="https://github.com/embedthis/appweb/issues/172">[issue 172]</a></li>
+                <li>Fix missing EspControl documentation and add ESP API stability classifications
+                    <a href="https://github.com/embedthis/appweb/issues/173">[issue 173]</a></li>
+                <li>Update to jQuery 1.9 for ESP
+                    <a href="https://github.com/embedthis/appweb/issues/174">[issue 174]</a></li>
+                <li>Use HTML5 data-esp prefix for ESP data attributes
+                    <a href="https://github.com/embedthis/appweb/issues/175">[issue 175]</a></li>
+                <li>Add SO_REUSEADDR for VxWorks
+                    <a href="https://github.com/embedthis/appweb/issues/176">[issue 176]</a></li>
+                <li>Fix the ESP text password attributes
+                    <a href="https://github.com/embedthis/appweb/issues/177">[issue 177]</a></li>
+            </ul>
+            <a id="4.3.2"></a>
+            <h2 class="section">Changes in 4.3.2</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add self-signed cert and enable SSL by default
+                    <a href="https://github.com/embedthis/appweb/issues/150">[issue 150]</a></li>
+                <li>Improve generated makefiles using top level CFLAGS, LDFLAGS
+                    <a href="https://github.com/embedthis/appweb/issues/151">[issue 151]</a></li>
+                <li>Improve and extend samples
+                    <a href="https://github.com/embedthis/appweb/issues/152">[issue 152]</a></li>
+                <li>Improve portability of compiled ESP modules. Change MD5 encoding to be based on route relative paths.
+                    <a href="https://github.com/embedthis/appweb/issues/153">[issue 153]</a></li>
+                <li>Change _default_ to APPWEB for UserAccount and GroupAccount directives. 
+                        The old _default_ is still implemented.
+                    <a href="https://github.com/embedthis/appweb/issues/161">[issue 161]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix esp --platform vxworks compile
+                    <a href="https://github.com/embedthis/appweb/issues/154">[issue 154]</a></li>
+                <li>Fix CPU setting in "configure --platform os-arch:CPU"
+                    <a href="https://github.com/embedthis/appweb/issues/155">[issue 155]</a></li>
+                <li>Fix compiling ESP pages with DOS end-of-line terminators (CR/LF)
+                    <a href="https://github.com/embedthis/appweb/issues/156">[issue 156]</a></li>
+                <li>Fix "EspUpdate off" to permit one-time loading of ESP modules
+                    <a href="https://github.com/embedthis/appweb/issues/157">[issue 157]</a></li>
+                <li>Fix location of error.log and default to the current directory.
+                    <a href="https://github.com/embedthis/appweb/issues/158">[issue 158]</a></li>
+                <li>Rename AuthStore pam =&gt; system, internal =&gt; file. Pam|internal deprecated but still implemented.
+                    <a href="https://github.com/embedthis/appweb/issues/159">[issue 159]</a></li>
+                <li>Fix compiling C++ samples on windows by removing TSZ define
+                    <a href="https://github.com/embedthis/appweb/issues/160">[issue 160]</a></li>
+                <li>Fix "esp can't find platform"
+                    <a href="https://github.com/embedthis/appweb/issues/162">[issue 162]</a></li>
+                <li>Cookie fixes: Fix httpSetCookie to only allow one header per cookie.
+                    httpCreateSession to always re-create a session.
+                    httpDestroySession to erase the client cookie (API change).
+                    <a href="https://github.com/embedthis/appweb/issues/163">[issue 163]</a></li>
+            </ul>
+            <a id="4.3.1"></a>
+            <h2 class="section">Changes in 4.3.1</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add MPR palloc/pfree APIs to allocate and free permanent memory
+                    <a href="https://github.com/embedthis/appweb/issues/139">[issue 139]</a></li>
+                <li>Update API stability classifications
+                    <a href="https://github.com/embedthis/appweb/issues/140">[issue 140]</a></li>
+                <li>Update JQuery to 1.9.1
+                    <a href="https://github.com/embedthis/appweb/issues/141">[issue 141]</a></li>
+                <li>Update SQLite to 3.7.15.1
+                    <a href="https://github.com/embedthis/appweb/issues/142">[issue 142]</a></li>
+                <li>Improve conditional makefiles to support SSL and PHP
+                    <a href="https://github.com/embedthis/appweb/issues/143">[issue 143]</a></li>
+                <li>Add make deploy
+                    <a href="https://github.com/embedthis/appweb/issues/144">[issue 144]</a></li>
+                <li>Lots of documentation updates
+                    <a href="https://github.com/embedthis/appweb/issues/145">[issue 145]</a></li>
+                <li>Add static makefiles
+                    <a href="https://github.com/embedthis/appweb/issues/146">[issue 146]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Only change user/group for UserAccount/GroupAccount if root/administrator
+                    <a href="https://github.com/embedthis/appweb/issues/147">[issue 147]</a></li>
+                <li>Define default stack size for VxWorks
+                    <a href="https://github.com/embedthis/appweb/issues/148">[issue 148]</a></li>
+                <li>Fix make/bit install for non-root installations
+                    <a href="https://github.com/embedthis/appweb/issues/125">[issue 125]</a></li>
+                <li>Add "public" to cookies over SSL for firefox
+                    <a href="https://github.com/embedthis/appweb/issues/149">[issue 149]</a></li>
+                <li>Fix C++ compilation
+                    <a href="https://github.com/embedthis/appweb/issues/127">[issue 127]</a></li>
+            </ul>
+            <a id="4.3.0"></a>
+            <h2 class="section">Changes in 4.3.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Fixed listening on Windows 64 with IPv6 and IPv4 on a single socket.
+                    <a href="https://github.com/embedthis/appweb/issues/98">[issue 98]</a></li>
+                <li>Change tunable defines to be override via configure. These are now all named: BIT_*.
+                    <a href="https://github.com/embedthis/appweb/issues/99">[issue 99]</a></li>
+                <li>Update to PHP5.4
+                    <a href="https://github.com/embedthis/appweb/issues/100">[issue 100]</a></li>
+                <li>Add support for the Mocana NanoSSL stack:
+                    <a href="https://github.com/embedthis/appweb/issues/102">[issue 102]</a></li>
+                <li>Add prototype support for the EST SSL stack:
+                    <a href="https://github.com/embedthis/appweb/issues/101">[issue 101]</a></li>
+                <li>Add main.bit settings "logging". This is enabled by default for debug and release builds.
+                    If disabled, calls to mprLog() will be optimized out. Calls to mprError will always be enabled.
+                    Similarly, added main.bit settings "tracing". This is enabled by default for only for debug builds.
+                    If disabled, calls to assert() and mprTrace() will be optimized out.
+                    <a href="https://github.com/embedthis/appweb/issues/107">[issue 107]</a></li>
+                <li>Added esp --genlink, to generate a static link file for loading esp applications.
+                    Added "bit genapp" sample target to generate slink.c based on esp applications under
+                    src/server/web.
+                    <a href="https://github.com/embedthis/appweb/issues/114">[issue 114]</a></li>
+                <li>Added Ejscript as an integrated component instead of requiring a separate download.
+                    Use "configure --with ejscript" to enable.
+                    <a href="https://github.com/embedthis/appweb/issues/117">[issue 117]</a></li>
+                <li>Added support for HSTS (HTTP Strict Transport Security).
+                    <a href="https://github.com/embedthis/appweb/issues/120">[issue 120]</a></li>
+                <li>Enhance makefiles to support targets: install, uninstall
+                    <a href="https://github.com/embedthis/appweb/issues/121">[issue 121]</a></li>
+                <li>Support building on windows without cygwin
+                    <a href="https://github.com/embedthis/appweb/issues/122">[issue 122]</a></li>
+                <li>Add full text search (FTS3) in SQLite
+                    <a href="https://github.com/embedthis/appweb/issues/128">[issue 128]</a></li>
+                <li>Optimize memory allocation for large form requests
+                    <a href="https://github.com/embedthis/appweb/issues/131">[issue 131]</a></li>
+                <li>Optimize memory garbage collection when appweb is idle
+                    <a href="https://github.com/embedthis/appweb/issues/132">[issue 132]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>The mpr.h header has been split into a cross platform operating system layer called bitos.h.
+                    The mpr.h header includes this, so there should be no API impact.
+                    <a href="https://github.com/embedthis/appweb/issues/103">[issue 103]</a></li>
+                <li>Remove compiler switch -mtune when not required
+                    <a href="https://github.com/embedthis/appweb/issues/104">[issue 104]</a></li>
+                <li>Fix generated makefiles determining the system CPU architecture
+                    <a href="https://github.com/embedthis/appweb/issues/105">[issue 105]</a></li>
+                <li>Main.bit settings are grouped into collections: http, esp, mpr. Use
+                    configure --set NAME.FIELD=value where NAME is the collection name.
+                    <a href="https://github.com/embedthis/appweb/issues/108">[issue 108]</a></li>
+                <li>Update licenses. Remove licenses for SSL stacks that are not included in the product.
+                    <a href="https://github.com/embedthis/appweb/issues/109">[issue 109]</a></li>
+                <li>Fix test if IPv6 is supported on a system
+                    <a href="https://github.com/embedthis/appweb/issues/110">[issue 110]</a></li>
+                <li>Fix creating browser cookies for localhost
+                    <a href="https://github.com/embedthis/appweb/issues/112">[issue 112]</a></li>
+                <li>Fix esp --flat, to compile esp applications into a single library
+                    <a href="https://github.com/embedthis/appweb/issues/113">[issue 113]</a></li>
+                <li>Building with ROM fs support. Added configure --rom, and the sample target "bit rom"
+                    <a href="https://github.com/embedthis/appweb/issues/115">[issue 115]</a></li>
+                <li>Using static linking with esp applications.
+                    <a href="https://github.com/embedthis/appweb/issues/116">[issue 116]</a></li>
+                <li>Esp command without a database (mdb or sdb)
+                    <a href="https://github.com/embedthis/appweb/issues/119">[issue 119]</a></li>
+                <li>Appweb now installed under /usr/local rather than 1/2 under /usr.
+                    <a href="https://github.com/embedthis/appweb/issues/124">[issue 124]</a></li>
+                <li>ESP now uses the file handler to serve static content.
+                    <a href="https://github.com/embedthis/appweb/issues/126">[issue 126]</a></li>
+                <li>Form request with Content-Length of zero.
+                    <a href="https://github.com/embedthis/appweb/issues/129">[issue 129]</a></li>
+                <li>Improve CGI response header parsing
+                    <a href="https://github.com/embedthis/appweb/issues/130">[issue 130]</a></li>
+                <li>Fix esp run
+                    <a href="https://github.com/embedthis/appweb/issues/133">[issue 133]</a></li>
+                <li>Change esp @@variables and &lt;%= expressions to be HTML escaped
+                    <a href="https://github.com/embedthis/appweb/issues/134">[issue 134]</a></li>
+                <li>Fix worker thread calculations. Fix mprAvailableThreads().
+                    <a href="https://github.com/embedthis/appweb/issues/135">[issue 135]</a></li>
+                <li>Fix ErrorDocument processing when the error document itself is missing
+                    <a href="https://github.com/embedthis/appweb/issues/136">[issue 136]</a></li>
+                <li>Issue readable event when connection notifier registered
+                    <a href="https://github.com/embedthis/appweb/issues/138">[issue 138]</a></li>
+            </ul>
+            <h3>API Changes</h3>
+            <ul>
+                <li>The installation prefix names have been refactored to work with Bit.</li>
+            </ul>
+            <a id="4.2.0"></a>
+            <h2 class="section">Changes in 4.2.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add LimitParseTimeout directive to abort requests that start without concluding the HTTP headers.
+                    This optimizes the denial of service protections offered by Appweb. This was not a security
+                    flaw, as other limit and timeout directives would have protected the server regardless.
+                    <a href="https://github.com/embedthis/appweb/issues/73">[issue 73]</a></li>
+                <li>Add LimitRequestsPerClient directive to limit the number of requests that can be issued by a single
+                client IP address. This optimizes the denial of service protections offered by Appweb. This was not 
+                a security flaw, as other limit and timeout directives would have protected the server regardless.
+                    <a href="https://github.com/embedthis/appweb/issues/74">[issue 74]</a></li>
+                <li>Add Home directive to permit routes to store their own root directory for configuration files
+                    <a href="https://github.com/embedthis/appweb/issues/75">[issue 75]</a></li>
+                <li>Listen to both IPv4 and IPv6 in response to a single "Listen port" directive
+                    <a href="https://github.com/embedthis/appweb/issues/76">[issue 76]</a></li>
+                <li>Enhance performance and worker thread utilization by optimizing lock contention and GC yielding
+                    <a href="https://github.com/embedthis/appweb/issues/55">[issue 55]</a></li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Ensure the handler start() callback is always invoked before any incoming() data.
+                    <a href="https://github.com/embedthis/appweb/issues/77">[issue 77]</a></li>
+                <li>CGI unit test scripts to use ejs instead of /bin/sh so they can run on windows.
+                    <a href="https://github.com/embedthis/appweb/issues/78">[issue 78]</a></li>
+                <li>Timeout message for inactive keep-alive connections
+                    <a href="https://github.com/embedthis/appweb/issues/79">[issue 79]</a></li>
+                <li>Make server/src/cache and test/cache directories for unit tests
+                    <a href="https://github.com/embedthis/appweb/issues/80">[issue 80]</a></li>
+                <li>Bit run" invokes appweb in src/server instead of ./test
+                    <a href="https://github.com/embedthis/appweb/issues/81">[issue 81]</a></li>
+                <li>ErrorDocument preserves original failing HTTP status code for internal redirects.
+                    <a href="https://github.com/embedthis/appweb/issues/82">[issue 82]</a></li>
+                <li>Bind to ports with exclusive use on Windows (SO_EXCLUSIVEADDRUSE).
+                    <a href="https://github.com/embedthis/appweb/issues/83">[issue 83]</a></li>
+                <li>Create /var/spool/appweb/cache for ESP and EJS compiled modules.
+                    <a href="https://github.com/embedthis/appweb/issues/84">[issue 84]</a></li>
+                <li>Building with VS 2012 and Windows SDK 8
+                    <a href="https://github.com/embedthis/appweb/issues/86">[issue 86]</a></li>
+                <li>Appman is slow to start appweb.
+                    <a href="https://github.com/embedthis/appweb/issues/87">[issue 87]</a></li>
+                <li>mprWriteSocketVector was returning incorrect status transmitting bad output
+                    <a href="https://github.com/embedthis/appweb/issues/88">[issue 88]</a></li>
+                <li>Linux epoll waiting now detects hang-up on writable sockets.
+                    <a href="https://github.com/embedthis/appweb/issues/89">[issue 89]</a></li>
+                <li>Improve WebSockets error handling.
+                    <a href="https://github.com/embedthis/appweb/issues/91">[issue 91]</a></li>
+                <li>Improve connector end-of-output handling
+                    <a href="https://github.com/embedthis/appweb/issues/92">[issue 92]</a></li>
+                <li>External redirects that use a different scheme and the Redirect directive
+                    <a href="https://github.com/embedthis/appweb/issues/93">[issue 93]</a></li>
+                <li>Graceful shutdowns should wait for open requests to complete before stopping or restarting.
+                    <a href="https://github.com/embedthis/appweb/issues/94">[issue 94]</a></li>
+                <li>Added client IP to session lookup to strengthen session hijack preventions.
+                    <a href="https://github.com/embedthis/appweb/issues/95">[issue 95]</a></li>
+            </ul>
+            <h3>API Changes</h3>
+            <ul>
+                <li>The Listen directive will now listen on both IPv4 and IPv6 by default if no network interface
+                is supplied. Previously it only listened on IPv4. If a network interface is supplied, only that
+                interface will be listened on.</li>
+            </ul>
+            <a id="4.1.1"></a>
+            <h2 class="section">Changes in 4.1.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Esp command was crashing on initialization
+                    <a href="https://github.com/embedthis/appweb/issues/85">[issue 85]</a></li>
+                <li>Esp generation of apps on windows
+                    <a href="https://github.com/embedthis/appweb/issues/90">[issue 90]</a></li>
+            </ul>
+            <a id="4.1.0"></a>
+            <h2 class="section">Changes in 4.1.0</h2>
+            <h2>Major Features</h2>
+            <ul>
+                <li>Enhanced role-based authentication management for granular access control
+                    <a href="https://github.com/embedthis/appweb/issues/19">[issue 19]</a></li>
+                <li>Web based form authentication and custom authentication support
+                    <a href="https://github.com/embedthis/appweb/issues/20">[issue 20]</a></li>
+                <li>Require ability "token" directive to specify required route abilities for access
+                    <a href="https://github.com/embedthis/appweb/issues/19">[issue 19]</a></li>
+                <li>Session state management and automatic cookie management. Optimizes authentication via session
+                    storage of credentials
+                    <a href="https://github.com/embedthis/appweb/issues/21">[issue 21]</a></li> 
+                <li>Prototype WebSockets support
+                    <a href="https://github.com/embedthis/appweb/issues/22">[issue 22]</a></li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Added static build support (configure --static)
+                    <a href="https://github.com/embedthis/appweb/issues/23">[issue 23]</a>
+                </li>
+                <li>Added ESP migrations
+                    <a href="https://github.com/embedthis/appweb/issues/24">[issue 24]</a>
+                </li>
+                <li>Upgraded ESP - Smart tables, HTML5 generation </li>
+                <li>Added HttpOnly cookie management in httpSetCookie()
+                    <a href="https://github.com/embedthis/appweb/issues/25">[issue 25]</a>
+                </li>
+                <li>Added lazy SSL loading. SSL library only loaded when SSL requests arrive
+                    <a href="https://github.com/embedthis/appweb/issues/26">[issue 26]</a>
+                </li>
+                <li>Add mprCreateEventOutside for calling back into Appweb from foreign threads
+                    <a href="https://github.com/embedthis/appweb/issues/27">[issue 27]</a>
+                </li>
+                <li>Add SSL unit tests </li>
+                <li>Add ListenSecure directive for SSL outside virtual hosts
+                    <a href="https://github.com/embedthis/appweb/issues/28">[issue 28]</a>
+                </li>
+                <li>Add support for Windows 8
+                    <a href="https://github.com/embedthis/appweb/issues/29">[issue 29]</a>
+                </li>
+                <li>Add support for Visual Studio 2012
+                    <a href="https://github.com/embedthis/appweb/issues/30">[issue 30]</a>
+                </li>
+                <li>Add error output to syslog
+                    <a href="https://github.com/embedthis/appweb/issues/31">[issue 31]</a>
+                </li>
+                <li>Add httpFinalizeOutput to signify completed output when still processing request
+                    <a href="https://github.com/embedthis/appweb/issues/32">[issue 32]</a>
+                </li>
+                <li>Added Action handler for simple URI to C function bindings
+                    <a href="https://github.com/embedthis/appweb/issues/33">[issue 33]</a>
+                </li>
+                <li>Remove *def files on windows. Use PUBLIC export decoration
+                    <a href="https://github.com/embedthis/appweb/issues/34">[issue 34]</a>
+                </li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix documentation version number
+                    <a href="https://github.com/embedthis/appweb/issues/35">[issue 35]</a>
+                </li>
+                <li>Xcode debug builds to include BIT_DEBUG
+                    <a href="https://github.com/embedthis/appweb/issues/36">[issue 36]</a>
+                </li>
+                <li>CGI NPH fixes to not augment CGI headers
+                    <a href="https://github.com/embedthis/appweb/issues/37">[issue 37]</a>
+                </li>
+                <li>ESP MDB database JSON format error
+                    <a href="https://github.com/embedthis/appweb/issues/38">[issue 38]</a>
+                </li>
+                <li>PUT method response to include Etag and Location
+                    <a href="https://github.com/embedthis/appweb/issues/39">[issue 39]</a>
+                </li>
+                <li>Consuming body of failed requests to preserve keep-alive
+                    <a href="https://github.com/embedthis/appweb/issues/40">[issue 40]</a>
+                </li>
+                <li>Http command --show displaying headers when no body in response
+                    <a href="https://github.com/embedthis/appweb/issues/41">[issue 41]</a>
+                </li>
+                <li>Fix SSL inheritance in appweb.conf for virtual hosts
+                    <a href="https://github.com/embedthis/appweb/issues/42">[issue 42]</a>
+                </li>
+                <li>If-Match header handling for case sensitivity
+                    <a href="https://github.com/embedthis/appweb/issues/43">[issue 43]</a>
+                </li>
+                <li>Option request handling
+                    <a href="https://github.com/embedthis/appweb/issues/44">[issue 44]</a>
+                </li>
+                <li>Directory listings path names to be relative paths
+                    <a href="https://github.com/embedthis/appweb/issues/45">[issue 45]</a>
+                </li>
+                <li>Xcode project to use unique output directory
+                    <a href="https://github.com/embedthis/appweb/issues/46">[issue 46]</a>
+                </li>
+                <li>Update MatrixSSL support to the latest version
+                    <a href="https://github.com/embedthis/appweb/issues/47">[issue 47]</a>
+                </li>
+                <li>Remove zlib not required
+                    <a href="https://github.com/embedthis/appweb/issues/48">[issue 48]</a>
+                </li>
+                <li>Rename T() to UT() to avoid winnt.h clash
+                    <a href="https://github.com/embedthis/appweb/issues/49">[issue 49]</a>
+                </li>
+                <li>Locating OpenSSL libraries on 64-bit systems
+                    <a href="https://github.com/embedthis/appweb/issues/50">[issue 50]</a>
+                </li>
+                <li>IPv6 unit tests
+                    <a href="https://github.com/embedthis/appweb/issues/51">[issue 51]</a>
+                </li>
+                <li>Renamed modules to begin with "lib" so static libraries can work on Linux
+                    <a href="https://github.com/embedthis/appweb/issues/52">[issue 52]</a>
+                </li>
+                <li>Mips CPU detection and number to asci conversion on big-endian mips
+                    <a href="https://github.com/embedthis/appweb/issues/53">[issue 53]</a>
+                    <a href="https://github.com/embedthis/appweb/issues/54">[issue 54]</a>
+                </li>
+                <li>Optimize memory usage under severe load 
+                    <a href="https://github.com/embedthis/appweb/issues/55">[issue 55]</a>
+                </li>
+                <li>Premature timer expiry when time-warping
+                    <a href="https://github.com/embedthis/appweb/issues/56">[issue 56]</a>
+                </li>
+            </ul>
+            <h3>API Changes</h3>
+            <ul>
+                <li>Refactor scase to scaseless</li>
+                <li>Changed name of ESP module entry point. Renamed "controller" to "module".
+                Existing controllers will need to be modified. 
+                </li>
+                <li>The HttpConn.finalized field is moved to HttpTx.
+                </li>
+                <li>The httpCreateHandler and httpCreateFilter APIs remove the flags arg.
+                </li>
+                <li>HTTP_STAGE_ALL define and HTTP_STAGE_* flags removed.
+                </li>
+                <li>The httpHandleOPtionsTrace API has a mew "methods" parameter for the supported methods
+                    for the handler. This should be set to a comma separated list of methods in uppercase.
+                    </li>
+                <li>All public methods are decorated with PUBLIC to export from windows DLLs. This is instead of
+                    using dumpbin.
+                    </li>
+                <li>Many time routines have their timeout type renamed to MprTicks from MprTime. As part of a fix
+                for time-zone warping, timeouts are now specified in MprTick values. Ticks are measured in milliseconds
+                from some arbitrary system-dependant starting point. Ticks never go backwards and are monotonically 
+                increasing.
+                </li>
+                <li>The old MprGetTicks is renamed MprGetHiResTime.
+                </li>
+                <li>The LimitStageBuffer directive is renamed LimitBuffer. The old name is supported.
+                </li>
+                <li>The httpWriteBlock API now takes a flags argument. It can be set to control whether the 
+                    call blocks, buffers or non-blocks.
+                    </li>
+                    <li>The WebSockets prototype adds some WebSockets specific APIs.
+                    </li>
+                <li>auth/httpPassword program renamed to authpass for clarity</li>
+                <li>AuthMethod renamed to AuthStore for clarity (old directive preserved for compatibility)</li>
+                <li>AuthName renamed to AuthRealm for clarity (old directive preserved for compatibility) </li>
+                <li>The Group directive has been renamed GroupAccount and User renamed to UserAccount. This is to 
+                be more descriptive as the role-based access control uses the User directive to define
+                user abilities for access control.</li>
+            </ul>
+            <a id="4.0.0"></a>
+            <h2 class="section">Changes in 4.0.0</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>New Embedded Server Pages (ESP) web framework</li>
+                <li>Request routing with multi-stage, regular expression routes</li>
+                <li>Integrated response caching</li>
+                <li>Multi-language support</li>
+                <li>Support Ejscript 2.0 web framework</li>
+                <li>Extended unit tests</li>
+                <li>Improved documentation and samples</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>Appweb 4 is a major release and most APIs have been modified based on the updated MPR.</li>
+            </ul>
+            <a name="3.4.1" id="3.4.1"></a>
+            <h2 class="section">Changes in 3.4.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Add missing MA_MAX_REQUESTS and MA_MAX_PROCESSES for various tune settings
+                    <a href="https://github.com/embedthis/appweb-3/issues/37">[issue 37].</a>
+                </li>
+                <li>Add support to permit changing a request timeout by updating HttpConn.expires
+                    <a href="https://github.com/embedthis/appweb-3/issues/38">[issue 38].</a>
+                </li>
+            </ul>
+            
+            <a id="3.4.0"></a>
+            <h2 class="section">Changes in 3.4.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Added LimitProcesses to limit the number of CGI processes</li>
+                <li>Added LimitRequests to limit the number of simultaneous requests</li>
+            </ul>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Ejscript return in try blocks</li>
+                <li>Idle threads consuming CPU after long delay</li>
+                <li>Prune workers not terminating idle threads</li>
+                <li>Sign-extension assertion in ctype on windows</li>
+                <li>MprCond not waiting waking up prematurely</li>
+                <li>CPU load via spinning thread with no work to do</li>
+                <li>PruneWorkers to prune all idle threads and ignore pruneHighWater</li>
+                <li>Add LimitProcesses to limit the number of CGI processes</li>
+                <li>Accelerate reaping of CGI zombie processes</li>
+            </ul>
+            <a id="3.3.3"></a>
+            <h2 class="section">Changes in 3.3.3</h2>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Fixes for building for VxWorks on linux</li>
+                <li>Fix httpPassword parsing</li>
+                <li>Add SSL_OP_NO_TICKET and SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION to force
+                    renegotiation of sessions.</li>
+                <li>Enable no free threads message to continually be emitted</li>
+            </ul>
+            <a id="3.3.2"></a>
+            <h2 class="section">Changes in 3.3.2</h2>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>CGI content-length headers</li>
+                <li>parsing XML documents with zero length attributes</li>
+                <li>Initialize blank areas of ejs byte code</li>
+                <li>ejs Array.sort order</li>
+                <li>ejs doc for Date.year</li>
+                <li>warnings in Xcode about OpenSSL</li>
+                <li>multiply defined target rules when building with latest GNU make</li>
+                <li>Remove -G 0 compilation switch for Mips</li>
+                <li>MVC apps with caselessmatch for URI extensions</li>
+                <li>setCookie()</li>
+                <li>PHP with basic/digest authentication requests</li>
+                <li>Session memory leaks</li>
+                <li>Improve X509 certificate verification with SSL</li>
+                <li>Ejscript property scope searching</li>
+                <li>Ejscript setCookie</li>
+                <li>Optimize output of large static files</li>
+                <li>Samples not compiling</li>
+                <li>Windows 64-bit file stat</li>
+                <li>Add huge file support (&gt; 2GB)</li>
+            </ul>
+            <a id="3.3.1"></a>
+            <h2 class="section">Changes in 3.3.1</h2>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Fix HEAD requests</li>
+                <li>Fix responses larger than 2GB</li>
+            </ul>
+            <a id="3.3.0"></a>
+            <h2 class="section">Changes in 3.3.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Added <a href="../guide/appweb/users/dir/server.html#chroot">Chroot</a> directive</li>
+                <li>Support filtering shebang lines in PHP scripts</li>
+                <li>Add missing extensions for PHP/CGI requests to allow requests for PHP files without .php extension</li>
+                <li>Support graceful exit</li>
+                <li>Add prototype module unloading for PHP via UnloadModule directive</li>
+                <li>Add request timing to log file at level 5</li>
+                <li>Add ASN1 certificate parsing for SSL</li>
+                <li>Add on-demand initialization for PHP</li>
+                <li>Prototype inactive PHP module unloading</li>
+            </ul>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Fix CGI output parsing when gateways omit headers</li>
+                <li>Bad timezone on HTTP headers in certain locales</li>
+                <li>Potential bad free of connection input buffer</li>
+                <li>Formatted printing of floating point numbers</li>
+                <li>Fixed --chroot switch</li>
+                <li>Ensure handlers match() routine is always invoked if required</li>
+                <li>FreeBSD linking fixes</li>
+                <li>CGI for long running requests and requests with large post data</li>
+                <li>Bad reference for req-&gt;pathInfo</li>
+                <li>ActionProgram directive for CGI</li>
+                <li>REDIRECT_STATIC compat env var for PHP</li>
+                <li>Inheriting AuthName, Require and CustomLog directives</li>
+                <li>Building with configure --disable-all</li>
+                <li>Ejscript: Windows 7 support and VS 10.0</li>
+                <li>Add missing msvcrt version 10 DLL</li>
+                <li>Update Ejscript documentation</li>
+                <li>Premature exit with large forward time changes</li>
+                <li>CGI with file upload</li>
+                <li>Return status of 401 instead of 404 when missing file and authentication</li>
+                <li>Rewriting the request URI. Now updates filename, alias, location, extension etc.</li>
+                <li>Configure for vxworks on Linux</li>
+                <li>Fix redirections using SSL</li>
+                <li>Fix running CGI/PHP startup for form and upload requests</li>
+                <li>Ejscript: Array.slice with negative indices</li>
+                <li>Ejscript: Date/Time calculations for pre 1970 dates</li>
+                <li>Ejscript: Cygwin Math.pow Infinity results</li>
+                <li>Ejscript: Allow JSON encoded arrays in Http form data</li>
+                <li>Ejscript: memory fragmentation</li>
+                <li>Ejscript: exception stack handling</li>
+                <li>Ejscript: parsing XML characters &gt; 127</li>
+                <li>Ejscript: GC issue with new Function()</li>
+                <li>Ejscript: XSS issue with embedded script in URLs</li>
+                <li>Ejscript: Compiler spin with }; construct</li>
+                <li>Ejscript: escape(quote)</li>
+            </ul>
+            
+            <a id="3.2.2"></a>
+            <h2 class="section">Changes in 3.2.2</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>FreeBSD ports</li>
+                <li>Http request and response body tracing. New configuration directives LogTrace and LogTraceFilter.</li>
+            </ul>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Freeing memory on exiting. (Fix to mprFree(mpr))</li>
+                <li>Ejscript update to 1.0.2 </li>
+                <li>Documentation updates</li>
+                <li>Debian package improvements</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <a id="3.2.1"></a>
+            <h2 class="section">Changes in 3.2.1</h2>
+            <h3>Key Fixes</h3>
+            <ul>
+                <li>Missing linkup script for packaging</li>
+                <li>Timed out requests</li>
+                <li>Building with va_list on some systems</li>
+                <li>Parsing IPv6 addresses in the config file</li>
+                <li>Ejscript loading modules fix for ARM</li>
+                <li>Large requests when using the fileHandler</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <a id="3.2.0"></a>
+            <h2 class="section">Changes in 3.2.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Updated Ejscript with enhanced Math, Date and Number classes</li>
+                <li>Improved Ejscript library API documentation</li>
+                <li>Improved configure diagnostics with the --verbose switch</li>
+                <li>Many small fixes</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Optimize make install/package when using svn</li>
+                <li>SimpleModule sample</li>
+                <li>Loading modules with a "." in the name</li>
+                <li>Single threaded page reload when using remote command execution</li>
+                <li>Improve configure diagnostics</li>
+                <li>Ejs: TextStream::read() with unterminated last line </li>
+                <li>Ejs: Http requests with credentials</li>
+                <li>Ejs: JSON parsing and encoding</li>
+                <li>Ejs: Math, Number and Date methods</li>
+                <li>Ejs: Documentation</li>
+                <li>Ejs: ByteArray.copyIn</li>
+                <li>Ejs: Parsing XML literals</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>New MPR mprDtoa C API</li>
+                <li>Enhanced Ejscript Number, Date and Math APIs</li>
+                <li>API documentation corrections</li>
+            </ul>
+            <a id="3.1.2"></a>
+            <h2 class="section">Changes in 3.1.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Windows project files</li>
+                <li>Setting /Program Files in windows installation</li>
+                <li>Ejscript TextStream and XML updates</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <a id="3.1.1"></a>
+            <h2 class="section">Changes in 3.1.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Handling bad HTTP request lines</li>
+                <li>TLS/SSL renegotiation. Updated binary packages for OpenSsl and MatrixSsl</li>
+                <li>Building in release mode on Windows</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <a id="3.1.0"></a>
+            <h2 class="section">Changes in 3.1.0</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Improve configure trace output</li>
+                <li>Fold text line lengths in README and LICENSE</li>
+                <li>Update WIN and WINCE projects</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Configure when /bin/cc is missing on Windows</li>
+                <li>Default buildConfig.h for windows</li>
+                <li>Remove absolute path names in buildConfig.h for Windows</li>
+                <li>Add quotes to some commands in bld</li>
+                <li>Mac OS X uninstall (pidof)</li>
+                <li>Removal of aborted upload temp files</li>
+                <li>Removing call to getSocketInfo. Was hanging if no DNS</li>
+                <li>ROM - no file system support</li>
+                <li>Windows case sensitive digest auth test</li>
+                <li>Windows TextStream in Ejs</li>
+                <li>Ejs WebWorkers</li>
+                <li></li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <a id="3.0.2"></a>
+            <h2 class="section">Changes in 3.0.2</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Support Web Worker API in Ejscript</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Ejscript Web Worker API support</li>
+                <li>Add versioned Ejscript module support</li>
+                <li>Updated utest (unit test driver) with Web Worker support</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Ejscript super invocations</li>
+                <li>Ejscript subclassing native classes</li>
+                <li>Ejscript strict mode errors</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>Modified MPR mprServiceEvents</li>
+                <li>Renamed MPR mprAwaken* to mprWakeDispatcher</li>
+            </ul>
+            <a id="3.0.1"></a>
+            <h2 class="section">Changes in 3.0.1</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Support Cygwin (Requires Cygwin 1.7 Beta)</li>
+                <li>Updated Ejscript to 1.0.0</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Optimized SSL reading from slow clients</li>
+                <li>Enhanced http command and MprHttp API to support chunking and file upload</li>
+                <li>Moved incoming chunk filter code into the chunk filter. Changed to appweb.conf to use AddFilter.</li>
+                <li>Modify makefiles to support Embedthis continuous integration build farm</li>
+                <li>Updated Ejscript to support fully relative URLs. Required when running behind a reverse proxy</li>
+                <li>Updated Ejscript for enhanced MVC and SQLite database support</li>
+                <li>Added prototype unit test program "utest"</li>
+                <li>Support Visual Studio 2012"</li>
+                <li>Enhanced Ejscript module search path controls</li>
+                <li>Optimize memory footprint</li>
+                <li>Partial support for PHP 5.3.0</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Missing PHP module on some builds</li>
+                <li>Configure buildConfig.h generation for certain paths</li>
+                <li>Chunk parsing for incoming data when chunks were split across TCP packets</li>
+                <li>Pipeline queue byte count accounting</li>
+                <li>Ejscript text() input control</li>
+                <li>Reduce worker thread priorities</li>
+                <li>Ejscript file size properties</li>
+                <li>SimpleEgi sample</li>
+                <li>Optimize file upload memory usage</li>
+                <li>Wince and Windows 
+                <li>Configure --disable-all</li>
+                <li>Ejscript fixes for: TextStream reading text lines,
+                    SSL protocol support for the Http class,
+                    nested try/catch inside functions,
+                    use of iterations inside finally blocks,
+                    file upload,
+                    fileUploadSize
+                    Http.secure property,
+                    GC issue for collecting frames,
+                    JSON encoding,
+                    SQL quoting,
+                    Error.stack,
+                    Hybrid type slot binding,
+                    regular expression doc and 
+                    File.size for open files</li>
+            </ul>
+            <h3><strong>API Changes</strong></h3>
+            <ul>
+                <li>Modified MprHttp APIs</li>
+                <li>Ejscript Http, Socket and Record classes</li>
+            </ul>
+            <a id="3.0.0"></a>
+            <h2 class="section">Changes in 3.0.0</h2>
+            <h3>Major Features vs Appweb 2</h3>
+            <ul>
+                <li>New faster request processing pipeline 2x faster on many operations</li>
+                <li>Enhanced Ejscript web framework for server-side JavaScript</li>
+                <li>Integrated SQLite with database ORM layer</li>
+                <li>Integrated Model / View / Controller web framework</li>
+                <li>Smaller and more modular</li>
+                <li>More flexible build configuration</li>
+                <li>Manager process to monitor Appweb and restart if required</li>
+                <li>Updates for PHP, OpenSSL and MatrixSSL</li>
+                <li>Enhanced and faster CGI using pipes for I/O transfer</li>
+                <li>XML parser for SOAP and RESTful web services</li>
+                <li>Windows CE support</li>
+                <li>FreeBSD support</li>
+                <li>MAC OSX support</li>
+                <li>Windows 7 support</li>
+                <li>OpenWrt platform support</li>
+                <li>IPv6 network support</li>
+                <li>Project files for MAC OS Xcode and Microsoft Visual Studio</li>
+                <li>Enhanced http command supporting SSL, chunking, ranged requests and file upload</li>
+            </ul>
+            <a id="2.4.4"></a>
+            <h2 class="section">Changes in 2.4.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Add session resumption work-around for OpenSSL module. Not required if using OpenSSL &gt;= 1.0.0</li>
+                <li>Linux compilation switches</li>
+                <li>Thread race in CGI/CMD</li>
+                <li>Sign extension assert in ctype routines on windows</li>
+                <li>Add CGI environment variable: REDIRECT_STATUS</li>
+            </ul>
+            <a id="2.4.3"></a>
+            <h2 class="section">Changes in 2.4.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Increase default limits for LimitRequestBody and php.ini limits</li>
+                <li>Timeouts for requests that do no I/O</li>
+                <li>Setting of the upload directory</li>
+                <li>Setting IPv6 initialization</li>
+                <li>Formatting log file messages</li>
+                <li>Support Windows SDK 6.0+</li>
+                <li>Support Visual Studio 9.0</li>
+                <li>Support PHP 5.2.8</li>
+                <li>Support MatrixSSL 1.8.6</li>
+                <li>Support OpenSSL 0.9.8j</li>
+            </ul>
+            <a id="2.4.2"></a>
+            <h2 class="section">Changes in 2.4.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for finding unused port in findFreePort()</li>
+                <li>Fix exception on initialization when a value is not supplied with directives in the config
+                file</li>
+                <li>Improve config file diagnostics when parsing</li>
+                <li>Fix exception when using digest authentication but building --disable-auth</li>
+                <li>Fixes for virtual host configuration when matching addresses. Remove requirement to have a port in
+                the NameVirtualHost and ServerName directives</li>
+            </ul>
+            <h2 class="section">Changes in 2.4.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for CGI on MAC OS X. Would not complete requests</li>
+                <li>Fix for digest authentication on IE 7 / vista</li>
+                <li>Fix for Ejscript @@variables when used inside []</li>
+                <li>Fix for Ejscript hexadecimal comparisons. Was comparing with null incorrectly</li>
+                <li>Replace fork with vfork for uclinux and to enhance CGI performance</li>
+                <li>Fix compiling when using ROMFS</li>
+            </ul>
+            <h2 class="section">Changes in 2.4.0</h2>
+            <h3>This is essentially a re-branding of the development version version 2.3.4. Here are the major changes
+            compared to version 2.2.X.<br /></h3>
+            <h3>Major</h3>
+            <ul>
+                <li>Support conditional directives in Appweb configuration files using &lt;IF&gt;.</li>
+                <li>Enhance cross-compilation support by extending control flags and control over compiler
+                options.</li>
+                <li>Plenty of Nessus scan testing and longevity testing.</li>
+            </ul>
+            <h3>Minor</h3>
+            <ul>
+                <li>Enhanced MAC OS X support. Builds and runs from svn tree. No installation, source only.</li>
+                <li>Cross development configuration simplified. Simplified tools.config configuration.</li>
+                <li>Improved tool searching algorithms in configure.</li>
+                <li>Update to use latest doxygen for documentation generation.</li>
+                <li>Fix C++ compiler warnings for a cleaner build.</li>
+                <li>Documentation updates for configuration and building.</li>
+                <li>Add IPv6 support for MACOSX and simplify IP4+6 implementations.</li>
+                <li>Support simultaneous IPv4 and IPv6 connections.</li>
+                <li>Initial BSD port. No installation, source only.</li>
+                <li>Extensive valgrind, nessus and longevity testing</li>
+                <li>VxWorks 6.X support.</li>
+                <li>Add support for Visual Studio 9.0 and Visual Studio Express.</li>
+                <li>SuSE linux support. Packaged releases provided, make install/uninstall operational.</li>
+                <li>Update uclibc support.</li>
+                <li>Remove requirement to have doxygen during the installation.</li>
+                <li>Increase default input buffer allocation to 1K to include most request headers without having to
+                reallocate memory.</li>
+                <li>Improved documentation on building from source.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Cross-compilation fixes for make install and make package.</li>
+                <li>Fix for ranged GETs when fetching a large chunk of data. Was sending incorrect data.</li>
+                <li>Fix Keep-Alive header timeout. Was in milliseconds, changed to be in seconds.</li>
+                <li>Fix for for large chunked requests hanging in some clients.</li>
+                <li>Fix for requests with large (incoming) headers.&nbsp;</li>
+                <li>Fix various compiler warnings.</li>
+                <li>Fix for responses with large headers exceeding the default buffer allocations.</li>
+                <li>Fix valgrind tests.</li>
+                <li>Change HTTP 1.0 requests to not use keep alive unless explicitly asked for via Connection
+                headers.</li>
+                <li>Fix case where under heavy load CGI process can get lost and the request can hang. Due to a
+                reentrant signal handler.</li>
+                <li>Fix Windows CGI processing was inoperable in 2.3.0.</li>
+                <li>Fix directory listings.</li>
+                <li>Fix Windows DLL search paths for locating DLLs.</li>
+                <li>Fix setting CPU -m switch for GCC.</li>
+                <li>Fixes for VxWorks cross compilation.</li>
+                <li>Fix building the gacompat module.</li>
+                <li>Fix request timeouts due to output data stalling when the socket becomes saturated.</li>
+                <li>Fix memory leak when deleting handlers that manage their own variable store.</li>
+                <li>Stop using mt.exe for embedding manifests into the application. VS mt.exe is bugged.</li>
+                <li>Various build system fixes.</li>
+                <li>Use chcon on shared libraries only if Security Enhanced Linux is enabled.</li>
+                <li>Fix ssl redirect.</li>
+                <li>Fixes for IPv6.</li>
+                <li>Fixes for library list when building statically.</li>
+                <li>Fix creation of C:/Program file on windows. Due to missing quotes on CustomLog file spec.</li>
+                <li>Fixes for compiling with VS 2005. Added manifests and embedded manifests for executables and DLLs.
+                Windows build is now compiled with VS 2005.</li>
+                <li>Fix for memory leak with CGI programs</li>
+                <li>Optimize stack size for requests with very large output headers.</li>
+                <li>Improved valgrind test suite conformance</li>
+                <li>Fix to permit recursion in Embedded Javascript and ESP</li>
+                <li>Reduce number of TIME_WAIT sockets</li>
+            </ul>
+            <h2 class="section">Changes in 2.3.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Cross-compilation fixes for make install and make package.</li>
+            </ul>
+            <h2 class="section">Changes in 2.3.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for for large chunked requests hanging in some clients.</li>
+                <li>Some cross-compilation build and make fixes.</li>
+            </ul>
+            <h2 class="section">Changes in 2.3.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for ranged GETs when fetching a large chunk of data. Was sending incorrect data.</li>
+                <li>Fixed SSL requests hanging when using large posted data.</li>
+                <li>Fix Keep-Alive header timeout. Was in milliseconds, changed to be in seconds.</li>
+            </ul>
+            <h2 class="section">Changes in 2.3.1</h2>
+            <h3>Major</h3>
+            <ul>
+                <li>Support conditional directives in Appweb configuration files using &lt;IF&gt;.</li>
+                <li>Enhance cross-compilation support by extending control flags and control over compiler
+                options.</li>
+                <li>Plenty of Nessus scan testing and longevity testing.</li>
+            </ul>
+            <h3>Minor</h3>
+            <ul>
+                <li>VxWorks 6.X support.</li>
+                <li>Add support for Visual Studio 9.0 and Visual Studio Express.</li>
+                <li>SuSE linux support. Packaged releases provided, make install/uninstall operational.</li>
+                <li>Update uclibc support.</li>
+                <li>Remove requirement to have doxygen during the installation.</li>
+                <li>Increase default input buffer allocation to 1K to include most request headers without having to
+                reallocate memory.</li>
+                <li>Improved documentation on building from source.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for requests with large (incoming) headers.&nbsp;</li>
+                <li>Fix various compiler warnings.</li>
+                <li>Fix for responses with large headers exceeding the default buffer allocations.</li>
+                <li>Fix valgrind tests.</li>
+                <li>Change HTTP 1.0 requests to not use keep alive unless explicitly asked for via Connection
+                headers.</li>
+                <li>Fix case where under heavy load CGI process can get lost and the request can hang. Due to a
+                reentrant signal handler.</li>
+                <li>Fix Windows CGI processing was inoperable in 2.3.0.</li>
+                <li>Fix directory listings.</li>
+                <li>Fix Windows DLL search paths for locating DLLs.</li>
+            </ul>
+            <h2 class="section">Changes in 2.3.0</h2>
+            <h3>Minor</h3>
+            <ul>
+                <li>Enhanced MAC OS X support. Builds and runs from svn tree. No installation, source only.</li>
+                <li>Cross development configuration simplified. Simplified tools.config configuration.</li>
+                <li>Improved tool searching algorithms in configure.</li>
+                <li>Update to use latest doxygen for documentation generation.</li>
+                <li>Fix C++ compiler warnings for a cleaner build.</li>
+                <li>Documentation updates for configuration and building.</li>
+                <li>Add IPv6 support for MACOSX and simplify IP4+6 implementations.</li>
+                <li>Support simultaneous IPv4 and IPv6 connections.</li>
+                <li>Initial BSD port. No installation, source only.</li>
+                <li>Extensive valgrind, nessus and longevity testing</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix setting CPU -m switch for GCC.</li>
+                <li>Fixes for VxWorks cross compilation.</li>
+                <li>Fix building the gacompat module.</li>
+                <li>Fix request timeouts due to output data stalling when the socket becomes saturated.</li>
+                <li>Fix memory leak when deleting handlers that manage their own variable store.</li>
+                <li>Stop using mt.exe for embedding manifests into the application. VS mt.exe is bugged.</li>
+                <li>Various build system fixes.</li>
+                <li>Use chcon on shared libraries only if Security Enhanced Linux is enabled.</li>
+                <li>Fix ssl redirect.</li>
+                <li>Fixes for IPv6.</li>
+                <li>Fixes for library list when building statically.</li>
+                <li>Fix creation of C:/Program file on windows. Due to missing quotes on CustomLog file spec.</li>
+                <li>Fixes for compiling with VS 2005. Added manifests and embedded manifests for executables and DLLs.
+                Windows build is now compiled with VS 2005.</li>
+                <li>Fix for memory leak with CGI programs</li>
+                <li>Fix for stack overflow with very large output headers.</li>
+                <li>Improved valgrind test suite conformance</li>
+                <li>Fix to permit recursion in Embedded Javascript and ESP</li>
+                <li>Reduce number of TIME_WAIT sockets</li>
+            </ul>
+            <h2 class="section">Changes in 2.2.2</h2>
+            <h3>Minor</h3>
+            <ul>
+                <li>Added directive to enable / disable the TRACE method. Use TraceMethod on|off in the appweb.conf
+                configuration file. The trace method is now disabled by default.</li>
+                <li>The use of winTools.zip is now officially deprecated. Please use the cygwin tools from
+                www.cygwin.com to build from source on windows instead.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Removed double quotes on module search path in trace log.</li>
+                <li>Change to only call setFileName if the handler is not virtual. Change cgiHandler to use new flag
+                MPR_HANDLER_NEED_FILENAME so setFileName is still called for cgiHandler.</li>
+            </ul>
+            <h2 class="section">Changes in 2.2.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fixed memory leaks in EJS.</li>
+                <li>Fix configure to handle windows absolute and relative paths more intelligently.</li>
+                <li>Close connection when uploaded content exceeds LimitRequestBody. This avoids a long wait if the
+                upload is very large.</li>
+                <li>Update search path in configure for Inno Setup 5 when doing windows builds.</li>
+                <li>Improve path name resolution for packages when using Cygwin on windows.</li>
+                <li>Updated memory leak tests.</li>
+                <li>Replace and improve directory listing graphics .</li>
+                <li>Improve robustness of 64-bit versions. Fix 64-bit conversions .</li>
+                <li>Fix 64-bit basic and digest authentication.</li>
+                <li>Fixed upload issue where medium to large files of a certain length would fail to upload.</li>
+            </ul>
+            <h2 class="section">Changes in 2.2.0</h2>
+            <h3>Major</h3>
+            <ul>
+                <li>Completely reworked build configuration</li>
+                <li>Upgrade support for latest PHP, MatrixSSL and OpenSSL packages.</li>
+                <li>Added Debian (including Ubuntu) packages.</li>
+                <li>Modularized packages. Now supplying binary, documentation, development and source packages
+                separately.</li>
+                <li>Changed file system locations to conform with the Linux File System Hierarchy (FSH) standard.</li>
+                <li>Allow PHP to run single threaded.</li>
+            </ul>
+            <h3>Minor</h3>
+            <ul>
+                <li>Optimized builds, now about 2x faster on some systems</li>
+                <li>Updated build configuration tools. config.h, config.make, config.sh now renamed buildConfig</li>
+                <li>Changed configure to always do a configure --reset.</li>
+                <li>Improve bld tool library searching</li>
+                <li>LoadModulePath now takes filenames with spaces. Must use quotes.</li>
+                <li>Improve VS 2005 building support</li>
+                <li>Speed up build times</li>
+                <li>Change appweb to continue on invalid configuration file directives rather than aborting.</li>
+                <li>Remove old PHP4 handler. Now only supporting PHP.</li>
+                <li>Improve 64-bit Linux support</li>
+                <li>Added windows tar installation capability</li>
+                <li>Removed legacy configure options:
+                    <ul>
+                        <li>--without-xdb, --without-php4, --enable/disable-stdcpp</li>
+                    </ul>
+                </li>
+                <li>The configure command now accepts absolute paths for --with-*-libpath and --with-*-dir
+                switches</li>
+                <li>The configure command now emits more information about the type of build and O/S and CPU
+                versions</li>
+                <li>Added support for negative ranged requests where the user requests N bytes from the end of a
+                file.</li>
+                <li>Improved code comments.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix when listening on a port number to listen on all IP addresses. Previously only listened on IP
+                addresses that existed when Appweb was started. This fix enables the use of DHCP addresses once Appweb
+                has started. </li>
+                <li>Fix directory list wild card matching with trailing wild cards</li>
+                <li>Make putHandler more robust when encountering invalid ranges. It will now ignore invalid ranges and
+                proceed to accept uploaded files.</li>
+                <li>Change listen backlog queue length to use the system defined maximum via SOMAXCONN</li>
+                <li>Fix using ESP files as directory indexes</li>
+                <li>Remove fdm=marker from all source files to fix vim warning.</li>
+                <li>Fixed CGI incorrectly setting CGI program arguments. Removed argument setting.</li>
+                <li>Updated copyright messages.</li>
+                <li>Fixed pipelined ranged requests</li>
+                <li>Fix single-threaded operation under windows.</li>
+                <li>Fix for when select file handle becomes bad.</li>
+            </ul>
+            <h2 class="section">Changes in 2.1.1</h2>
+            <h3>Major</h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <h3>Minor</h3>
+            <ul>
+                <li>Add ESP "rename" command to rename files. Useful in upload forms.</li>
+                <li>Add sample put and upload location blocks to appweb.conf</li>
+                <li>Improve comments in appweb.conf</li>
+                <li>Simplify configure defaults files and appweb.conf</li>
+                <li>Change default build to not require PHP, MatrixSSL or OpenSSL</li>
+                <li>Changed path references in directory listings to be relative paths for better Apache
+                compatibility.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix directory listing sorting and file sizes.</li>
+                <li>Prevent directory listings from caching in user's browsers.</li>
+                <li>Fix ESP with large scripts.</li>
+                <li>Fix GoAhead compatibility function redefining form and ASP functions.</li>
+                <li>Fix loss of query string when matching the "/" URL.</li>
+                <li>Fix VxWorks handling of path names when using an FTP based file system.</li>
+                <li>Fix DocumentIndex handling if set to ESP pages</li>
+                <li>Fix re-matching of handlers if a handler changes the request URI</li>
+                <li>Remove uploaded temp files at the end of the request</li>
+                <li>Improve calculation of random bytes for VxWorks</li>
+                <li>Remove VxWorks SEM_INVERSION_SAFE flag to preserve defined priorities</li>
+                <li>Fix Nan and Infinity calculations for VxWorks</li>
+                <li>Fix compilation errors if ranges is not defined.</li>
+                <li>Cleanup PHP shutdown</li>
+                <li>Fix PUT handler processing when the file exists and also some ranged upload behavior.</li>
+                <li>Fixed mprGetDirName API to handle file names with trailing "/"</li>
+                <li>Added MPR_REQUEST_PRIORITY to run requests at normal priority. Select and pool management tasks run
+                at elevated priority.</li>
+                <li>Removed redundant assert in mpr/timer.cpp</li>
+                <li>Reworked directory listing pages to be more Apache compatible with relative file paths.</li>
+                <li>Fixed ranged downloads. Was downloading one character short.</li>
+                <li>Fixed partial ranged downloads without a starting range.</li>
+                <li>Fixed Location blocks in appweb.conf to append a trailing "/" to only match directories.</li>
+                <li>Added Cache-Control: no-cache header to directory listing output.</li>
+            </ul>
+            <h2 class="section">Changes in 2.1.0</h2>
+            <h3>Major</h3>
+            <ul>
+                <li>Added directory listing module: libdirModule</li>
+                <li>Added put module for PUT and DELETE HTTP method support: libputModule</li>
+                <li>Added HTTP/1.1 chunking support. Use the HttpChunking [on|off| directive to enable or disable. Also
+                can use a custom HTTP header for client requests: X-Appweb-Chunk-Transfer header. Set value to "on" or
+                "off" to control chunking on a per-request basis.</li>
+                <li>Added HTTP/1.1 ranged transfer support for output and input requests.</li>
+                <li>Added ErrorDocument directive for mapping HTTP errors to specific web pages. E.g.: "ErrorDocument
+                404 myErrorPage.html"</li>
+                <li>Added IPv6 (prototype) support for Linux</li>
+            </ul>
+            <h3>Minor</h3>
+            <ul>
+                <li>Optimized TCP/IP I/O and buffer sizes</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for simpleEsp sample when running HTTP client</li>
+                <li>Fix for client fetch when running multithreaded but with no pool threads configured</li>
+                <li>Fix for REMOTE_USER being set when authorization is used</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.5</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Enhanced GoAhead Compatibility API</li>
+                <li>Fix for page redirection in when using the GoAhead Compatibility API</li>
+                <li>Fix for websGetVar API</li>
+                <li>Upgrade to support Inno Setup 5 for packaging Windows releases</li>
+                <li>Support PHP 5.1.1</li>
+                <li>Don't ask for password if doing a "make package" as root on Unix/Linux</li>
+                <li>Determine correct "strip" program when doing cross-compilation</li>
+                <li>Fix EJS diagnostic trace. Was truncating one character on trace lines.</li>
+                <li>Improved longevity test suite and build farm testing</li>
+                <li>Fix for handling time wrapping on long running servers</li>
+                <li>Support SELinux</li>
+                <li>Support for current versions of rpmbuild (Fedora Core 4)</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for MatrixSsl handler where data was being read twice</li>
+                <li>Fix header in config.h</li>
+                <li>Add new switches to configure: --enable-ejs, --enable-samples, --enable-test,
+                --with-PACKAGE-cflags, --with-PACKAGE-iflags, --with-PACKAGE-ldflags</li>
+                <li>Fix several compilers warnings for ARM</li>
+                <li>Fix crash when reading a users.db authorization file</li>
+                <li>Fix MPR Var deep copy</li>
+                <li>Fix MPR Select / Task interaction</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix httpPassword overwriting existing password entries</li>
+                <li>Fixed bad build output formatting.</li>
+                <li>Improved error messages in Appweb</li>
+                <li>Fix windows SSL crash due when missing a TypesConfig directive and using SSL</li>
+                <li>Fix wrong license agreement display when installing.</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for form.php to post back to itself</li>
+                <li>Various code cleanup</li>
+                <li>Compiler fixes for when logging is disabled</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.1</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for VxWorks truncating large files</li>
+                <li>Fix PHP flushing</li>
+            </ul>
+            <h2 class="section">Changes in 2.0.0</h2>
+            <p>Version 2.0.0 is the next stable release after the 1.2 series. The description below lists the major
+            changes relative to the 1.2 release.</p>
+            <h3>Major</h3>
+            <ul>
+                <li>Embedded Server Pages greatly enhanced. New parser, new Embedded JavaScript. Now supporting:</li>
+                <li>
+                    <ul>
+                        <li>Session state access via the session[] array</li>
+                        <li>Global application data via the application[] array</li>
+                        <li>Uploaded files accessible via files[] array</li>
+                        <li>Configurable auto-session creation</li>
+                        <li>Other variable arrays include: cookies[], server[], request[], headers[], form[], global[],
+                        local[]</li>
+                    </ul>
+                </li>
+                <li>Embedded Server Pages broken out as a separate source code module.</li>
+                <li>Embedded JavaScript rewritten and greatly enhanced. Now supports:</li>
+                <li>
+                    <ul>
+                        <li>Object type and the <i>new</i> reserved word</li>
+                        <li>Array type</li>
+                        <li>Boolean type</li>
+                        <li>Floating point</li>
+                        <li>64 bit integer support</li>
+                        <li>Automatic casting between types</li>
+                        <li>Functions</li>
+                        <li>for / in statement to iterate through arrays or objects</li>
+                        <li>Extended standard procedure library: print, println, printVars, trace</li>
+                    </ul>
+                </li>
+                <li>Merged appweb and winAppweb. Windows application intelligently runs as a command line program,
+                windows program or system service depending on the command line switches. Easier invocation by
+                supporting configuration via command line. Can now just run "appweb".</li>
+                <li>File upload module completed and now supported. File upload usable from ESP, EJS and CGI.</li>
+                <li>PHP 5.0 support</li>
+                <li>Save configuration routines to save the run-time configuration back to a standard Appweb
+                configuration file.</li>
+                <li>Completely new installation and packaging routines. Supports a flexible make install set of targets
+                including: install, install-dev, install-release, install-samples, install-doc, install-src,
+                install-all. Make install also supports a ROOT_DIR environment setting to re-base the installation
+                directories. This feature includes a safe uninstall. See INSTALL.TXT in the source directory for full
+                details.</li>
+                <li>Ability to create new native distribution packages from a source build tree.</li>
+                <li>VxWorks port.</li>
+                <li>Extended cross compilation system to support cross-O/S development.</li>
+                <li>Rewrite the CGI subsystem to be more uniform across all operating systems.</li>
+                <li>Lots of improvements to the configuration and build system</li>
+                <li>Windows switches to use configure and the makefile system. Supports a subset of CYGWIN called
+                winTools for building.</li>
+                <li>Added file upload handler</li>
+            </ul>
+            <h2 class="section">Changes in 1.3.6</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Several compile time fixes when using configure with some options. Fix for building EJS without
+                floating point.</li>
+                <li>Fix for not launching the documentation on Windows when the installation is complete</li>
+                <li>Fixed date calculations for IF_MODIFIED requests being off for 1 day.</li>
+                <li>Fixed formatting of README.TXT files to be DOS format (CR/LF)</li>
+                <li>Fixed request.cpp compilation when not using SSL</li>
+                <li>Fix building with C-API without ESP</li>
+                <li>Fix crash in request.cpp when requests timeout</li>
+                <li>Fix compiling request.cpp without SSL</li>
+            </ul>
+            <h2 class="section">Changes in 1.3.5</h2>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add request variable REQUEST_TRANSPORT that is set to "http" or "https" depending on whether SSL is
+                used or not.</li>
+                <li>Simplify the regeneration of the documentation.</li>
+                <li>EJS: Add support for automatic casting to strings when types require casting.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix MatrixSsl bug where some data can be lost and a request can hang.</li>
+                <li>Fix uClinux integration. Support uClinux 3.2.0</li>
+                <li>Fix for browser not refreshing content correctly. Change to copyHandler.</li>
+                <li>Fix for single threaded compilation.</li>
+                <li>Fix for compiling samples when using --disable-static</li>
+                <li>Fix for running configure on linux. Changes to bin/bld. </li>
+                <li>Fix for uClinux building. Changes to bin/bld to use BIT_CFLAGS instead of BIT_LDFLAGS. </li>
+                <li>Fix for building on Linux. Was not testing for existence of cygpath correctly. </li>
+                <li>Fixed bugs in EJS for comparisons with non-boolean operands. </li>
+                <li>Fix EJS issue with unary minus calculations.</li>
+            </ul>
+            <h2 class="section">Changes in 1.3.4-5</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Completely new installation and packaging routines. Supports a flexible make install set of targets
+                including: install, install-dev, install-release, install-samples, install-doc, install-src,
+                install-all. Make install also supports a ROOT_DIR environment setting to re-base the installation
+                directories. This feature includes a safe uninstall. See INSTALL.TXT in the source directory for full
+                details.</li>
+                <li>Ability to create new native distribution packages from a source build tree.</li>
+                <li>Create a C API for the httpClient. Use --enable-c-api-client</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Expose the GoAhead WebServer compatibility API via the Compat module </li>
+                <li>Create a C API for the httpClient. Use --enable-c-api-client</li>
+                <li>Removed SessionAutoCreate from the makefiles. The default for this is now off. Users must include
+                useSession(); in their ESP pages or explicitly turn this directive back on. This was removed to boost
+                performance for pages that do not require session handling.</li>
+                <li>Added a new LimitScriptSize directive to specify the maximum ESP script size. This replaces the
+                previously overloaded use of LimitResponseBody.</li>
+                <li>Partitioned documentation to prepare for future derivative products. Stay tuned.</li>
+                <li>Fix source tree so it can be built from a read-only tree.</li>
+                <li>Update to latest PHP 5.0.3 release for the PHP module</li>
+                <li>Support spaces in file names and install in "/Program Files/Embedthis Appweb" on Windows by
+                default.</li>
+                <li>Updated WinTools to use latest Cygwin tools.</li>
+                <li>Added file upload limit. Directive is LimitUploadSize.</li>
+                <li>Convert windows make package to use cygwin zip utilities and not winzip.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix including of ESP include files to look for the included file in the same directory as the base
+                ESP page.</li>
+                <li>Fix for "make uninstall" to not to change permissions of any standard directories</li>
+                <li>Fix segfault on large ESP pages. This occurred when the page exceeded the maximum configured via
+                the LimitResponseBody directive. Use LimitScriptSize in future to specify or modify
+                the default maximum size (128K) of a script.</li>
+                <li>Added clearer error messages when the maximum script size is exceeded.</li>
+                <li>Fixed missing API documentation.</li>
+                <li>Fix permissions on the bin directory for installed appweb (make install).</li>
+                <li>Fix errors in make install for missing users.dist, groups.dist and libsslModule.so</li>
+                <li>Fix obscure hang in httpClient if server dies.</li>
+                <li>Add cpio, id and awk to WinTools. Also added curl for those using the test framework via an Appweb
+                subversion checkout.</li>
+                <li>Fix assert in ESP when assigning to non-existent object arrays</li>
+                <li>Warn in ESP if assigning to sessions and sessions are not enabled. Uses now must either put
+                useSession() in their web page or turn on SessionAutoCreate in their configuration file.</li>
+                <li>Fix for a multithreaded race in EJS/ESP under heavy load. Our longevity test harness caught this
+                one.</li>
+                <li>Fixed multithreaded deadlock in CGI under heavy load.</li>
+                <li>Fix printVars displaying the wrong value for an array length</li>
+                <li>Fixed crash in testClient when server is not running. Only impacted test framework.</li>
+                <li>Fixed search path for locating the ServerRoot.</li>
+                <li>Fixed file upload handler for parsing boundaries.</li>
+                <li>Fixed PHP handler processing of empty forms.</li>
+                <li>Made MaRequest::readPostData more robust.</li>
+            </ul>
+            <h2 class="section">Changes in 1.3.3</h2>
+            <p>The 1.3.1 and 1.3.2 releases were internal releases only and were not publicly made available.</p>
+            <h3>Major Features</h3>
+            <ul>
+                <li>VxWorks port.</li>
+                <li>Extended cross compilation system to support cross-O/S development.</li>
+                <li>Rewrite the CGI subsystem to be more uniform across all operating systems.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>The PHP handler now supports the PHP flush function.</li>
+                <li>Added function to create ESP array variables in ESP C functions.</li>
+                <li>Add file upload.esp sample file.</li>
+                <li>Fix and extend samples for the new ESP and EJS.</li>
+                <li>Add support for the If-Match and If-UnMatch HTTP headers.</li>
+                <li>Disable timeouts if running Appweb in debug mode (-D). This disables the Keep-Alive, Session and
+                general request Timeout.</li>
+                <li>Allow Alias directives to alias files. Previously only directories could be aliased.</li>
+                <li>Rewrite of CGI / CMD to be simpler. Necessitated by VXWORKS port.</li>
+                <li>Speedup makedep on Windows for first time builds.</li>
+                <li>Add ESP convenience API espCreateArrayVar.</li>
+                <li>Add mprSetThreads API to extend the C API.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>The following fixes are applied from 1.2.4
+                    <ul>
+                        <li>Fix in validating URLs with consecutive "/" characters</li>
+                        <li>Fix for upload handler with ":" characters in the upload URL</li>
+                        <li>Add new directive ListenIF that allows listening on an interface</li>
+                        <li>Fix bug for long ESP/EJS tokens</li>
+                    </ul>
+                </li>
+                <li>Change session cookies to only persist while the user's browser is open.</li>
+                <li>Fix to allow functions to have the opening brace on the same line as the function keyword.</li>
+                <li>Get all samples building. Supply makefiles for the Appweb build system and stand-alone
+                makefiles.</li>
+                <li>Improve error messages for several error conditions to make diagnosis easier.</li>
+                <li>Add msvcrt.dll to the distribution to prevent DLL versioning issues.</li>
+                <li>Fix various memory leaks</li>
+                <li>Fix for EJS to not iterate over the length property for arrays in a for... in statement</li>
+                <li>Fix for EJS to allow "var" in a for (var .. statement</li>
+                <li>Fix for EJS syntax error when defining a for (.. in statement inside a function</li>
+                <li>Fix for EJS "var o = new Array;"</li>
+                <li>Fix for EJS testing variables against -1</li>
+                <li>Fix for crashing issue CGI when a CGI request times out.</li>
+                <li>Update configure to fix syntax error for --with-c-api. Support --with-c_api as an alias.</li>
+                <li>Fix for "make uninstall" to not remove any standard directories.</li>
+                <li>Fixed matrixssl handler hanging when serving large files.</li>
+                <li>Fixed sessions being continually re-created when browsers respond with multiple cookies.</li>
+                <li>Fix several compiler errors when compiling single-threaded.</li>
+                <li>Fix compiler errors when excluding various modules.</li>
+            </ul>
+            <h2 class="section">Changes in 1.3</h2>This is a major feature release and is part of the development
+            branch. Users wanting stability should continue to use the stable 1.2.X series. This 1.3 release does have
+            some <a href="#compat">compatibility changes</a>.<br />
+            <h3>Major Features</h3>
+            <ul>
+                <li>Embedded Server Pages greatly enhanced. New parser, new Embedded JavaScript. Now supporting:</li>
+                <li>
+                    <ul>
+                        <li>Session state access via the session[] array</li>
+                        <li>Global application data via the application[] array</li>
+                        <li>Uploaded files accessible via files[] array</li>
+                        <li>Configurable auto-session creation</li>
+                        <li>Other variable arrays include: cookies[], server[], request[], headers[], form[], global[],
+                        local[]</li>
+                    </ul>
+                </li>
+                <li>Embedded Server Pages broken out as a separate source code module.</li>
+                <li>Embedded JavaScript rewritten and greatly enhanced. Now supports:</li>
+                <li>
+                    <ul>
+                        <li>Object type and the <i>new</i> reserved word</li>
+                        <li>Array type</li>
+                        <li>Boolean type</li>
+                        <li>Floating point</li>
+                        <li>64 bit integer support</li>
+                        <li>Automatic casting between types</li>
+                        <li>Functions</li>
+                        <li>for / in statement to iterate through arrays or objects</li>
+                        <li>Extended standard procedure library: print, println, printVars, trace</li>
+                    </ul>
+                </li>
+                <li>Easier invocation by supporting configuration via command line. Can now just run "appweb".</li>
+                <li>Merged appweb and winAppweb. Windows application intelligently runs as a command line program,
+                windows program or system service depending on the command line switches.</li>
+                <li>PHP 5.0 support</li>
+                <li>Save configuration routines to save the run-time configuration back to a standard Appweb
+                configuration file.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Simplify the build system by removing the need for template files.</li>
+                <li>Aliases are now per host instead of being per server.</li>
+                <li>Allow Aliases to come before or after directory blocks that describe the alias destination.</li>
+                <li>Build system improvements for building external packages</li>
+                <li>Improved 64-bit support.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix bug where URLs that matched aliases were incorrectly defining an their CGI EXTRA_PATH
+                calculation. Added a new configuration directive ExtraPath that can be used in Location blocks to
+                specify that a handler should perform extra path calculations. NOTE: this is normally not
+                required.</li>
+                <li>Fix some build issues with various configuration options.</li>
+                <li>Fix the inheriting of directory authorization information.</li>
+            </ul>
+            <h3><a id="compat"></a>Compatibility Changes</h3>
+            <ul>
+                <li>The MaServer::configure command has reduced its parameter count from 2 to 1.</li>
+                <li>maGetVar and maSetVar now require an object array argument to specify the variable array to
+                access.</li>
+                <li>The C++ EspProc method of creating ESP procedures is now deprecated. It will be supported until
+                version 3.X when it will be removed from the product. Users should call espDefineCFunction
+                instead.</li>
+                <li>The EJS module has been removed it is now integrated into the ESP module.</li>
+                <li>The previous session APIs have been integrated into MaRequest::setVar and MaRequest::getVar</li>
+            </ul>
+            <h2 class="section">Features in 1.2.3</h2>This is a minor bug fix release.<br />
+            <h3>Fixes<br /></h3>
+            <ul>
+                <li>Fix compatibility issue in libcompatModule with GoAhead WebServer. Was not creating environment
+                variables for posted data. Will only do this if the data is URL encoded.</li>
+                <li>Fixed Windows not matching case of URL extensions correctly.</li>
+            </ul>
+            <h2 class="section">Features in 1.2.2</h2>
+            <p>This is a minor bug fix release.</p>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for ESP includes. On windows, was including files with text processing which resulted in bad
+                content lengths. Now reading RAW.</li>
+                <li>Added MatrixSSL handler</li>
+                <li>Re-added some missing documentation pages</li>
+                <li>Changed default MPR number of threads to 10. Can be overridden in the appweb.conf file.</li>
+                <li>Fixed several authorization issues relating to ordering of directives in the configuration file.</li>
+                <li>Fixed encoding of "/" in query vars.</li>
+                <li>Fixed Windows not matching case of URL extensions correctly.</li>
+            </ul>
+            <h2 class="section">Changes in 1.2.1</h2>
+            <p>This is a minor bug fix release.</p>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for large SSL requests. Some large requests would not be processed and would be prematurely
+                terminated. There are no known security implications.</li>
+            </ul>
+            <h2 class="section">New Features in 1.2</h2>This 1.2 release rolls all the changes in the 1.1.X development
+            stream into a new stable release. The description below is a summary of the key changes.<br />
+            <br />
+            <h3>Major Features</h3>
+            <ul>
+                <li>Integrated module for PHP4 and PHP</li>
+                <li>Enhanced Embedded Server Pages supporting post-back</li>
+                <li>Session handling and cookie management</li>
+                <li>Extended documentation with a wealth of new material</li>
+                <li>Small C library support via uClibc</li>
+                <li>uClinux support.</li>
+                <li>Completely revised build system and configuration to better support cross-compilation and modular
+                selection of features.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Enhanced C-API</li>
+                <li>httpClient supports single threaded operation.</li>
+                <li>New compact libminiStdc++ library to replace libstdc++ reduces memory footprint.</li>
+                <li>Experimental ports for MAC</li>
+                <li>Upgraded PHP and OpenSSL versions</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>All fixes mentioned in the 1.1 stream below</li>
+                <li>Fixed a Denial of Service issue where accesses to /esp could consume 100% of the CPU.</li>
+            </ul>
+            <h3>Compatibility Changes</h3>
+            <ul>
+                <li>None<br /></li>
+            </ul>
+            <h2 class="section">New Features in 1.1.3</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Include PHP support</li>
+                <li>Enhanced uClibc support -- no patch required.</li>
+                <li>Enhanced uClinux support.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>httpClient supports single threaded operation.</li>
+                <li>Add new compact libminiStdc++ library to replace libstdc++. This reduces default memory footprint
+                with glibc considerably.</li>
+                <li>Merge Subversion initialization command setupTree into the configure command.</li>
+                <li>Add to the top level Makefile and configure program the ability to autoconfigure.</li>
+                <li>Improve comments in configure, configuration template files and in the default configuration files.
+                The make.rules file is now common across all operating systems.</li>
+                <li>Eliminate the need for LD_LIBRARY_PATH unless debugging in the tree. The "make run" target and many
+                other internal build commands automatically set the library path where required.</li>
+                <li>Version the appweb library.</li>
+                <li>Include packaging file lists in the source release.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix location of the libraries needed by PHP when creating a distribution package</li>
+                <li>Fix for URLs that have trailing "." or " " in Windows. Fix prevents returning the page as pure
+                text. This bug affected windows systems only for handlers that are matching by extension. This
+                typically means ESP and PHP pages configured to match URLs by extension. If using URL prefix matching,
+                the bug does not appear.</li>
+                <li>Fix the 'h' formatting option for the CustomLog directive. This outputs the remote host name in the
+                access log</li>
+                <li>Fix session timeouts. Session timeouts did not renew when subsequent session activity occurred.
+                Timeouts will now cause a session to be deleted when there is no activity on the session for the
+                timeout period.</li>
+                <li>Security fix for Windows allowing access to secured URLs by mixing case.</li>
+                <li>Fix for HEAD, and TRACE not being handled correctly by some handlers.</li>
+                <li>Security fix for user message disclosing too much information when denying access. (Ziv)</li>
+                <li>Fix for VirtualHosts (including SSL virtual hosts) incorrectly parsing authorization configuration
+                directives. (Ziv)</li>
+                <li>Fix when using ROM fs on Windows. Was still accessing file system routines.
+                (Black&amp;White)</li>
+            </ul>
+            <h2 class="section">Changes in 1.1.2</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Enhanced cross-compiling support. Configure program supports --build, --host and the setting of
+                CFLAGS, IFLAGS, LDFLAGS, CC, LD, AR, RANLIB, CC_FOR_BUILD, LD_FOR_BUILD.</li>
+                <li>More documentation via README.TXT and FILES.TXT files in many directories.</li>
+                <li>Small libc, uclibc support</li>
+                <li>Uclinux support</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Merged per O/S configuration files into a single file.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Corrected the Windows Start Menu shortcut</li>
+                <li>Rebuild OpenSSL with msvcrt.dll rather than msvcr71.dll</li>
+                <li>Fix some errors in the README.HTML and converted to README.TXT</li>
+                <li>Modify the source distribution appweb.conf to not load libcompat</li>
+                <li>Fixed handling of URLs with upper case extensions (e.g. file.HTML)</li>
+            </ul>
+            <h2 class="section">Changes in 1.1.1</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Enhanced Embedded Server Pages (ESP) allowing post-back to same page</li>
+                <li>Integrated Session handling including C and Javascript APIs.</li>
+                <li>Include a more feature-rich PHP module and upgrade PHP version.</li>
+                <li>Enhanced C-API</li>
+                <li>Authorization APIs for modifying user and group auth details at run-time</li>
+                <li>Added a fully static appweb program</li>
+                <li>Experimental fFile upload (Nick again)</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>"make install" for installing directly from source</li>
+                <li>Support full static linking with Appweb libraries and building static versions.</li>
+                <li>Add LoadModulePath directive to make it easier to maintain module paths</li>
+                <li>Removed Matrix SSL handler. This is now being handled directly by PeerSec. See
+                (<a href="http://www.matrixssl.org">http://www.matrixssl.org</a>)</li>
+                <li>Speed up building on Windows with Cygwin</li>
+                <li>Enhanced GoAhead WebServer API compatibility</li>
+                <li>Extended build system, configure command and bld script.</li>
+                <li>Upgrade OpenSSL versions</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for ESP pages with 8-bit characters in scripts.</li>
+                <li>Fix duplicate environment variables in simpleEgi sample.</li>
+                <li>Fix some build circular dependencies.</li>
+                <li>Fix incomplete requests not handling keep alive correctly.</li>
+                <li>Don't close keep-alive connections for requests returning 304 (not modified) ]</li>
+                <li>Fix mprStrCmpAnyCase routine.</li>
+                <li>Fix Content-Length handling when the length is zero.</li>
+                <li>Fix MaRequest:getCrackedCookie.</li>
+                <li>Fix when using ROMed web pages</li>
+                <li>Fix some visual studio project files that referenced libraries of the wrong build type.</li>
+            </ul>
+            <h3>Compatibility Changes</h3>
+            <ul>
+                <li>None</li>
+            </ul>
+            <h2 class="section">Changes in 1.1</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>PHP module for fast embedded execution of PHP applications and scripts</li>
+                <li>First pass source code MACOSX port</li>
+                <li>Greatly enhanced build system supporting granular selection of build features.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Support full static linking with Appweb libraries and building static versions.</li>
+                <li>Add LoadModulePath directive to make it easier to maintain module paths</li>
+                <li>Removed Matrix SSL handler. This is now being handled directly by PeerSec. See
+                (<a href="http://www.matrixssl.org">http://www.matrixssl.org</a>)</li>
+                <li>Speed up building on Windows with Cygwin</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for ESP pages with 8-bit characters in scripts.</li>
+                <li>Fix duplicate environment variables in simpleEgi sample.</li>
+                <li>Fix some build circular dependencies.</li>
+                <li>Fix incomplete requests not handling keep alive correctly.</li>
+                <li>Don't close keep-alive connections for requests returning 304 (not modified) ]</li>
+                <li>Fix mprStrCmpAnyCase routine.</li>
+                <li>Fix Content-Length handling when the length is zero.</li>
+            </ul>
+            <h3>Compatibility Changes</h3>
+            <h2 class="section">Changes in 1.0.4</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for URLs that have trailing "." or " " in Windows. Fix prevents returning the page as pure
+                text. This bug affected windows systems only for handlers that are matching by extension. This
+                typically means ESP and PHP pages configured to match URLs by extension. If using URL prefix matching,
+                the bug does not appear.</li>
+                <li>Fix the 'h' formatting option for the CustomLog directive. This outputs the remote host name in the
+                access log.</li>
+                <li>Security fix for Windows allowing access to secured URLs by mixing case.</li>
+                <li>Fix for HEAD, and TRACE not being handled correctly by some handlers.</li>
+                <li>Security fix for user message disclosing too much information when denying access. (Ziv)</li>
+                <li>Fix for VirtualHosts (including SSL virtual hosts) incorrectly parsing authorization configuration
+                directives. (Ziv)</li>
+            </ul>
+            <h2 class="section">Changes in 1.0.3</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix for digest handing on Windows.</li>
+                <li>Fix for formatting of secure cookies.</li>
+                <li>Enhance keep-alive for request errors.</li>
+                <li>Remove the MatrixSSL handler (now supplied directly in the MatrixSSL distribution -- see
+                http://www.matrixssl.org).</li>
+            </ul>
+            <h2 class="section">Changes in 1.0.2</h2>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fixes for Windows PHP handling. Define the SCRIPT_FILENAME environment variable. NOTE: users must
+                change the cgi_pathinfo setting in their /WINDOWS/PHP.INI file to be set to "1". This instructs PHP to
+                operate according to the standards.</li>
+                <li>Fix for launching Firefox / Firebird by double-clicking on the Windows tray icon.</li>
+                <li>Fix for bad DocumentIndex directive if occurring after the ScriptAlias directive for CGI files. </li>
+                <li>Several fixes for memory leaks when compiling Multithreaded.</li>
+            </ul>
+            <h2 class="section">Changes in 1.0.1</h2>
+            <h3>Documentation</h3>
+            <ul>
+                <li>Few small fixes.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Test if a URL maps to a Windows device file. Fixes a crash condition on Windows NT, 9X and
+                2000.</li>
+                <li>Fixed setting of Content-Length when the length of the content is not known. Changes to
+                rq-&gt;setHeaderFlags</li>
+                <li>Fix handling of poorly formed OPTIONS requests.</li>
+            </ul>
+            <h2 class="section">Changes in 1.0</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Extensive push to test Appweb to its limits with extreme load and long "soak" testing.</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Support the Action directive to make it easier to configure CGI programs that cannot use "#!/path"
+                in the first line of the script.</li>
+                <li>Fix and simplify configuration for CGI Perl, Python and PHP. New Action and AddType directives to
+                the rescue.</li>
+                <li>Test suite extended for CGI programs and for long POST data requests.</li>
+            </ul>
+            <h3>Performance</h3>
+            <ul>
+                <li>Boost performance for Windows socket handling</li>
+                <li>Boost performance for HTTP requests with long POST data.</li>
+            </ul>
+            <h3>Documentation</h3>
+            <ul>
+                <li>Few small fixes.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix a CGI multi-threaded bug where returning CGI data would interfere with subsequent Keep-Alive
+                request data</li>
+                <li>Fix MPR_FEATURE_MALLOC_HOOK when using the fast memory allocator</li>
+                <li>Some fixes for Matrix SSL</li>
+                <li>Disable log file rotation -- Security risk in current default configuration. (Can be re-enabled in
+                source code)</li>
+                <li>Fix a race condition with the socket handling code on Windows</li>
+            </ul>
+            <h2 class="section">New features in 0.9.1</h2>
+            <h3>Major Features</h3>
+            <ul>
+                <li>Full support for Matrix SSL (small footprint embedded SSL)</li>
+                <li>Cookie support</li>
+                <li>Add setHeader API to allow handlers to define and override HTTP headers</li>
+            </ul>
+            <h3>Minor Features</h3>
+            <ul>
+                <li>Add support for TRACE and OPTIONS HTTP methods</li>
+                <li>Tighten handler checking to only respond to supported HTTP methods</li>
+                <li>Allow ESP pages to post back forms to themselves. Test on REQUEST_METHOD == "POST" to determine if
+                the page is being displayed for the first time or whether the form is being submitted. 
+                One ESP page can be used to display and process the data.</li>
+                <li>Improved debug trace for httpClient and the appweb servers.</li>
+                <li>Improved unit test for CGI and</li>
+            </ul>
+            <h3>Documentation</h3>
+            <ul>
+                <li>Lots of small fixes.</li>
+            </ul>
+            <h3>Architecture</h3>
+            <ul>
+                <li>Enhanced post data handling. The postData handler method is now called after the run method. It
+                will be called as required to push post data to the handler.</li>
+                <li>Post data pull mode support. Handlers can request to pull the post data rather than having it
+                pushed to them. The Request::setPullPost will enable pull mode. The Request::readPostData API can be
+                called in the handler to pull the post data as required.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix error with poorly form HTTP headers in some cases.</li>
+                <li>Fix attempting to start appweb.exe when installing only the source code on Windows.</li>
+                <li>Fix setResponseCode API to remove assert on non-200 response codes.</li>
+                <li>Lots of minor fixes.</li>
+                <li>Append to the access log on restarts.</li>
+            </ul>
+            <h3>Compatibility Changes</h3>
+            <ul>
+                <li>The postData method and usage in the Appweb handler interface has bee reworked.</li>
+            </ul>
+            <h2 class="section">New features in 0.9.0</h2>
+            <h3>General</h3>
+            <ul>
+                <li>SSL is now supported "out of the box".</li>
+                <li>GoAhead WebServer compatibility module (compatModule) now supported.</li>
+                <li>C Language API and samples complete.</li>
+                <li>Automatically launch browser after install to display documentation.</li>
+                <li>Run as a windows service and automatically install as a service on Windows</li>
+            </ul>
+            <h3>Performance</h3>
+            <ul>
+                <li>Shrink code on all platforms (Now from 120K to 300K).</li>
+                <li>Compile without using exceptions -- further code size reduction.</li>
+                <li>Performance gains. Throughput exceeds 3,500 requests per second (P4 2.4 GHZ running both client and
+                server on Linux)</li>
+            </ul>
+            <h3>Documentation</h3>
+            <ul>
+                <li>Documentation arrives</li>
+                <li>Extensive overviews, guides, how-to documents, samples, references and APIs</li>
+                <li>Samples are now divided into C and C++ samples with lots of extra samples including event loop
+                integration samples.</li>
+                <li>The installation now offers to install the documentation as a separate component.</li>
+                <li>Documented C Language API.</li>
+                <li>Documented C++ Language API.</li>
+                <li>Lots more code comments.</li>
+            </ul>
+            <h3>Architecture</h3>
+            <ul>
+                <li>New SSL Provider interface.</li>
+                <li>Enhanced module loading interface.</li>
+            </ul>
+            <h3>Fixes</h3>
+            <ul>
+                <li>Fix Appweb not starting on system reboot on Linux.</li>
+                <li>Fix build errors when compiling with various FEATURE combinations specified via bld.h and
+                configure.</li>
+                <li>Fixed issues with Visual Studio.NET upgrading Visual Studio 6 project files.</li>
+                <li>Fix building source when installed stand-alone without the binary install.</li>
+                <li>Fixed bug handling empty password and group authorization files.</li>
+                <li>Fix windows link errors 4217, 4049</li>
+                <li>Fix windows bug where aliases without drive specs were not handled correctly.</li>
+                <li>Fix bug escaping URLs.</li>
+                <li>Fix bug with windows event processing under heavy load where an event could get lost.</li>
+                <li>Lots of minor fixes.</li>
+            </ul>
+            <h3>Compatibility Changes</h3>
+            <ul>
+                <li>The module loading API has changed to allow modules to parse the configuration file.</li>
+                <li>sslHandler has been renamed sslModule.</li>
+                <li>The SSL provider interfaces has been rewritten.</li>
+            </ul>
+            <h2 class="section">Changes in Embedthis Appweb 0.8.1</h2>
+            <h3>Dynamic Content</h3>
+            <ul>
+                <li>Embedded Server Pages</li>
+                <li>Embedded JavaScript</li>
+                <li>Embedded Gateway Interface (in-memory CGI)</li>
+                <li>CGI/1.1</li>
+            </ul>
+            <h3>Security</h3>
+            <ul>
+                <li>Secure Sockets Layer (SSL)</li>
+                <li>Basic and Digest Authentication</li>
+                <li>Directory and URL location based authorization</li>
+                <li>Sandbox limits</li>
+                <li>Access and access violation logging</li>
+            </ul>
+            <h3>Modularity</h3>
+            <ul>
+                <li>Dynamic loading of modules</li>
+                <li>Extensible URL handlers</li>
+                <li>Extensible / replaceable authorization, SSL and script</li>
+            </ul>
+            <h3>Easy to Use</h3>
+            <ul>
+                <li>Apache-style configuration file</li>
+                <li>Debugging and trace logging</li>
+                <li>Packaged installations for Linux and Windows</li>
+                <li>Run as a service / daemon</li>
+            </ul>
+            <h3>Other Features</h3>
+            <ul>
+                <li>HTTP server and client access program</li>
+                <li>Named and IP based virtual hosts</li>
+                <li>Listen on multiple ports</li>
+                <li>Compile web pages and files into C code for execution from ROM</li>
+            </ul>
+            <h3>Standards</h3>
+            <ul>
+                <li>HTTP/1.1</li>
+                <li>CGI/1.1</li>
+                <li>Apache configuration file compatibility</li>
+            </ul>
+            <h3>Performance</h3>
+            <ul>
+                <li>Multithreaded with high performance thread pool</li>
+                <li>Request throughput (&gt; 4,500 requests per second)</li>
+                <li>Scales on multi-cpu systems</li>
+                <li>Small memory footprint even under heavy load (from 1MB)</li>
+            </ul>
+            <h3>Developer Features</h3>
+            <ul>
+                <li>HTTP server and client libraries</li>
+                <li>Shared and static libraries supplied</li>
+                <li>C and C++ APIs</li>
+                <li>Operate single-threaded or multithreaded (Compile or run-time selectable)</li>
+                <li>Easy, intuitive programming model</li>
+                <li>Integrate with common event mechanism: Windows Messages, Unix select, dedicated thread</li>
+                <li>Coding minimized as most features can be specified via the configuration file</li>
+                <li>Cookbook of samples (cut and paste to get going)</li>
+                <li>SMP safe</li>
+                <li>Extensive debug trace logging</li>
+            </ul>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

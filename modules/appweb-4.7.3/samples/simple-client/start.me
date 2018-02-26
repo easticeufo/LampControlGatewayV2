@@ -1,0 +1,19 @@
+/*
+    start.me - MakeMe build file
+ */
+
+Me.load({
+    configure: {
+        requires: ['appweb'],
+    },
+    targets: {
+        client: {
+            type:    'exe',
+            sources: '*.c',
+            depends: ['appweb'],
+        },
+        run: {
+            run: './client',
+        },
+    },
+})

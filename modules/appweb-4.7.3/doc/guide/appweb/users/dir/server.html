@@ -1,0 +1,569 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>Server Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#action">Action</a></li>
+                <li><a href="#addType">AddType</a></li>
+                <li><a href="#cgiEscape">CgiEscape</a></li>
+                <li><a href="#cgiPrefix">CgiPrefix</a></li>
+                <li><a href="#chroot">Chroot</a></li>
+                <li><a href="#groupAccount">GroupAccount</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#listen">Listen</a></li>
+                <!-- UNUSED <li><a href="#protocol">Protocol</a></li> -->
+                <li><a href="#serverName">ServerName</a></li>
+                <li><a href="#typesConfig">TypesConfig</a></li>
+                <li><a href="#userAccount">UserAccount</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <a id="action"></a>
+            <h1>Server Directives</h1>
+            <h2>Action</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Specify the CGI program to run to handle the document</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Action mimeType programPath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Action application/x-appweb-python /usr/bin/python</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Action directive associates the specified program path with a document mime type.
+                            The Action directive may be&nbsp; used to ensure a specific program is used to run CGI
+                            scripts.</p>
+                            <p>The CGI handler may match URLs by extension or by prefix path, depending on how the
+                            appweb configuration file setup. When a match by extension occurs, the cgiHandler will
+                            first see if an Action directive has been specified for the corresponding mime type for the
+                            URLs extension. If one is defined, the specified program is run with the CGI script passed
+                            as the first argument. If no action directive is found, the script is examined to see if it
+                            contains a "#!/programPath" in the first line of the script. If it does, the specified
+                            program is run with the CGI script passed as the first argument. If the script is a binary
+                            executable or if the first line does not contain such a programPath, the CGI script will be
+                            directly executed.</p>
+                            <p>The default extensions in the appweb configuration file are: cgi, cgi-nph, bat, cmd, pl,
+                            py, and php. For Linux, the default settings also include an Action directive for the php
+                            extension. The other default extensions do not have Action directives.</p>
+                            <p>The mime type may be added via the AddType directive or you may edit the mime.types file
+                            to add the mime type. Mime type entries associate a mime type with a given URL extension.
+                            For example, the following mime entry specifies that any URL with a ".php" extension should
+                            will have the application/x-appweb-php mime type:</p>
+                            <p><em>application/x-appweb-php php</em></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><a id="addType"></a>
+            <h2>AddType</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Add a MIME type specification</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AddType mimeType extension</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>application/x-appweb-perl pl</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AddType directive will associate the specified MIME type with the nominated
+                            extension. MIME types are used by Appweb when processing CGI scripts. When processing
+                            client requests, Appweb will map a URLs extension to a mime type. If an Action directive
+                            has been specified for this mime type, the associate program will be run using the CGI
+                            protocol to process the URL.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="cgiEscape"></a>
+            <h2>CgiEscape</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Escape environment variables passed to CGI programs for special shell characters.
+                        If using shell scripts as CGI programs, this directive will escape all special 
+                            shell characters to make scripting easier and more secure. This will escape 
+                           (with \) the following characters: &;`'\"|*?~<>^()[]{}$\\\n and also on windows \r%.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>CgiEscape on|off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>CgiEscape on</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>Shell script variables should always be uses inside quotes. 
+                            For example: use "${filename}" not $filename. This permits filenames with spaces and special 
+                            characters from being incorrectly interpreted by the shell.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>Failing to escape CGI variables and then using $name to reference variables can cause
+                            a security vulnerability by permitting user supplied data to inject shell special characters
+                            into the variable value. This will then be interpreted by the shell when the variable is 
+                            referenced. </td>
+                    </tr>
+                </tbody>
+            </table> 
+            <a id="cgiPrefix"></a>
+            <h2>CgiPrefix</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define a prefix to prepend to URI query parameters and form variables that are passed to
+                        CGI programs in the environment.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>CgiPrefix String</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>CgiPrefix CGI_</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>If using shell scripts as CGI programs, you should ensure important shell variables like IFS, SHELL and PATH are not overwritten or corrupted by user supplied URI query or form variables. Use a prefix to ensure parameters have their own namespace. The default appweb.conf defines the "CGI_" prefix.</td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>Failing to define 
+                            When coupled with lowering the privilege for the <a href="#userAccount">UserAccount</a> and 
+                            <a href="#groupAccount">GroupAccount</a> potential security exposures can be minimized.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="chroot"></a>
+            <h2>Chroot</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Directory containing a "chroot jail" in which for Appweb to execute. Once this 
+                            directive is parsed, all files outside the jail will be inaccessible.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Chroot directoryPath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Entire Application</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Chroot /etc/appweb/jail</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>See <a href="http://en.wikipedia.org/wiki/Chroot">Wikipedia Chroot</a> for more
+                            information.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>A chroot jail enhances security by limiting system access should Appweb ever be compromised.
+                            When coupled with lowering the privilege for the <a href="#userAccount">UserAccount</a> and 
+                            <a href="#groupAccount">GroupAccount</a> potential security exposures can be minimized.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a name="groupAccount"></a>
+            <h2>GroupAccount</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Account group that Appweb will run as.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>GroupAccount group</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>GroupAccount nobody<br/>
+                        GroupAccount APPWEB</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The GroupAccount directive specifies the account group in which Appweb will be a member when
+                            running. If UserAccount and GroupAccount are defined, the supplemental
+                            groups will include only the specified group and not the other groups to which the user is a
+                            member of. If you require all supplemental groups, do not set the GroupAccount.</p>
+                            <p>It is important that you run Appweb with the lowest system privilege that will get the
+                            job done. If any application is compromised, including Appweb, then the system will be
+                            safest if the compromised application has as few privileges as possible.</p>
+                            <p>When Appweb starts it initially runs as root or administrator and then changes account if a
+                            group account is defined in the Appweb configuration file by the GroupAccount directive.  </p>
+                            <p>If logged in as root or administrator, the pseudo name of APPWEB will change group to 
+                            _www on Mac, nogroup/nobody on Unix and Administrator on Windows.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>It is extremely dangerous to run Appweb as Group "root" or "administrators".</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="home"></a>
+            <h2>Home</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Directory containing the core Appweb installation files</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Home directoryPath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Home /etc/appweb</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Home is by default /etc/appweb on Linux and "C:\appweb" on Windows. It is
+                            important that the server root directory be protected against modification by other users.
+                            It should be owned by either root or administrator and should only be writable by these
+                            users.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="listen"></a>
+            <h2>Listen</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>IP address and port on which to listing for incoming requests.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Listen [IP address:]portNumber</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual Host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Examples</td>
+                        <td>Listen 80<br />
+                            Listen 205.162.77.64:7777<br/>
+                            Listen [::]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Listen directive specifies the IP endpoints on which Appweb will listen for incoming
+                            HTTP requests. If you specify only the port number and omit the IP address, Appweb will
+                            listen on all network interfaces including the loop-back adaptor. It will listen on both 
+                            IPv4 and IPv6 if only a portNumber is specified. </p>
+                            <p>To listen on IPv6 endpoints, enclose the IP address in square brackets. For example:
+                            Listen [2001:05c0:9168:0000:0000:0000:0000:0001]</p>
+                            <p>To listen on IPv4 endpoints, supply an IPv4 IP address. You may use 0.0.0.0 to listen
+                            on all IPv4 interfaces.</p>
+                            <p>To listen for SSL requests, use the <a href="ssl.html#listenSecure">ListenSecure</a>
+                                directive.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- UNUSED
+            <a id="protocol"></a>
+            <h2>Protocol</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>HTTP protocol version to use</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Protocol [HTTP/1.0 | HTTP/1.1]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Protocol HTTP/1.0</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Protocol directive specifies the HTTP protocol version to respond with. If the
+                            Protocol directive specifies HTTP/1.0, a browser may issue requests using either HTTP/1.0
+                            or HTTP/1.1. However, the response will always be downgraded to use HTTP/1.0 without
+                            Keep-Alive support.</p>
+                            <p>If the Protocol directive specifies HTTP/1.1 and a browser makes a request using
+                            HTTP/1.0 it will not be processed and the client will receive an error.</p>
+                            <p>NOTE: this directive is proprietary to Appweb and is not an Apache directive.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            -->
+            
+            <a id="serverName"></a>
+            <h2>ServerName</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the fully qualified hostname and port number for the server to use.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>ServerName hostName</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual Host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>ServerName www.acme.com</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The ServerName directive specifies the base HTTP address that will be used 
+                            for identification and for redirection responses. The given hostName should be a fully 
+                            qualified domain name with port number if using a port other than port 80.</p>
+                            <p>When used inside Name based VirtualHost blocks, this directive specifies the Host
+                            HTTP header that should be supplied with the request.</p>
+                            <p>When using virtual hosting, the ServerName may begin with "*" in which case the 
+                                VirtualHost block will match a request with a Host header that "contains" the given
+                                name. For example: a ServerName directive of "*.embedthis.com" will match
+                                farm.embedthis.com and www.embedthis.com.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="streamInput"></a>
+            <h2>StreamInput</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control if request body data should be streamed or buffered.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>StreamInput [!] mimeType URI</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual Host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>StreamInput ! application/x-www-form-urlencoded /very/big/form</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The StreamInput directive specifies if the request body data should be buffered
+                            before processing the request or whether the processing should be started immediately and the
+                            body data streamed to the handler.</p>
+                            <p>By default, POST forms that have a Content-Type of "application/x-www-form-urlencoded" or 
+                            "application/json" will have their request body data buffered before processing. 
+                            This enables form requests to use body data in the route processing. 
+                            By default, all other requests content types will be streamed. </p>
+                            <p>The mimeType specifies the required "Content-Type" HTTP header for the request. 
+                            The URI is optional and if supplied, specifies a matching URI prefix for qualifying requests.</p>
+                            <pre>StreamInput application/x-gzip /upload</pre>
+                            <p>The StreamInput applies to the entire host and is not specific per-route.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="typesConfig"></a>
+            <h2>TypesConfig</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Specify the location of the Mime types file</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>TypesConfig directoryPath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>TypesConfig /etc/appweb/mime.types</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The TypeConfig directive specifies the location of the MIME types files. This file
+                            contains the mappings from file extensions to content types and is used by Appweb to
+                            determine the document content type which is included in the HTTP response back to the
+                            browser. The MIME types file included with Appweb follows the standard specified by
+                            IANA.</p>
+                            <p>The directory path may be an absolute path or it may be relative to the Home directory.</p>
+                            <p>The MIME types file has lines of the format:</p>
+                            <pre>ApplicationType [extensions]...</pre>
+                            <p>Feel free to modify the default mime types file, but be careful to save it as it will be
+                            overwritten should you upgrade Appweb.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="userAccount"></a>
+            <h2>UserAccount</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>The user account that Appweb will run as.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>UserAccount name</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>UserAccount nobody<br/>
+                        UserAccount APPWEB</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The UserAccount directive instructs Appweb to change accounts to run as the specified
+                            account name. The account name chosen for the UserAccount directive should have minimal 
+                            privilege and should not be able to read or modify any files outside the Documents directory
+                            or specified Alias directories.</p>
+                            <p>If logged in as root or administrator, the pseudo name of APPWEB will change user to _www on
+                            Mac OSX, nobody on Unix and Administrator on Windows.</p>
+                            <p>If UserAccount and GroupAccount are defined, the supplemental
+                            groups will be set to include only the specified group. This means you get one UID and one GID. 
+                            No supplemental groups.</p>
+                            <p>If UserAccount is set and GroupAccount is not set, then Appweb will run with group membership set 
+                            to include all groups to which the user account is a member of.</p>
+                            <P>The UserAccount directive can only be used if Appweb is started using a privileged
+                            account such as root. Normally Appweb is started using the account root or administrator
+                            and thereafter it changes to run with less privilege using the specified accountName.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>Do not run as root or administrator. Omitting the User directive can have the same effect
+                        as using a "User root" directive.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

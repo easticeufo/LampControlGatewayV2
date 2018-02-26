@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.9.2 On 2015-11-02</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.9.2 On 2015-11-02</h2><p><ul>
+<li>Fix the schema parser so that it interprets certain 
+    (obscure and ill-formed)
+    CREATE TABLE statements the same as legacy.  Fix for ticket
+    <a href="https://www.sqlite.org/src/info/ac661962a2aeab3c331">ac661962a2aeab3c331</a>
+<li>Fix a query planner problem that could result in an incorrect
+    answer due to the use of <a href="../optoverview.html#autoindex">automatic indexing</a> in subqueries in
+    the FROM clause of a correlated scalar subqueries.  Fix for ticket
+    <a href="https://www.sqlite.org/src/info/8a2adec1">8a2adec1</a>.
+
+<li>SQLITE_SOURCE_ID: "2015-11-02 18:31:45 bda77dda9697c463c3d0704014d51627fceee328"
+<li>SHA1 for sqlite3.c: 1c4013876f50bbaa3e6f0f98e0147c76287684c1
+
+</ul></p>
+<p><b>Changes carried forward from version 3.9.1 (2015-10-16):</b></p>
+<p><ul>
+<li>Fix <a href="../json1.html">the json1 extension</a> so that it does <u>not</u> recognize ASCII form-feed as a
+    whitespace character, in order to comply with RFC-7159.  Fix for ticket
+    <a href="https://www.sqlite.org/src/info/57eec374ae1d0a1d">57eec374ae1d0a1d</a>
+<li>Add a few #ifdef and build script changes to address compilation issues that
+    appeared after the 3.9.0 release.
+
+
+</ul></p>
+<p><b>Changes carried forward from version 3.9.0 (2015-10-14):</b></p>
+<p><ul>
+<p><b>Policy Changes:</b>
+<li>The <a href="../versionnumbers.html">version numbering conventions</a> for SQLite are revised to use the
+    emerging standard of <a href="http://semver.org/">semantic versioning</a>.
+<p><b>New Features And Enhancements:</b>
+<li>Added <a href="../json1.html">the json1 extension</a> module in the source tree, and in the <a href="../amalgamation.html">amalgamation</a>.
+    Enable support using the <a href="../compile.html#enable_json1">SQLITE_ENABLE_JSON1</a> compile-time option.
+<li>Added <a href="../fts5.html">Full Text Search version 5 (FTS5)</a> to the <a href="../amalgamation.html">amalgamation</a>, enabled
+    using <a href="../compile.html#enable_fts5">SQLITE_ENABLE_FTS5</a>.  FTS5 will be considered "experimental" (subject
+    to incompatible changes) for at least one more release cycle.
+<li>The <a href="../lang_createview.html">CREATE VIEW</a> statement now accepts an optional list of
+    column names following the view name.
+<li>Added support for <a href="../expridx.html">indexes on expressions</a>.
+<li>Added support for <a href="../vtab.html#tabfunc2">table-valued functions</a> in the FROM clause of a
+    <a href="../lang_select.html">SELECT</a> statement.
+<li>Added support for <a href="../vtab.html#epovtab">eponymous virtual tables</a>.
+<li>A <a href="../lang_createview.html">VIEW</a> may now reference undefined tables and functions when
+    initially created.  Missing tables and functions are reported when
+    the VIEW is used in a query.
+<li>Added the <a href="../c3ref/value_subtype.html">sqlite3_value_subtype()</a> and <a href="../c3ref/result_subtype.html">sqlite3_result_subtype()</a>
+    interfaced (used by <a href="../json1.html">the json1 extension</a>).
+<li>The query planner is now able to use <a href="../partialindex.html">partial indexes</a> that contain
+    AND-connected terms in the WHERE clause.
+<li>The sqlite3_analyzer.exe utility is updated to report the depth of
+    each btree and to show the average fanout for indexes and 
+    WITHOUT ROWID tables.
+<li>Enhanced the <a href="../dbstat.html">dbstat virtual table</a> so that it can be used as a
+    <a href="../vtab.html#tabfunc2">table-valued function</a> where the argument is the schema to be
+    analyzed.
+<p><b>Other changes:</b>
+<li>The <a href="../c3ref/aggregate_count.html">sqlite3_memory_alarm()</a> interface, which has been deprecated and
+    undocumented for 8 years, is changed into a no-op.
+<p><b>Important fixes:</b>
+<li>Fixed a critical bug in the 
+    <a href="https://www.sqlite.org/see/doc/trunk/www/readme.wiki">SQLite Encryption Extension</a> that
+    could cause the database to become unreadable and unrecoverable if a <a href="../lang_vacuum.html">VACUUM</a> command 
+    changed the size of the encryption nonce.
+<li>Added a memory barrier in the implementation of
+    <a href="../c3ref/initialize.html">sqlite3_initialize()</a> to help ensure that it is thread-safe.
+<li>Fix the <a href="../optoverview.html#or_opt">OR optimization</a> so that it always ignores subplans that
+    do not use an index.
+<li>Do not apply the WHERE-clause pushdown optimization on terms that originate
+    in the ON or USING clause of a LEFT JOIN.  Fix for ticket
+    <a href="https://www.sqlite.org/src/info/c2a19d81652f40568c">c2a19d81652f40568c</a>.
+
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

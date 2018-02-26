@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.12.0 On 2016-03-29</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.12.0 On 2016-03-29</h2><p><ul>
+<p><b>Potentially Disruptive Change:</b>
+<li>The <a href="../compile.html#default_page_size">SQLITE_DEFAULT_PAGE_SIZE</a> is increased from 1024 to 4096.  
+    The <a href="../compile.html#default_cache_size">SQLITE_DEFAULT_CACHE_SIZE</a> is changed from 2000 to -2000 so 
+    the same amount of cache memory is used by default.
+    See the application note on the
+    <a href="../pgszchng2016.html">version 3.12.0 page size change</a> for further information.
+<p><b>Performance enhancements:</b>
+<li>Enhancements to the <a href="https://www.sqlite.org/src/doc/trunk/doc/lemon.html">Lemon</a>
+    parser generator so that it creates a smaller and faster SQL parser.
+<li>Only create <a href="../tempfiles.html#masterjrnl">master journal</a> files if two or more attached databases are all
+    modified, do not have <a href="../pragma.html#pragma_synchronous">PRAGMA synchronous</a> set to OFF, and
+    do not have the <a href="../pragma.html#pragma_journal_mode">journal_mode</a> set to OFF, MEMORY, or WAL.
+<li>Only create <a href="../tempfiles.html#stmtjrnl">statement journal</a> files when their size exceeds a threshold.
+    Otherwise the journal is held in memory and no I/O occurs.  The threshold
+    can be configured at compile-time using <a href="../compile.html#stmtjrnl_spill">SQLITE_STMTJRNL_SPILL</a> or at
+    start-time using <a href="../c3ref/config.html">sqlite3_config</a>(<a href="../c3ref/c_config_covering_index_scan.html#sqliteconfigstmtjrnlspill">SQLITE_CONFIG_STMTJRNL_SPILL</a>).
+<li>The query planner is able to optimize IN operators on <a href="../vtab.html">virtual tables</a>
+    even if the <a href="../vtab.html#xbestindex">xBestIndex</a> method does not set the
+    sqlite3_index_constraint_usage.omit flag of the
+    virtual table column to the left of the IN operator.
+<li>The query planner now does a better job of optimizing <a href="../vtab.html">virtual table</a>
+    accesses in a 3-way or higher join where constraints on the virtual
+    table are split across two or more other tables of the join.
+<li>More efficient handling of <a href="../c3ref/create_function.html">application-defined SQL functions</a>, especially
+    in cases where the application defines hundreds or thousands of 
+    custom functions.
+<li>The query planner considers the LIMIT clause when estimating the cost
+    of ORDER BY.
+<li>The configure script (on unix) automatically detects
+    pread() and pwrite() and sets compile-time options to use those OS
+    interfaces if they are available.
+<li>Reduce the amount of memory needed to hold the schema.
+<li>Other miscellaneous micro-optimizations for improved performance and reduced
+    memory usage.
+<p><b>New Features:</b>
+<li>Added the <a href="../c3ref/c_dbconfig_enable_fkey.html">SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER</a> option to <a href="../c3ref/db_config.html">sqlite3_db_config()</a>
+    which allows the two-argument version of the <a href="../fts3.html#f3tknzr">fts3_tokenizer()</a> SQL function to
+    be enabled or disabled at run-time.
+<li>Added the <a href="https://www.sqlite.org/src/artifact/d7cc99350?ln=403-443">sqlite3rbu_bp_progress()</a>
+    interface to the <a href="../rbu.html">RBU</a> extension.
+<li>The <a href="../pragma.html#pragma_defer_foreign_keys">PRAGMA defer_foreign_keys=ON</a> statement now also disables 
+    <a href="../foreignkeys.html#fk_actions">RESTRICT actions</a> on foreign key.
+<li>Added the <a href="../c3ref/system_errno.html">sqlite3_system_errno()</a> interface.
+<li>Added the <a href="../compile.html#default_synchronous">SQLITE_DEFAULT_SYNCHRONOUS</a> and <a href="../compile.html#default_wal_synchronous">SQLITE_DEFAULT_WAL_SYNCHRONOUS</a>
+    compile-time options.  The <a href="../compile.html#default_synchronous">SQLITE_DEFAULT_SYNCHRONOUS</a> compile-time option
+    replaces the <a href="../compile.html#extra_durable">SQLITE_EXTRA_DURABLE</a> option, which is no longer supported.
+<li>Enhanced the ".stats" command in the <a href="../cli.html">command-line shell</a> to show more
+    information about I/O performance obtained from /proc, when available.
+<p><b>Bug fixes:</b>
+<li>Make sure the <a href="../c3ref/get_auxdata.html">sqlite3_set_auxdata()</a> values from multiple triggers
+    within a single statement do not interfere with one another.
+    Ticket <a href="https://www.sqlite.org/src/info/dc9b1c91">dc9b1c91</a>.
+<li>Fix the code generator for expressions of the form "x IN (SELECT...)" where
+    the SELECT statement on the RHS is a correlated subquery.
+    Ticket <a href="https://www.sqlite.org/src/info/5e3c886796e5512e">5e3c886796e5512e</a>.
+<li>Fix a harmless TSAN warning associated with the <a href="../c3ref/db_readonly.html">sqlite3_db_readonly()</a> interface.
+<p><b>Hashes:</b>
+<li>SQLITE_SOURCE_ID: "2016-03-29 10:14:15 e9bb4cf40f4971974a74468ef922bdee481c988b"
+<li>SHA1 for sqlite3.c: cba2be96d27cb51978cd4a200397a4ad178986eb
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

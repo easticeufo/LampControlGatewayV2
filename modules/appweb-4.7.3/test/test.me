@@ -1,0 +1,167 @@
+/*
+    test.me - MakeMe file for Appweb test
+ */
+
+Me.load({
+    targets: {
+        testAppweb: {
+            type: 'exe',
+            headers:   [ 'src/*.h' ],
+            sources:   [ 'src/testAppweb.c', 'src/testHttp.c' ],
+            depends:   [ 'libappweb' ],
+            platforms: [ 'local' ],
+        },
+
+        'test-testScript': {
+            path: 'cgi-bin/testScript',
+            build: "
+                let path = Path('cgi-bin/testScript')
+                path.write('#!' + me.dir.bin.join('cgiProgram${EXE}' + '\n'))
+                path.setAttributes({permissions: 0755})
+            ",
+            'generate-sh': "echo '#!${BIN}/cgiProgram${EXE}' >cgi-bin/testScript ; chmod +x cgi-bin/testScript",
+            depends: ['cgiProgram'],
+            platforms: [ 'local' ],
+            ifdef: [ 'cgi' ],
+            depends: ['testAppweb'],
+        },
+
+        'test-cache.cgi': {
+            path: 'web/caching/cache.cgi',
+            build: "
+                let path = Path('web/caching/cache.cgi')
+                path.write('#!' + Cmd.locate('ejs') + '\n' + 
+                    'print(\"HTTP/1.0 200 OK\nContent-Type: text/plain\n\n{number:\" + Date().now() + \"}\n\")')
+                path.setAttributes({permissions: 0755})
+            ",
+            'generate-sh': "\
+                echo \"#!`type -p ejs`\" >web/caching/cache.cgi
+                echo 'print(\"HTTP/1.0 200 OK\\nContent-Type: text/plain\\n\\n{number:\" + Date().now() + \"}\\n\")' >>web/caching/cache.cgi
+                chmod +x web/caching/cache.cgi
+            ",
+            platforms: [ 'local' ],
+            ifdef: [ 'cgi' ],
+            depends: ['testAppweb'],
+        },
+
+        'test-basic.cgi': {
+            path: 'web/auth/basic/basic.cgi',
+            build: "
+                let path = Path('web/auth/basic/basic.cgi')
+                path.write('#!' + Cmd.locate('ejs') + '\n' + 
+                    'print(\"HTTP/1.0 200 OK\nContent-Type: text/plain\n\n\" + serialize(App.env, {pretty: true}) + \"\n\")')
+                path.setAttributes({permissions: 0755})
+                trace('Generate', path)
+            ",
+            'generate-sh': "\
+                echo \"#!`type -p ejs`\" >web/auth/basic/basic.cgi
+                echo 'print(\"HTTP/1.0 200 OK\\nContent-Type: text/plain\\n\\n\" + serialize(App.env, {pretty: true}) + \"\\n\")' >>web/auth/basic/basic.cgi
+                chmod +x web/auth/basic/basic.cgi
+            ",
+            platforms: [ 'local' ],
+            ifdef: [ 'cgi' ],
+            depends: ['testAppweb'],
+        },
+
+        'test-cgiProgram': {
+            path: 'cgi-bin/cgiProgram${EXE}',
+            build: "
+                let perms = { permissions: 0755 }
+                let cgiProgram = me.dir.bin.join('cgiProgram${EXE}')
+                cp(cgiProgram, Path('cgi-bin/cgiProgram${EXE}'), perms)
+                cp(cgiProgram, Path('cgi-bin/nph-cgiProgram${EXE}'), perms)
+                cp(cgiProgram, Path('cgi-bin/cgi Program${EXE}'), perms)
+                cp(cgiProgram, Path('web/cgiProgram.cgi'), perms)
+            ",
+            'generate-sh': "\
+                cp ${BIN}/cgiProgram${EXE} cgi-bin/cgiProgram${EXE}
+                cp ${BIN}/cgiProgram${EXE} cgi-bin/nph-cgiProgram${EXE}
+                cp ${BIN}/cgiProgram${EXE} 'cgi-bin/cgi Program${EXE}'
+                cp ${BIN}/cgiProgram${EXE} web/cgiProgram.cgi
+                chmod +x cgi-bin/* web/cgiProgram.cgi
+            ",
+            depends: ['cgiProgram'],
+            platforms: [ 'local' ],
+            ifdef: [ 'cgi' ],
+        },
+
+        //  TODO
+        'test.js': {
+            enable: false,
+            type:   'file',
+            path:   'web/js/',
+            files:  ['../src/esp/proto/angular/client/lib/'],
+        },
+
+        test: {
+            action: "
+                let ro = {}
+                let depth = me.settings.depth
+                Path('cache').makeDir()
+                run('utest -v -i 1 --depth ' + depth, ro)
+                if (depth >= 2) {
+                    trace('Test', 'Light load tests')
+                    run('utest -v -i 5 --depth ' + depth, ro)
+                }
+                //  TODO - thread tests don't work yet
+                if (depth >= 3) {
+                    for each (t in [2, 4]) {
+                        trace('Test', 'Light thread tests')
+                        run('utest -v -i 20 --depth ' + depth + ' --threads ' + t, ro)
+                    }
+                }
+                if (depth >= 4) {
+                    trace('Test', 'Longevity load tests')
+                    run('utest -v -i 100 --depth ' + depth, ro)
+                    for each (t in [8, 16]) {
+                        trace('Test', 'Light thread tests')
+                        run('utest -v -i 100 --depth ' + depth + ' --threads ' + t, ro)
+                    }
+                }
+                trace('Test', 'Unit tests complete')
+            ",
+            platforms: [ 'local' ],
+        },
+
+        'auth.conf': {
+            action: "
+                let path = Path('auth.conf')
+                trace('Generate', 'Authorization file: ' + path)
+                path.write('#\n#   ' + path + ' - Authorization roles and users\n#\n\n')
+                path.write('Role user view\nRole administrator view\nRole executive manage direct\n\n')
+                run('authpass --cipher md5 --password pass4 ' + path + ' example.com julie user')
+                run('authpass --cipher md5 --password pass3 ' + path + ' example.com peter user')
+                run('authpass --cipher md5 --password pass2 ' + path + ' example.com mary user executive')
+                run('authpass --cipher md5 --password pass1 ' + path + ' example.com joshua user administrator purchase')
+                run('authpass --cipher blowfish --password pass5 ' + path + ' example.com ralph user administrator purchase')
+            ",
+        },
+
+        'test-run': {
+            enable: "!me.platform.cross",
+            depends: [ 'compile' ],
+            action: "
+                trace('Run', 'From directory src/server')
+                run('appweb -v')
+            ",
+            generate: "${BIN}/appweb -v"
+        },
+
+        'clean-test': {
+            type: 'clean',                                                                                 
+            action: "                                                                                      
+                rm('cache/*')
+                rm('app/cache/*')
+                rm('apps/*/cache/*')
+                rm('junk/**')
+                rm('web/js')
+                Path('cache').makeDir()
+                Path('cache/.keep').write()
+                Path('app/cache').makeDir()
+                Path('app/cache/.keep').write()
+                Path('web/caching/cache.cgi').remove()
+                Path('web/auth/basic/basic.cgi').remove()
+            ",
+        },  
+    },
+})

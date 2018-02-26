@@ -1,0 +1,205 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>Module Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#loadModule">LoadModule</a></li>
+                <li><a href="#loadModulePath">LoadModulePath</a></li>
+                <li><a href="#unloadModule">UnloadModule</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../../../../guide/appweb/users/modules.html">Loadable Modules</a></li>
+                <li><a href="../../../../guide/appweb/users/stages.html">Handlers</a></li>
+                <li><a href="../../../../guide/appweb/users/configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>Module Directives</h1><a id="loadModule"></a>
+            <h2>LoadModule</h2>
+            <table class="directive" title="loadModule">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Load Appweb module</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>LoadModule moduleName modulePath</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>LoadModule openSsl /etc/appweb/modules/libopenSsl.so</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The LoadModule directive causes the specified module to be loaded and its functionality
+                            made available to the default server and all virtual hosts.</p>
+                            <p>LoadModule directive will locate and dynamically load the module shared library and
+                            then activate it for processing.</p>
+                            <p>The modulePath argument is the filename for the module without the extension. Appweb omits the
+                            extension so that loading modules will work regardless of the platform specific module
+                            filename extension. The modulePath may be an absolute path or it may be relative to the
+                            Server Root. If the modulePath if a pure filename without any directory portion, the
+                            directory paths specified by the <a href="module.html#loadModulePath">LoadModulePath</a>
+                            are used to search for the module.</p>
+                            <p>The order of modules in the Appweb configuration file is important. If module "A" uses
+                            the services of module "B", then module "B" must be loaded prior to loading module "A".</p>
+                            <h3>Types of Modules</h3>
+                            <p>There are many kinds of modules:</p>
+                            <ul>
+                                <li>Handlers</li>
+                                <li>Filters</li>
+                                <li>Connectors</li>
+                                <li>Pure modules</li>
+                            </ul>
+                            <p>Handlers are modules that respond to HTTP requests and serve the response content
+                            themselves. Pure modules are units of functionality that augment Appweb without directly
+                            handling HTTP responses themselves.</p>
+                            <h3>Appweb supplied modules</h3>
+                            <table title="cgi">
+                                <tbody>
+                                    <tr>
+                                        <td>Common Gateway Interface Handler</td>
+                                        <td>cgi</td>
+                                        <td>mod_cgi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Embedded Server Pages Handler</td>
+                                        <td>esp</td>
+                                        <td>mod_esp</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ejscript Web Framework and Handler</td>
+                                        <td>ejs</td>
+                                        <td>mod_ejs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP Handler</td>
+                                        <td>php</td>
+                                        <td>mod_php</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SSL Module</td>
+                                        <td>ssl</td>
+                                        <td>mod_ssl</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="loadModulePath"></a>
+            <h2>LoadModulePath</h2>
+            <table class="directive" title="loadModulePath">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Specify a list of directory paths to search when loading Modules</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>LoadModule path ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>LoadModulePath "../bin:/home/josh/test:/My Modules"</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The LoadModulePath directive causes subsequent LoadModule directives to search for their
+                            modules in the paths nominate by the LoadModulePath directive, if the module paths do not
+                            contain directory paths. On Unix like systems, the path separator is ":". On windows, the
+                            path separator is ";". Relative paths in this directive are resolved relative to the server
+                            root directory. The default path is:</p><p><em>appweb-executable-directory:/usr/lib/appweb/bin</em>.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="unloadModule"></a>
+            <h2>UnloadModule</h2>
+            <table class="directive" title="unloadModule">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Unload an Appweb module</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>UnloadModule moduleName seconds</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>UnloadModule espHandler 60</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The UnloadModule directive causes the specified module to be unloaded if it is inactive
+                            for the given number of seconds.</p>
+                            <p>NOTE: PHP cannot be unloaded due to a common bug in the PHP shutdown routines.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

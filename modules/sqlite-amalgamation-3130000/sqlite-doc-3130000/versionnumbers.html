@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Version Numbers in SQLite</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+
+<h1>SQLite Version Numbers</h1>
+
+<p>
+Beginning with <a href="releaselog/3_9_0.html">version 3.9.0</a> SQLite uses 
+<a href="http://semver.org">semantic versioning</a>.
+Prior to that time, SQLite employed a version identifier that
+contained between two and four numbers.
+
+<h2>The New Version Numbering System (After 2015-10-01)</h2>
+
+<p>
+All SQLite releases starting with 3.9.0 use a three-number
+"<a href="http://semver.org">semantic version</a>" of the form X.Y.Z.
+The first number X is only increased when there is a change that
+breaks backward compatibility.  The
+current value for X is 3, and the SQLite developers plan to support
+the current SQLite database file format, SQL syntax, and C interface
+through at least the year 2050.  Hence, one
+can expect that all future versions of SQLite for the next several
+decades will begin with "3.".
+
+<p>
+The second number Y is incremented for any change that breaks forward
+compatibility by adding new features.
+Most future SQLite releases are expected
+to increment the second number Y.  The Z is reset to zero whenever Y
+is increased.
+
+<p>
+The third number Z is incremented for releases consisting of only
+small changes that implement performance enhancements and/or bug fixes.
+
+<p>
+The rate of enhancement for SQLite over the previous five years
+(2010-2015) is approximately 6 increments of Y per year.  The
+numbering format used by for <a href="c3ref/c_source_id.html">SQLITE_VERSION_NUMBER</a> and
+<a href="c3ref/libversion.html">sqlite3_libversion_number()</a> allows versions up to 3.999.999, which is
+more than enough for the planned end-of-support date for SQLite
+in 2050.  However, the current tarball naming conventions only
+reserve two digits for the Y and so the naming format for downloads
+will need to be revised in about 2030.
+
+<h2>The Historical Numbering System (Before 2015-10-01)</h2>
+
+<p>This historical version numbering system used a two-, three-,
+or four-number version:  W.X, W.X.Y, or W.X.Y.Z.
+W was the file format: 1 or 2 or 3.
+X was the major version.
+Y was the minor version.
+Z was used only for patch releases to fix bugs.
+
+<p>
+There have been three historical file formats for SQLite.
+SQLite 1.0 through 1.0.32 used the
+<a href="https://www.gnu.org/software/gdbm/gdbm.html">gdbm</a> library as its storage
+engine.
+SQLite 2.0.0 through 2.8.17 used a custom b-tree storage engine that
+supported only text keys and data.
+All modern versions of SQLite (3.0.0 to present) use a b-tree storage
+engine that has full support for binary data and Unicode.
+
+<p>
+This major version number X was historically incremented only for
+large and important changes to the code.  What constituted "large
+and important" was subjective.  The 3.6.23 to 3.7.0 change
+was a result of adding support for <a href="wal.html">WAL mode</a>.
+The 3.7.17 to 3.8.0 change was a result of rewrite known as the
+<a href="queryplanner-ng.html">next generation query planner</a>.
+
+<p>
+The minor version number Y was historically incremented for new
+features and/or new interfaces that did not significantly change
+the structure of the code.  The addition of <a href="lang_with.html">common table expressions</a>,
+<a href="partialindex.html">partial indexes</a>, and <a href="expridx.html">indexes on expressions</a> are all examples of
+"minor" changes.  Again, the distinction between "major" and "minor"
+is subjective.
+
+<p>
+The patch level Z was historically only used for bug-fix releases
+that changed only a small number of code lines.
+

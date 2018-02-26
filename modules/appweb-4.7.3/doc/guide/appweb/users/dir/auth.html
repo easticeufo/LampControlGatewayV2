@@ -1,0 +1,544 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="../index.html">Users Guide</a> &gt; <a href="../configuration.html#directives">Configuration
+            Directives</a> &gt; <b>Authorization Directives</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#allow">Allow</a></li>
+                <li><a href="#authAutoLogin">AuthAutoLogin</a></li>
+<!-- UNUSED
+                <li><a href="#authCipher">AuthCipher</a></li>
+-->
+                <li><a href="#authDigestQop">AuthDigestQop</a></li>
+                <li><a href="#authStore">AuthStore</a></li>
+                <li><a href="#authType">AuthType</a></li>
+                <li><a href="#deny">Deny</a></li>
+                <li><a href="#order">Order</a></li>
+                <li><a href="#require">Require</a></li>
+                <li><a href="#role">Role</a></li>
+                <li><a href="#user">User</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="../../../../guide/appweb/users/authentication.html">Authorization Guide</a></li>
+                <li><a href="../../../../guide/appweb/users/configuration.html">Configuration</a></li>
+                <li><a href="../configuration.html#directives">Configuration Directives</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <a id="allow"></a>
+            <h1>Authorization Directives</h1>
+            <p>Authorization directives manage user authentication and server access control.</p>
+            <h2>Allow</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define which servers can access a section of the published content</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Allow from [all | host]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Directory</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+                            <pre class="paper">
+&lt;Directory /var/www/acme&gt;
+    Allow from www.example.com
+&lt;/Directory&gt;
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>The Allow directive is currently not implemented.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="authAutoLogin"></a>
+            <h2>AuthAutoLogin</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Automatically login as the designated user</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthAutoLogin username</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthAutoLogin peter</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthAutoLogin directive automatically logs in as the specified user.
+                            This is useful for development to avoid having to enter the user credentials for each debug 
+                            session.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- UNUSED
+            <a id="authCipher"></a>
+            <h2>AuthCipher</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the cipher used to encrypt passwords</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthCipher [blowfish | md5]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthCipher blowfish</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthCipher directive specifies the cipher used for encryption when storing passwords 
+                            at the server. There are two choices, 
+                            <ul>
+                            <li>blowfish &mdash; for Blowfish encryption. Cannot use with Digest authentication</li>
+                            <li>md5 &mdash; for MD5 hashing. Required if using Digest authentication</li>
+                            </ul>
+                            <p>The blowfish cipher is much more secure than MD5 which can be compromised if the password
+                            file is accessible.
+                            <p>The default cipher is "md5".</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            -->
+            
+            <a id="authDigestQop"></a>
+            <h2>AuthDigestQop</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the quality of protection for Digest authentication</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthDigestQop [none | auth | auth-int]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthDigesteQop auth</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthDigestQop directive specifies the desire quality of protection to be employed by
+                            the AuthHandler when validating user credentials. The following levels are supported:</p>
+                            <ul>
+                                <li>none -- No authentication</li>
+                                <li>auth -- Standard digest authentication</li>
+                                <li>auth-int --Use integrity checking via an MD5 hash of the credentials. Not yet
+                                implemented.</li>
+                            </ul>
+                            <p>The default level is "auth".</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- DEPRECATED
+            <a id="authRealm"></a>
+            <h2>AuthRealm</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines a realm name for authentication.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthRealm realm</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthRealm "example.com"<br />
+                        AuthType Basic<br />
+                        Require group employees</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthRealm directive defines a unique name for a zone of access. The realm is used
+                            in combination with the username and password during the authentication process.
+                            For Basic and Digest authentication types, the realm is displayed by the user's browser when
+                            prompting for a user name and password. For consistency, Appweb requires a realm to be
+                            specified even if Basic and Digest authentication types are not employed. When creating
+                            internal passwords via the <em>authpass</em> utility, the realm is combined with the
+                            username and password when encrypting the password.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            -->
+            
+            <a id="authStore"></a>
+            <h2>AuthStore</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the password store for user and password credentials.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthStore [file | system]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthStore system</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthStore directive defines where Appweb can access user credentials for 
+                            authenticating users and their passwords.</p>
+                            <p>The "file" authentication method uses users credentials defined via the 
+                            <a href="#user">User</a> directive and then stored internally in Appweb. These User 
+                            directives are typically stored in a separate authentication configuration file that is
+                            included by <em>appweb.conf</em>. The <em>authpass</em> program can be used to create
+                            encrypted User passwords in the authentication file.</p>
+                            <P>The "system" option selects the default system password database. On Unix, the 
+                            Plugable Authentication Modules (PAM) method is used. Windows ActiveDirectory is not yet 
+                            supported. </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="authType"></a>
+            <h2>AuthType</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the type of authentication to use.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>AuthType [basic | digest | none] [realm]<br/>
+                        AuthType form realm login-page [login-service logout-service logged-in-page]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>AuthType basic example.com<br />
+                            AuthType form example.com https:///admin/login.esp -<br/>
+                                &nbsp; &nbsp; https:///login /logout /home.html<br/>
+                            Require ability modify</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The AuthType directive specifies the style of authorization to perform when validating
+                            users. If a route block does not define, the AuthType is inherited from outer routes in the config file.</p>
+                            <p>All forms of the AuthType directive specify an authentication realm.  The realm is included as an ingredient
+                            when encrypting passwords via the <a href="../../../../man/authpass.html">authpass</a> program.
+                            For basic and digest authentication, this realm is also displayed by the browser when the user logs in. </p>
+                            <p>The "AuthType form" authentication directive has extra arguments after the realm. These are
+                            four URIs to control the login and logout sequence. These are:
+                            <ol>
+                            <li>login-page &mdash; Unauthenticated users are redirected to this URI to log in</li>
+                            <li>login-service-page &mdash; URI to receive the login POST request from the client</li>
+                            <li>logout-service-page &mdash; URI to receive the logout request from the client</li>
+                            <li>logged-in-page &mdash; Authenticated users are redirected to this URI after logging in</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>
+                            <p>Basic authentication is not very secure. It will transmit user credentials in a
+                            format that is very easy for malicious individuals to exploit. If using basic authentication, 
+                            you should use SSL to encrypt the transmission of the password.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+            <a id="deny"></a>
+            <h2>Deny</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines servers to deny access to content</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Deny [all | host]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Deny www.example.com</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>The Deny directive is currently not implemented.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="order"></a>
+            <h2>Order</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Specifies the order in which the allow and deny directives apply</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Order allowSpec</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Order Deny,Allow<br />
+                        Deny from all<br />
+                        Allow from www.example.com</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Order directive defines who the server access control is applied. The allowSpec may
+                            be either "Deny,Allow" or "Allow,Deny". Note that no spaces may appear between the words or
+                            after the comma.</p>
+                            <h3>Deny,Allow</h3>
+                            <p>The deny directive is applied first then the allow directive. Requests that do not match
+                            the deny directive and do match the allow directive will be permitted access. Access is
+                            allowed by default if either the deny or allow directive is omitted.</p>
+                            <h3>Allow,Deny</h3>
+                            <p>The allow directive is applied first then the deny directive. Requests that do not match
+                            the allow directive or requests that match the deny directive will be denied. Access is
+                            denied by default if either the deny or allow directive is omitted.</p>
+                            <h3>Examples</h3>
+                            <p>To only allow access for a specified domain, www.example.com:</p>
+                            <pre>
+Order Deny,Allow
+Deny from All
+Allow from www.example.com
+</pre>
+                            <p>To deny access to a specific domain: www.myCompetitor.com</p>
+                            <pre>
+Order Allow,Deny
+Allow from All
+Deny from www.myCompetitor.com
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="require"></a>
+            <h2>Require</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the required users and abilities to permitted access</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Require user username...<br />
+                        Require secure [age=secs] [domains]<br />
+                        Require ability name...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Examples</td>
+                        <td>
+                            Require user julie
+                            Require ability manage
+                            Require secure
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Require directive defines which users can access a set of resources. The directive may specify a set of users by name, or a set of abilities that users must possess before being granted access. In the absence of a require directive, any valid user will be permitted access.  The Require ability directive specifies a list of ability words. These are typically verbs such as "view", "manage", "edit", and the like. </p>
+                            <p>The <em>Require secure</em> directive specifies that access must be performed over a secure protocol using 
+                            SSL/TLS. If an age is provided, a <i>Strict-Transport-Security</i> response header will be emitted. 
+                            This instructs browsers that all connections thereafter must only request over HTTPS. This applies to the 
+                            current and all future browser sessions to this domain up to the specified lifespan. If the domains attribute
+                            is specified, then the Strict-Transport-Security header will apply to all subdomains.</p>
+                            <p>The Require directive is inherited from outer hosts and blocks in the config file.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="role"></a>
+            <h2>Role</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines an authentication role with associated abilities.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Role name abilities...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Role administrator view edit</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Role directive defines a role with associated abilities. Roles may be specified by
+                            the <a href="#user">User</a> directive to specify a set of abilities for the user.
+                            <p>Role names are typically nouns such as: user, administrator, manager and the like.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>
+                            <p>Role directives are typically kept in a separate authentication configuration file 
+                            with User directives that is included from the main <em>appweb.conf</em> file. 
+                            It is essential that any configuration file containing Role or User directives be stored 
+                            outside the DocumentRoot or any directory serving content.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a id="user"></a>
+            <h2>User</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines a user with password and abilities.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>User name password abilities...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>User julie 9d8873a123eb506e7f8e84d1f2a26916 view</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The User directive defines a user for use with the <em>internal</em> AuthType. 
+                            The user definition includes an encrypted password and a set of abilities. Multiple users
+                            can be defined.</p>
+                            <p>The user abilities are words that may
+                            be specified by <a href="#require">Require</a> directives to restrict access to those users
+                            possessing the required abilities.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>
+                            <p>User directives are typically kept in a separate authentication configuration file that
+                            is included from the main <em>appweb.conf</em> file. 
+                            It is essential that any configuration file containing User directives be stored 
+                            outside the DocumentRoot or any directory serving content.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

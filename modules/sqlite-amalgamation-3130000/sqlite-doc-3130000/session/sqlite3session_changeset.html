@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Generate A Changeset From A Session Object</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Generate A Changeset From A Session Object</h2><blockquote><pre>int sqlite3session_changeset(
+  sqlite3_session *pSession,      /* Session object */
+  int *pnChangeset,               /* OUT: Size of buffer at *ppChangeset */
+  void **ppChangeset              /* OUT: Buffer containing changeset */
+);
+</pre></blockquote><p>
+Obtain a changeset containing changes to the tables attached to the
+session object passed as the first argument. If successful,
+set *ppChangeset to point to a buffer containing the changeset
+and *pnChangeset to the size of the changeset in bytes before returning
+SQLITE_OK. If an error occurs, set both *ppChangeset and *pnChangeset to
+zero and return an SQLite error code.</p>
+
+<p>A changeset consists of zero or more INSERT, UPDATE and/or DELETE changes,
+each representing a change to a single row of an attached table. An INSERT
+change contains the values of each field of a new database row. A DELETE
+contains the original values of each field of a deleted database row. An
+UPDATE change contains the original values of each field of an updated
+database row along with the updated values for each updated non-primary-key
+column. It is not possible for an UPDATE change to represent a change that
+modifies the values of primary key columns. If such a change is made, it
+is represented in a changeset as a DELETE followed by an INSERT.</p>
+
+<p>Changes are not recorded for rows that have NULL values stored in one or
+more of their PRIMARY KEY columns. If such a row is inserted or deleted,
+no corresponding change is present in the changesets returned by this
+function. If an existing row with one or more NULL values stored in
+PRIMARY KEY columns is updated so that all PRIMARY KEY columns are non-NULL,
+only an INSERT is appears in the changeset. Similarly, if an existing row
+with non-NULL PRIMARY KEY values is updated so that one or more of its
+PRIMARY KEY columns are set to NULL, the resulting changeset contains a
+DELETE change only.</p>
+
+<p>The contents of a changeset may be traversed using an iterator created
+using the <a href="../session/sqlite3changeset_start.html">sqlite3changeset_start()</a> API. A changeset may be applied to
+a database with a compatible schema using the <a href="../session/sqlite3changeset_apply.html">sqlite3changeset_apply()</a>
+API.</p>
+
+<p>Within a changeset generated by this function, all changes related to a
+single table are grouped together. In other words, when iterating through
+a changeset or when applying a changeset to a database, all changes related
+to a single table are processed before moving on to the next table. Tables
+are sorted in the same order in which they were attached (or auto-attached)
+to the sqlite3_session object. The order in which the changes related to
+a single table are stored is undefined.</p>
+
+<p>Following a successful call to this function, it is the responsibility of
+the caller to eventually free the buffer that *ppChangeset points to using
+<a href="../c3ref/free.html">sqlite3_free()</a>.</p>
+
+<p><h3>Changeset Generation</h3></p>
+
+<p>Once a table has been attached to a session object, the session object
+records the primary key values of all new rows inserted into the table.
+It also records the original primary key and other column values of any
+deleted or updated rows. For each unique primary key value, data is only
+recorded once - the first time a row with said primary key is inserted,
+updated or deleted in the lifetime of the session.</p>
+
+<p>There is one exception to the previous paragraph: when a row is inserted,
+updated or deleted, if one or more of its primary key columns contain a
+NULL value, no record of the change is made.</p>
+
+<p>The session object therefore accumulates two types of records - those
+that consist of primary key values only (created when the user inserts
+a new record) and those that consist of the primary key values and the
+original values of other table columns (created when the users deletes
+or updates a record).</p>
+
+<p>When this function is called, the requested changeset is created using
+both the accumulated records and the current contents of the database
+file. Specifically:</p>
+
+<p><ul>
+<li> For each record generated by an insert, the database is queried
+for a row with a matching primary key. If one is found, an INSERT
+change is added to the changeset. If no such row is found, no change
+is added to the changeset.</p>
+
+<p><li> For each record generated by an update or delete, the database is
+queried for a row with a matching primary key. If such a row is
+found and one or more of the non-primary key fields have been
+modified from their original values, an UPDATE change is added to
+the changeset. Or, if no such row is found in the table, a DELETE
+change is added to the changeset. If there is a row with a matching
+primary key in the database, but all fields contain their original
+values, no change is added to the changeset.
+</ul></p>
+
+<p>This means, amongst other things, that if a row is inserted and then later
+deleted while a session object is active, neither the insert nor the delete
+will be present in the changeset. Or if a row is deleted and then later a
+row with the same primary key values inserted while a session object is
+active, the resulting changeset will contain an UPDATE change instead of
+a DELETE and an INSERT.</p>
+
+<p>When a session object is disabled (see the <a href="../session/sqlite3session_enable.html">sqlite3session_enable()</a> API),
+it does not accumulate records when rows are inserted, updated or deleted.
+This may appear to have some counter-intuitive effects if a single row
+is written to more than once during a session. For example, if a row
+is inserted while a session object is enabled, then later deleted while
+the same session object is disabled, no INSERT record will appear in the
+changeset, even though the delete took place while the session was disabled.
+Or, if one field of a row is updated while a session is disabled, and
+another field of the same row is updated while the session is enabled, the
+resulting changeset will contain an UPDATE change that updates both fields.
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

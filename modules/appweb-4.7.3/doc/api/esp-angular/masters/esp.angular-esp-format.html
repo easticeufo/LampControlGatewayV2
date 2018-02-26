@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>esp-format Filter</title>
+   <link rel="stylesheet" type="text/css" href="doc.css" />
+   <link rel="stylesheet" type="text/css" href="api.css" />
+</head>
+
+<body>
+<div class='body'>
+	<div class="content">
+		<a name='top'></a>
+		<h1 class='className'>Filter: esp-format</h1>
+		<div class='api'>
+			<div class='prototype'>
+				{{ | format }}
+			</div>
+			<div class='apiDetail'>
+				<dl>
+					<dt>Synopsis</dt>
+				    <dd>format</dd>
+				</dl>
+				<dl>
+					<dt>Description</dt>
+					<dd><p>
+						The esp-format filter formats values according to the relevant data type specified in the 
+						supplied database schema. When ESP responds to requests, it supplies the response data and
+						the associated database schema that describes the various field types. This schema information
+						may be used to automatically format fields before display.
+					</dd>
+				</dl>
+				<dl>
+					<dt>Attributes</dt>
+					<dd>None</dd>
+				</dl>
+				<dl>
+					<dt>Example</dt>
+					<dd>&lt;span&gt;{{date | format:schema:date}}&lt;/span&gt;
+				</dl>
+			</div>
+		</div>
+		<div class="terms">
+		   <p class="terms">
+		       <a href="http://embedthis.com/">Embedthis Software LLC, 2003-2014. 
+		       	All rights reserved. Embedthis is a trademark of Embedthis Software LLC.</a>
+		   </p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

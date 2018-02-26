@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Esp-page Sample</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+<body>
+    <h1>ESP Directives</h1>
+<%^start
+    /* These declarations are moved to the top of the generated page function */
+    char *weather = "Raining";
+
+    /*
+        Manually set some session values and parameters. 
+        Parameters normally come from query and form request data.
+     */
+    setSessionVar("color", "yellow");
+    setParam("message", "Hello World");
+    setIntParam("number", 42);
+-%>
+
+<pre>
+    Time: <%= mprGetDate(0) %>
+    Timestamp: <%= %d mprGetTime() %>
+    Hostname: <%= %s mprGetHostName() %>
+    <!-- Note that variables use safe render to HTML escapse input -->
+    Favorite color: @@color
+    Lucky Number: @@number
+    <!-- Local string variable access -->
+    Weather: @!weather
+
+    Formatted Number: <%= %,d 12345678 %>
+    Safe Strings: <%= %S "<bold>" %>
+</pre>
+</body>
+</html>
+
+<%^end 
+    /* These declarations are moved to the end of the generated page function */
+    espSetStatus(conn, 200); 
+%>
+</html>

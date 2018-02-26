@@ -1,0 +1,19 @@
+<html>
+<body>
+<% 	
+	if (request.method == "POST") {
+        // request.show("PARAMS", request.params)
+        // request.show("request.files", request.files)
+
+        request.show("PARAMS", request.params)
+        request.show("request.files", request.files)
+        for each (f in request.files) {
+            // print("MV " + f.filename + " to " + "web/tmp/" + f.clientFilename)
+            Path(f.filename).rename("web/tmp/" + f.clientFilename)
+        }
+        write("Uploaded")
+    }
+%>
+</body>
+</html>
+

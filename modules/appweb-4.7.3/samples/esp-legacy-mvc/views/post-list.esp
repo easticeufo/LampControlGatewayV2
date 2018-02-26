@@ -1,0 +1,4 @@
+<h1>Post List</h1>
+
+<% table(readTable("post"), "{data-esp-click: '@edit'}"); %>
+<% buttonLink("New Post", "@init", 0); %>

@@ -1,0 +1,20 @@
+<h1><%= hasRec() ? "Edit" : "Create" %> ${UCONTROLLER}</h1>
+
+<% form(0, 0); %>
+    <table border="0">
+    <% {
+        char    *name, *uname;
+        int     next;
+        MprList *cols = getColumns(NULL);
+        for (ITERATE_ITEMS(cols, name, next)) {
+            if (smatch(name, "id")) continue;
+            uname = spascal(name);
+    %>
+            <tr><td><% render(uname); %></td><td><% input(name, 0); %></td></tr>
+        <% } %>
+    <% } %>
+    </table>
+    <% button("commit", "OK", 0); %>
+    <% buttonLink("Cancel", "@", 0); %>
+    <% if (hasRec()) buttonLink("Delete", "@destroy", "{data-esp-method: 'DELETE'}"); %>
+<% endform(); %>

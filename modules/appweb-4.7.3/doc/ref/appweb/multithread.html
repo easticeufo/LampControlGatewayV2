@@ -1,0 +1,133 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Programmers Reference</a> &gt; <b>Architecture</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#dispatchers">Dispatchers</a></li>
+                <li><a href="#multithreaded">Multithreaded</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#locking">Locking</a></li>
+            </ul>
+            <h1>See Also</h1>
+            <ul>
+                <li><a href="architecture.html">Appweb Architecture</a></li>
+                <li><a href="memory.html">MPR Memory Allocator</a></li>
+                <li><a href="../../guide/appweb/overview.html">User Guide Overview</a></li>
+                <li><a href="../../guide/appweb/users/authentication.html">Authorization</a></li>
+                <li><a href="../../guide/appweb/users/configuration.html">Configuration</a></li>
+                <li><a href="../../guide/appweb/users/configuration.html#directives">Configuration Directives</a></li>
+                <li><a href="../../guide/appweb/users/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../guide/appweb/users/client.html">HTTP Client</a></li>
+                <li><a href="../../guide/appweb/users/modules.html">Loadable Modules</a></li>
+                <li><a href="../../guide/appweb/users/ports.html">Ports and Binding</a></li>
+                <li><a href="../../guide/appweb/users/ssl.html">Secure Sockets Layer</a></li>
+                <li><a href="../../guide/appweb/users/vhosts.html">Virtual Hosts</a></li>
+            </ul>
+        </div>
+        <div class="contentLeft">
+            <h1>Multithreaded Programming</h1>
+            <a id="overview"></a>
+            <h2>Overview</h2>
+            <p>Programming in a multithreaded environment can be difficult. Sometimes programming errors are timing related 
+            as multiple threads interact. Multithread locks can become tangled and bugs can be difficult to reproduce. 
+            To alleviate these problems and
+            enable the benefits of a multi-threaded core, Appweb provides a suite of facilities to make multithreaded
+            programming easier, more reliable, and more efficient.</p>
+            <h3>The Problem of Multithreaded I/O Events</h3>
+            <p>A particularly thorny issue in multithreaded servers is how to handle I/O without consuming a thread for
+            each request. It is not practical to dedicate a thread to each HTTP request. A single browser will often
+            send 6-10 simultaneous requests. If each request consumed a thread for the duration, the web server would
+            quickly consume too many threads and system performance would greatly suffer. </p>
+            <p>One solution is to use a thread pool. This allows a request to borrow a thread from a thread pool while 
+            the request is active and return the thread when it cannot immediately continue with servicing the request. 
+            A thread may
+            not be able to continue because it is waiting for I/O from the client, or waiting for I/O to the client to 
+            drain over the network. Returning the thread to the pool allows other requests to use the thread while the
+            first request is waiting for network I/O. When the network is ready, a thread can be obtained from the pool
+            and the original request can continue. For this to work, an efficient network event service is 
+            essential. Appweb uses such a thread pool and event service to efficiently manage thread resources. </p>
+            
+            <p>However, this use of such an event service and thread pool raises another problem: races between the 
+            foreground request thread and the background async I/O event thread. It is easy for these two threads to 
+            simultaneously interact and corrupt critical data structures. A typical solution is to use multithread
+            locks to serialize access to such data, but this is a crude solution and often leads to brittle applications.
+            Appweb has a better solution that effectively serializes all activity for a request: per-request 
+            event dispatchers.</p>
+            <a id="dispatchers"></a>
+            <h3>Event Dispatchers</h3>
+            <p>The Multithreaded Portable Runtime (MPR) used by Appweb has a facility called Event Dispatchers. These
+            are event queues on which all I/O and other event activity for a request can be queued and serviced. 
+            Each request has its own dispatcher and so events for a request are serialized.  When a network I/O event
+            is received by Appweb for a request, an event is queued on the request's dispatcher. If the request is 
+            currently active (using a thread from the thread pool), the event is queued and no immediate action is taken. 
+            When the request has finished its current activity, it will service events on its dispatcher queue and 
+            eventually service the I/O event. If the request is currently idle, a thread is assigned from the thread 
+            pool for the request, and the thread is resumed to service the request's dispatcher queue. This greatly 
+            simplifies Appweb as all activity for a request is thus serialized via the dispatcher queue.</p>
+            <p>By using event dispatchers, multithread locking is not required on every API &mdash; because activity
+            is serialized by the dispatcher. This significantly boosts performance and reduces the risk of lock contention.</p>
+            <a id="multithreaded"></a>
+            <h3>Multithreaded Appweb</h3>
+            <p>By using request dispatchers, Appweb serializes all request activity, yet it can support many 
+            simultaneous requests due to its multithreaded core. Appweb efficiently utilizes thread resources by using
+            a thread pool and not permanently dedicating threads to requests. Threads are temporarily assigned
+            only as required by active requests.</p>
+            <a id="modules"></a>
+            <h3>Modules</h3>
+            <p>Appweb can be extended by writing loadable modules. Modules can add request handlers, pipeline filters,
+            or network connectors. All module code can rely on the fact that request activity will be serialized and
+            no locking is required to serialize I/O activity. Consequently, most module code can be effectively 
+            single-threaded.</p>
+            <p>Appweb can also be extended via Embedded Server Pages applications. These are loadable ESP web pages,
+            and ESP Model-View-Controller applications. These too can rely on the fact that request activity is serialized
+            and locking primitives are typically not required. ESP code can thus be simple, 
+            single-threaded application code.</p>
+            
+            <a id="locking"></a>
+            <h3>Locking</h3>
+            <p>If you have a requirement for a data structure that will be accessed and manipulated simultaneously
+            by multiple threads, the MPR provides a suite of locking primitives. See
+            <a href="../../api/mpr.html#group___mpr_synch">MprSynch</a> for the MPR Multithreaded Synchronization Services.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

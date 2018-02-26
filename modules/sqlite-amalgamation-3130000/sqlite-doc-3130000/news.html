@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Recent SQLite News</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="index.html">
+<img class="logo" src="images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="about.html">About</a>
+    <a href="docs.html">Documentation</a>
+    <a href="download.html">Download</a>
+    <a href="copyright.html">License</a>
+    <a href="support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+
+
+<h2>Recent News</h2>
+
+<a name="2016_05_18"></a><h3>2016-05-18 - Release 3.13.0</h3><blockquote>
+SQLite <a href="releaselog/3_13_0.html">version 3.13.0</a> is a regularly schedule maintenance release containg
+performance enhancements and fixes for obscure bugs.
+</blockquote><hr width="50%"><a name="2016_04_18"></a><h3>2016-04-18 - Release 3.12.2</h3><blockquote>
+<p>Yikes!  The 3.12.0 and 3.12.1 releases contain a backwards compatibility bug!
+   Tables that declare a column with type <tt>"INTEGER" PRIMARY KEY</tt>
+   (where the datatype name INTEGER is quoted) generate an incompatible
+   database file.  The mistake came about because the developers have never
+   thought to put a typename in quotes before, and so there was no documentation 
+   of that capability nor any tests.  (There are tests now, though, of course.)
+   Instances of quoting the datatype name are probably infrequent in the wild,
+   so we do not expect the impact of this bug to be too severe.
+   Upgrading is still strongly recommended.
+<p>Fixes for three other minor issues were included in this patch release.
+   The other issues would have normally been deferred until the next scheduled
+   release, but since a patch release is being issued anyhow, they might as
+   well be included.
+</blockquote><hr width="50%"><a name="2016_04_08"></a><h3>2016-04-08 - Release 3.12.1</h3><blockquote>
+<p>SQLite <a href="releaselog/3_12_1.html">version 3.12.1</a> is an emergency patch release to address a 
+   <a href="https://www.sqlite.org/src/info/7f7f8026eda38">crash bug</a> that snuck
+   into <a href="releaselog/3_12_0.html">version 3.12.0</a>.  Upgrading from version 3.12.0 is highly
+   recommended.
+<p>Another minor problem involving datatypes on <a href="lang_createview.html">view</a> columns, and
+   a query planner deficiency are fixed at the same time.  These two
+   issues did not justify a new release on their own, but since a release
+   is being issued to deal with the crash bug, we included these other
+   fixes for good measure.
+</blockquote><hr width="50%"><a name="2016_03_29"></a><h3>2016-03-29 - Release 3.12.0</h3><blockquote>
+<p>SQLite <a href="releaselog/3_12_0.html">version 3.12.0</a> is a regularly scheduled maintenance release.
+   A notable change in this release is an
+   <a href="pgszchng2016.html">increase in the default page size</a> for newly created database files.
+   There are also various performance improvements.
+   See the <a href="releaselog/3_12_0.html">change log</a> for details.
+</blockquote><hr width="50%"><a name="2016_03_03"></a><h3>2016-03-03 - Release 3.11.1</h3><blockquote>
+<p>SQLite <a href="releaselog/3_11_1.html">version 3.11.1</a> is a patch release that fixes problems in the
+   new <a href="fts5.html">FTS5</a> extension and increases a default setting in the <a href="spellfix1.html">spellfix1</a>
+   extension, and implements enhancements to some of the Windows makefiles.
+   The SQLite core is unchanged from 3.11.0. Upgrading is optional.
+</blockquote><hr width="50%"><a name="2016_02_15"></a><h3>2016-02-15 - Release 3.11.0</h3><blockquote>
+<p>SQLite <a href="releaselog/3_11_0.html">version 3.11.0</a> is a regularly scheduled maintenance release.
+</blockquote><hr width="50%"><a name="2016_01_20"></a><h3>2016-01-20 - Release 3.10.2</h3><blockquote>
+<p>Yikes!  An optimization attempt gone bad resulted in a 
+<a href="https://www.sqlite.org/src/info/80369eddd5c94">bug in the LIKE operator</a>
+which is fixed by this patch release.
+Three other minor but low-risk fixes are also included in the patch.
+</blockquote><hr width="50%"><a name="2016_01_14"></a><h3>2016-01-14 - Release 3.10.1</h3><blockquote>
+<p>SQLite <a href="releaselog/3_10_1.html">version 3.10.1</a> is a bug-fix release primarily targeting the
+fix for the query planner bug
+<a href="https://www.sqlite.org/src/info/cb3aa0641d9a4">cb3aa0641d9a4</a> discovered by
+Mapscape.  Also included is a minor API enhancement requested by
+the Firefox developers at Mozilla.  The differences from version 
+3.10.0 are minimal.
+</blockquote><hr width="50%"><a name="2016_01_06"></a><h3>2016-01-06 - Release 3.10.0</h3><blockquote>
+<p>SQLite <a href="releaselog/3_10_0.html">version 3.10.0</a> is a regularly scheduled maintenance release.
+</blockquote><hr width="50%"><a name="2015_11_02"></a><h3>2015-11-02 - Release 3.9.2</h3><blockquote>
+<p>SQLite <a href="releaselog/3_9_2.html">version 3.9.2</a> is a patch release fixing two obscure bugs.
+(Details: <a href="https://www.sqlite.org/src/tktview?name=8a2adec166">(1)</a>,
+<a href="https://www.sqlite.org/src/tktview?name=ac661962a2">(2)</a>).
+Upgrade only if you are having problems.
+</blockquote><hr width="50%"><a name="2015_10_16"></a><h3>2015-10-16 - Release 3.9.1</h3><blockquote>
+<p>SQlite <a href="releaselog/3_9_1.html">version 3.9.1</a> is a
+<a href="https://www.sqlite.org/src/vpatch?from=version-3.9.0&to=version-3.9.1">small patch</a>
+to <a href="releaselog/3_9_0.html">version 3.9.0</a> that includes
+a few simple build script and #ifdef tweaks to make the code easier to 
+compile on a wider variety of platform.  There are no functional changes, 
+except for a single
+<a href="https://www.sqlite.org/src/info/57eec374ae1d0a1d4a">minor bug-fix</a> in 
+<a href="json1.html">the json1 extension</a> to stop it from recognizing form-feed 
+(ASCII 0x0c) as a whitespace character, in conformance with 
+<a href="http://www.rfc-editor.org/rfc/rfc7159.txt">RFC7159</a>.
+</blockquote><hr width="50%"><a name="2015_10_14"></a><h3>2015-10-14 - Release 3.9.0</h3><blockquote>
+<p>SQLite version 3.9.0 is a regularly schedule maintenance release.
+Key changes include:
+<ul>
+<li>Begin using <a href="http://semver.org/">semantic versioning</a>.
+<li><a href="json1.html">JSON SQL functions</a>
+<li>The <a href="fts5.html">FTS5</a> full-text search engine
+<li>Support for <a href="expridx.html">indexes on expressions</a>
+<li>Support for <a href="vtab.html#tabfunc2">table-valued functions</a>
+</ul>
+See the <a href="releaselog/3_9_0.html">change log</a> for a long and more complete list
+of changes.
+</blockquote><hr width="50%"><a name="2015_07_29"></a><h3>2015-07-29 - Release 3.8.11.1</h3><blockquote>
+<p>SQLite version 3.8.11.1 is a patch release that fixes two arcane
+   issues that were reported shortly after 3.8.11 was released.  Upgrade
+   from 3.8.11 only in the unlikely event that one of these obscure
+   issues affect your code.
+</blockquote><hr width="50%"><a name="2015_07_27"></a><h3>2015-07-27 - Release 3.8.11</h3><blockquote>
+<p>SQLite version 3.8.11 is a regularly scheduled maintenance release.
+   See the <a href="releaselog/3_8_11.html">change log</a> for details.
+</blockquote><hr width="50%"><a name="2015_05_20"></a><h3>2015-05-20 - Release 3.8.10.2</h3><blockquote>
+<p>Yikes!  Index corruption after a sequence of valid SQL statements!
+<p>It has been many years since anything like 
+   <a href="https://www.sqlite.org/src/info/34cd55d6">this bug</a> has snuck into
+   an official SQLite release.  But for the pasts seven months
+   (<a href="releaselog/3_8_7.html">version 3.8.7</a> through <a href="releaselog/3_8_10_1.html">version 3.8.10.1</a>)
+   if you do an INSERT into a carefully
+   crafted schema in which there are two nested triggers that convert
+   an index key value from TEXT to INTEGER and then back
+   to TEXT again, the INTEGER value might get inserted as the index
+   key instead of the correct TEXT, resulting in index corruption.
+   This patch release adds a single line of code to fix the problem.
+<p>If you do actually encounter this problem, running <a href="lang_reindex.html">REINDEX</a> on the
+   damaged indexes will clear it.
+</blockquote><hr width="50%"><a name="2015_05_09"></a><h3>2015-05-09 - Release 3.8.10.1</h3><blockquote>
+<p>The 3.8.10 release did not add the new <a href="compile.html#enable_dbstat_vtab">SQLITE_ENABLE_DBSTAT_VTAB</a>
+   compile-time option to the <a href="c3ref/compileoption_get.html">sqlite3_compileoption_used()</a> interface.
+   This patch release fixes that omission.  And while we are at it,
+   the associated <a href="dbstat.html">dbstat virtual table</a> was enhanced slightly and a
+   harmless compiler warning was fixed.</p>
+
+<p>   <p>There is no reason to upgrade from version 3.8.10 unless you are
+   using the new <a href="compile.html#enable_dbstat_vtab">SQLITE_ENABLE_DBSTAT_VTAB</a> compile-time option.
+</blockquote><hr width="50%"><a name="2015_05_07"></a><h3>2015-05-07 - Release 3.8.10</h3><blockquote>
+<p>SQLite version 3.8.10 is a regularly scheduled maintenance release.
+   This release features performance improvements, fixes to several
+   arcane bugs found by the AFL fuzzer, the new "sqldiff.exe" command-line
+   utility, improvements to the documentation, and other enhancements.
+   See the <a href='releaselog/3_8_10.html'>release notes</a> for 
+   additional information.
+</blockquote><hr width="50%"><a name="2015_04_08"></a><h3>2015-04-08 - Release 3.8.9</h3><blockquote>
+<p>SQLite version 3.8.9 is a regularly scheduled maintenance release.
+   New features in this release include the 
+   <a href="pragma.html#pragma_index_xinfo">PRAGMA index_xinfo</a> command, the <a href="c3ref/status.html">sqlite3_status64()</a> interface,
+   and the ".dbinfo" command of the <a href="cli.html">command-line shell</a>.
+   See the <a href='releaselog/3_8_9.html'>release notes</a> for
+   additional information.
+</blockquote><hr width="50%"><a name="2015_02_25"></a><h3>2015-02-25 - Release 3.8.8.3</h3><blockquote>
+<p>The 3.8.8.3 patch release fixes an obscure problem in the SQLite code
+   generator that can cause incorrect results when the qualifying expression
+   of a <a href="partialindex.html">partial index</a> is used inside the ON clause of a LEFT JOIN.
+   This problem has been in the code since support for partial indexes
+   was first added in version 3.8.0.  However, it is difficult to imagine
+   a valid reason to every put the qualifying constraint inside the ON
+   clause of a LEFT JOIN, and so this issue has never come up before.</p>
+
+<p><p>Any applications that is vulnerable to this bug would have encountered
+   problems already.  Hence, upgrading from the previous release is optional.
+</blockquote><hr width="50%"><a name="2015_01_30"></a><h3>2015-01-30 - Release 3.8.8.2</h3><blockquote>
+<p>The 3.8.8.2 patch release fixes a single minor problem:  It ensures
+   that the <a href="c3ref/wal_checkpoint.html">sqlite3_wal_checkpoint(TRUNCATE)</a> operation will always truncate
+   the <a href="wal.html">write-ahead log</a> even if log had already been reset and contained
+   no new content.  It is unclear if this is a bug fix or a new feature.</p>
+
+<p><p>Something like this would normally go into the next regularly scheduled
+   release, but a prominent SQLite user needed the change in a hurry so
+   we were happy to rush it out via this patch.</p>
+
+<p><p>There is no reason to upgrade unless you actually need the enhanced
+   behavior of <a href="c3ref/wal_checkpoint.html">sqlite3_wal_checkpoint(TRUNCATE)</a>.
+</blockquote><hr width="50%"><a name="2015_01_20"></a><h3>2015-01-20 - Release 3.8.8.1</h3><blockquote>
+<p>Within hours of releasing version 3.8.8, a bug was reported against
+   the 10-month-old 3.8.4 release.  As that bug exists in all subsequent
+   releases, the decision was made to issue a small patch to the
+   3.8.8 before it came into widespread use.</p>
+
+<p><p>See ticket
+   <a href="https://www.sqlite.org/src/info/f97c4637102a3ae72b7911">f97c4637102a3ae72b7911</a>
+   for a description of the bug.</p>
+
+<p><p>The changes between versions 3.8.8 and 3.8.8.1 are minimal.
+</blockquote><hr width="50%"><a name="2015_01_16"></a><h3>2015-01-16 - Release 3.8.8</h3><blockquote>
+<p>SQLite <a href="releaselog/3_8_8.html">version 3.8.8</a> is a regularly schedule maintenance release of
+   SQLite.</p>
+
+<p><p>There are no dramatic new features or performance enhancements in this
+   release, merely incremental improvements.  Most of the performance gain
+   in this release comes from refactoring the B-Tree rebalancing logic to
+   avoid unnecessary memcpy() operations.  New features include the
+   <a href="pragma.html#pragma_data_version">PRAGMA data_version</a> statement and the ability to accept a
+   <a href="lang_select.html#values">VALUES clause</a> with no arbitrary limit on the number of rows.
+   Several obscure bugs have been fixed, including some multithreading
+   races and a work-around for a compiler bug on some Macs.</p>
+
+<p><p>See the <a href="releaselog/3_8_8.html">change log</a> for a longer list of
+   enhancements and bug fixes.
+</blockquote><hr width="50%">
+
+<a href="oldnews.html">Old news...</a>
+

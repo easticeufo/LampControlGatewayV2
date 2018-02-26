@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Convenience Routines For Running Queries</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<a href="intro.html"><h2>SQLite C Interface</h2></a><h2>Convenience Routines For Running Queries</h2><blockquote><pre>int sqlite3_get_table(
+  sqlite3 *db,          /* An open database */
+  const char *zSql,     /* SQL to be evaluated */
+  char ***pazResult,    /* Results of the query */
+  int *pnRow,           /* Number of result rows written here */
+  int *pnColumn,        /* Number of result columns written here */
+  char **pzErrmsg       /* Error msg written here */
+);
+void sqlite3_free_table(char **result);
+</pre></blockquote><p>
+This is a legacy interface that is preserved for backwards compatibility.
+Use of this interface is not recommended.</p>
+
+<p>Definition: A <b>result table</b> is memory data structure created by the
+<a href="../c3ref/free_table.html">sqlite3_get_table()</a> interface.  A result table records the
+complete query results from one or more queries.</p>
+
+<p>The table conceptually has a number of rows and columns.  But
+these numbers are not part of the result table itself.  These
+numbers are obtained separately.  Let N be the number of rows
+and M be the number of columns.</p>
+
+<p>A result table is an array of pointers to zero-terminated UTF-8 strings.
+There are (N+1)*M elements in the array.  The first M pointers point
+to zero-terminated strings that  contain the names of the columns.
+The remaining entries all point to query results.  NULL values result
+in NULL pointers.  All other values are in their UTF-8 zero-terminated
+string representation as returned by <a href="../c3ref/column_blob.html">sqlite3_column_text()</a>.</p>
+
+<p>A result table might consist of one or more memory allocations.
+It is not safe to pass a result table directly to <a href="../c3ref/free.html">sqlite3_free()</a>.
+A result table should be deallocated using <a href="../c3ref/free_table.html">sqlite3_free_table()</a>.</p>
+
+<p>As an example of the result table format, suppose a query result
+is as follows:</p>
+
+<p><blockquote><pre>
+Name        | Age
+-----------------------
+Alice       | 43
+Bob         | 28
+Cindy       | 21
+</pre></blockquote></p>
+
+<p>There are two column (M==2) and three rows (N==3).  Thus the
+result table has 8 entries.  Suppose the result table is stored
+in an array names azResult.  Then azResult holds this content:</p>
+
+<p><blockquote><pre>
+azResult&#91;0] = "Name";
+azResult&#91;1] = "Age";
+azResult&#91;2] = "Alice";
+azResult&#91;3] = "43";
+azResult&#91;4] = "Bob";
+azResult&#91;5] = "28";
+azResult&#91;6] = "Cindy";
+azResult&#91;7] = "21";
+</pre></blockquote></p>
+
+<p>The sqlite3_get_table() function evaluates one or more
+semicolon-separated SQL statements in the zero-terminated UTF-8
+string of its 2nd parameter and returns a result table to the
+pointer given in its 3rd parameter.</p>
+
+<p>After the application has finished with the result from sqlite3_get_table(),
+it must pass the result table pointer to sqlite3_free_table() in order to
+release the memory that was malloced.  Because of the way the
+<a href="../c3ref/free.html">sqlite3_malloc()</a> happens within sqlite3_get_table(), the calling
+function must not try to call <a href="../c3ref/free.html">sqlite3_free()</a> directly.  Only
+<a href="../c3ref/free_table.html">sqlite3_free_table()</a> is able to release the memory properly and safely.</p>
+
+<p>The sqlite3_get_table() interface is implemented as a wrapper around
+<a href="../c3ref/exec.html">sqlite3_exec()</a>.  The sqlite3_get_table() routine does not have access
+to any internal data structures of SQLite.  It uses only the public
+interface defined here.  As a consequence, errors that occur in the
+wrapper layer outside of the internal <a href="../c3ref/exec.html">sqlite3_exec()</a> call are not
+reflected in subsequent calls to <a href="../c3ref/errcode.html">sqlite3_errcode()</a> or
+<a href="../c3ref/errcode.html">sqlite3_errmsg()</a>.
+</p><p>See also lists of
+  <a href="objlist.html">Objects</a>,
+  <a href="constlist.html">Constants</a>, and
+  <a href="funclist.html">Functions</a>.</p>

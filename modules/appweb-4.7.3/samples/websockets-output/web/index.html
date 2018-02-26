@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+
+<body>
+    <div id="log"><h1>Web Sockets Test</h1></div>
+    <script>
+    ws = new WebSocket('ws://localhost:8080/ws/test/output', ['chat']);
+    ws.onopen = function (event) {
+    /*
+        $('#log').append('<p>Open message received</p>');
+        $('#log').append('<p>Send: <b>"Hello Server"</b> to server</p>');
+        ws.send("Hello Server");
+        */
+    };
+    ws.onmessage = function (event) {
+        $('#log').append('<p>Received: <b>' + event.data + '</b></p>');
+    };
+    ws.onclose = function (event) {
+        $('#log').append('<p>Close message received</p>');
+    };
+    ws.onerror = function (event) {
+        $('#log').append('<p>Error message received: ' + event + '</p>');
+    };
+    </script>
+</body>
+</html>

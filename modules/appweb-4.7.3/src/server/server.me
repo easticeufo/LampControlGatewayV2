@@ -1,0 +1,70 @@
+/*
+    server.me -- MakeMe file for appweb server
+ */
+
+Me.load({
+    targets: {
+        appweb: {
+            type: 'exe',
+            depends: [ 'libappweb', 'libslink' ],
+            sources: [ 'appweb.c' ],
+            postblend: function (target) {
+                let sources = target.sources
+                if (me.settings.rom) {
+                    sources.push(target.home.join('romFiles.c'))
+                }
+                if (target.static) {
+                    target.depends += ['libmod_esp', 'libmod_ssl', 'libmod_ejs', 'libmod_php', 'libmod_cgi']
+                }
+            },
+        },
+
+        appwebMonitor: {
+            enable: "me.platform.like == 'windows'",
+            type: 'exe',
+            rule: 'gui',
+            depends: [ 'libappweb' ],
+            sources: [ 'windows/appwebMonitor.c' ],
+            headers: [ 'windows/*.h' ],
+            libraries: [ 'shell32.lib' ],
+            resources: [ 'windows/appwebMonitor.rc' ],
+        },
+
+        'appwebMonitor.ico': {
+            type: 'file',
+            files: [ 'windows/appwebMonitor.ico' ],
+            enable: "me.platform.like == 'windows'",
+        },
+
+        'server-cache': {
+            path: 'cache',
+            precious: true,
+            build: "Path('cache').makeDir()",
+            generate: "mkdir -p cache",
+            'generate-nmake': "md cache",
+        },
+
+        run: {
+            depends: [ 'compile' ],
+            action: "
+                trace('Run', 'From directory src/server')
+                run('appweb -v')
+            ",
+            generate: "sudo ${BIN}/appweb -v"
+        },
+
+        rom: {
+            action: "
+                let files = [ '.' ]
+                files += Path('web').files('**')
+                files += Path('junk/static').files('**')
+                files += Path('junk/db').files('*.mdb')
+                files.push('appweb.conf')
+                files.push('mob.conf')
+                files.push('auth.conf')
+                files.push('esp.conf')
+                Path('romFiles.c').write(Cmd.run(['makerom', '--prefix', '/'] + files))
+            ",
+        },
+    },
+})

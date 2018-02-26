@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SQLite Release 3.8.4 On 2014-03-10</title>
+<style type="text/css">
+body {
+    margin: auto;
+    font-family: Verdana, sans-serif;
+    padding: 8px 1%;
+}
+
+a { color: #044a64 }
+a:visited { color: #734559 }
+
+.logo { position:absolute; margin:3px; }
+.tagline {
+  float:right;
+  text-align:right;
+  font-style:italic;
+  width:300px;
+  margin:12px;
+  margin-top:58px;
+}
+
+.menubar {
+  clear: both;
+  border-radius: 8px;
+  background: #044a64;
+  padding: 0px;
+  margin: 0px;
+  cell-spacing: 0px;
+}    
+.toolbar {
+  text-align: center;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0px 8px;
+}
+.toolbar a { color: white; text-decoration: none; padding: 6px 12px; }
+.toolbar a:visited { color: white; }
+.toolbar a:hover { color: #044a64; background: white; }
+
+.content    { margin: 5%; }
+.content dt { font-weight:bold; }
+.content dd { margin-bottom: 25px; margin-left:20%; }
+.content ul { padding:0px; padding-left: 15px; margin:0px; }
+
+/* Things for "fancyformat" documents start here. */
+.fancy img+p {font-style:italic}
+.fancy .codeblock i { color: darkblue; }
+.fancy h1,.fancy h2,.fancy h3,.fancy h4 {font-weight:normal;color:#044a64}
+.fancy h2 { margin-left: 10px }
+.fancy h3 { margin-left: 20px }
+.fancy h4 { margin-left: 30px }
+.fancy th {white-space:xnowrap;text-align:left;border-bottom:solid 1px #444}
+.fancy th, .fancy td {padding: 0.2em 1ex; vertical-align:top}
+.fancy #toc a        { color: darkblue ; text-decoration: none }
+.fancy .todo         { color: #AA3333 ; font-style : italic }
+.fancy .todo:before  { content: 'TODO:' }
+.fancy p.todo        { border: solid #AA3333 1px; padding: 1ex }
+.fancy img { display:block; }
+.fancy :link:hover, .fancy :visited:hover { background: wheat }
+.fancy p,.fancy ul,.fancy ol,.fancy dl { margin: 1em 5ex }
+.fancy li p { margin: 1em 0 }
+.fancy blockquote { margin-left : 10ex }
+/* End of "fancyformat" specific rules. */
+
+.yyterm {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
+  
+</head>
+<body>
+<div><!-- container div to satisfy validator -->
+
+<a href="../index.html">
+<img class="logo" src="../images/sqlite370_banner.gif" alt="SQLite Logo"
+ border="0"></a>
+<div><!-- IE hack to prevent disappearing logo--></div>
+<div class="tagline">Small. Fast. Reliable.<br>Choose any three.</div>
+
+<table width=100% class="menubar"><tr>
+  <td width=100%>
+  <div class="toolbar">
+    <a href="../about.html">About</a>
+    <a href="../docs.html">Documentation</a>
+    <a href="../download.html">Download</a>
+    <a href="../copyright.html">License</a>
+    <a href="../support.html">Support</a>
+    <a href="http://www.hwaci.com/sw/sqlite/prosupport.html">Purchase</a>
+  </div>
+<script>
+  gMsg = "Search SQLite Docs..."
+  function entersearch() {
+    var q = document.getElementById("q");
+    if( q.value == gMsg ) { q.value = "" }
+    q.style.color = "black"
+    q.style.fontStyle = "normal"
+  }
+  function leavesearch() {
+    var q = document.getElementById("q");
+    if( q.value == "" ) { 
+      q.value = gMsg
+      q.style.color = "#044a64"
+      q.style.fontStyle = "italic"
+    }
+  }
+  function hideorshow(btn,obj){
+    var x = document.getElementById(obj);
+    var b = document.getElementById(btn);
+    if( x.style.display!='none' ){
+      x.style.display = 'none';
+      b.innerHTML='show';
+    }else{
+      x.style.display = '';
+      b.innerHTML='hide';
+    }
+    return false;
+  }
+</script>
+<td>
+    <div style="padding:0 1em 0px 0;white-space:nowrap">
+    <form name=f method="GET" action="https://www.sqlite.org/search">
+      <input id=q name=q type=text
+       onfocus="entersearch()" onblur="leavesearch()" style="width:24ex;padding:1px 1ex; border:solid white 1px; font-size:0.9em ; font-style:italic;color:#044a64;" value="Search SQLite Docs...">
+      <input type=submit value="Go" style="border:solid white 1px;background-color:#044a64;color:white;font-size:0.9em;padding:0 1ex">
+    </form>
+    </div>
+  </table>
+
+<div class=startsearch></div>
+  
+<h2>SQLite Release 3.8.4 On 2014-03-10</h2><p><ul>
+<li>Code optimization and refactoring for improved performance.
+<li>Add the ".clone" and ".save" commands to the command-line shell.
+<li>Update the banner on the command-line shell to alert novice users when they
+    are using an ephemeral in-memory database.
+<li>Fix editline support in the command-line shell.
+<li>Add support for coverage testing of VDBE programs using the
+    <a href="../c3ref/c_testctrl_always.html">SQLITE_TESTCTRL_VDBE_COVERAGE</a> verb of <a href="../c3ref/test_control.html">sqlite3_test_control()</a>.
+<li>Update the _FILE_OFFSET_BITS macro so that builds work again on QNX.
+<li>Change the datatype of SrcList.nSrc from type u8 to type int to work around 
+    an issue in the C compiler on AIX.
+<li>Get extension loading working on Cygwin.
+<li>Bug fix: Fix the <a href="../lang_corefunc.html#char">char()</a> SQL function so that it returns an empty string
+    rather than an "out of memory" error when called with zero arguments. 
+<li>Bug fix: DISTINCT now recognizes that a <a href="../lang_corefunc.html#zeroblob">zeroblob</a> and a blob of all
+    0x00 bytes are the same thing. 
+    <a href="http://www.sqlite.org/src/info/fccbde530a">Ticket &#91;fccbde530a&#93</a>
+<li>Bug fix: Compute the correct answer for queries that contain an IS NOT NULL
+    term in the WHERE clause and also contain an OR term in the WHERE clause and
+    are compiled with <a href="../compile.html#enable_stat4">SQLITE_ENABLE_STAT4</a>.
+    <a href="http://www.sqlite.org/src/info/4c86b126f2">Ticket &#91;4c86b126f2&#93</a>
+<li>Bug fix: Make sure "rowid" columns are correctly resolved in joins between
+    normal tables and WITHOUT ROWID tables.
+    <a href="http://www.sqlite.org/src/info/c34d0557f7">Ticket &#91;c34d0557f7&#93</a>
+<li>Bug fix: Make sure the same temporary registers are not used in concurrent
+    co-routines used to implement compound SELECT statements containing ORDER
+    BY clauses, as such use can lead to incorrect answers.
+    <a href="http://www.sqlite.org/src/info/8c63ff0eca">Ticket &#91;8c63ff0eca&#93</a>
+<li>Bug fix: Ensure that "ORDER BY random()" clauses do not get optimized out.
+    <a href="http://www.sqlite.org/src/info/65bdeb9739">Ticket &#91;65bdeb9739&#93</a>
+<li>Bug fix: Repair a name-resolution error that can occur in sub-select statements
+    contained within a TRIGGER.
+    <a href="http://www.sqlite.org/src/info/4ef7e3cfca">Ticket &#91;4ef7e3cfca&#93</a>
+<li>Bug fix: Fix column default values expressions of the form
+    "DEFAULT(-(-9223372036854775808))" so that they work correctly, initializing
+    the column to a floating point value approximately equal to
+    +9223372036854775808.0.
+<li>SQLITE_SOURCE_ID: "2014-03-10 12:20:37 530a1ee7dc2435f80960ce4710a3c2d2bfaaccc5"
+<li>SHA1 for sqlite3.c: b0c22e5f15f5ba2afd017ecd990ea507918afe1c
+
+</ul></p>
+
+      <p>A <a href="../changes.html">complete list of SQLite releases</a>
+      in a single page and a <a href="../chronology.html">chronology</a> are both also available.  
+      A detailed history of every
+      check-in is available at
+      <a href="http://www.sqlite.org/src/timeline">
+      SQLite version control site</a>.</p>
+    

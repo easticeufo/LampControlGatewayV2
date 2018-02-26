@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>ESP Upload</title>
+</head>
+<body>
+    <h2>ESP File Upload</h2>
+    <!--
+        Upload form. This posts to /upload/upload.esp. 
+    -->
+    <form method="post" action="/upload/upload.esp" enctype="multipart/form-data">
+        <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+        <table border="0">
+            <tr><td>Name</td><td><input type="text" name="Name"></td></tr>
+            <tr><td>Address</td><td><input type="text" name="Address"></td></tr>
+            <tr><td>Photo:</td><td><input type="file" name="photo"></td></tr>
+        </table>
+        <input type="submit" value="send">
+        <input type="reset" value="cancel">
+    </form>
+</body>
+</html>
+

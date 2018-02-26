@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">  
+    <script>
+        setTimeout(function() {
+            alert("You will be logged out in 15 seconds");
+            // The server will enforce this, but this gives immediate logout feedback to the user
+            setTimeout(function() { window.location = "/logout"; }, 15 * 1000);
+        }, 45 * 1000);
+    </script>
+</head>
+<body>
+    <h1>Welcome</h1>
+   
+    <p>You will remain logged in for one minute. Click <a href="/">here</a> to refresh the session.</p>
+
+    <p>Click to <a href="/logout">Logout</a> and you will be redirected back to the login form.</p>
+</body>
+</html>

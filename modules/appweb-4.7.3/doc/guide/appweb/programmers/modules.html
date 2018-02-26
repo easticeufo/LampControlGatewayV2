@@ -1,0 +1,111 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Appweb 4.6.5 Documentation</title>
+    <meta name="keywords" content="embedded web server, web server software, embedded HTTP, application web server, 
+        embedded server, small web server, HTTP server, library web server, library HTTP, HTTP library" />
+    <meta name="description" content="Embedthis Sofware provides commercial and open source embedded web servers for 
+        devices and applications." />
+	<meta name="robots" content="index,follow" />
+	<link href="../../../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../../../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../../../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://appwebserver.org/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Appweb 4.6.5</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../../../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <a href="index.html">Programming Guide</a> &gt; <b>Creating Appweb Modules</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            
+<!-- BeginDsi "dsi/progGuideSeeAlso.html" -->
+            <h1>See Also</h1>
+            <ul class="nav">
+                <li><a href="../../../guide/appweb/programmers/index.html">Programmers Guide</a></li>
+                <li><a href="../../../guide/appweb/programmers/embedding.html">Embedding Appweb</a></li>
+                <li><a href="../../../guide/appweb/programmers/modules.html">Custom Modules</a></li>
+                <li><a href="../../../guide/appweb/programmers/handlers.html">Custom Handlers</a></li>
+                <li><a href="../../../guide/appweb/programmers/stages.html">Pipeline Stages</a></li>
+                <li><a href="../../../guide/appweb/programmers/migrating.html">Migrating to Appweb 4</a></li>
+                <li><a href="../../../guide/appweb/programmers/rom.html">ROM Content</a></li>
+                <li><a href="../../../guide/appweb/programmers/man.html">Manual Pages</a></li>
+                <li><a href="../../../ref/appweb/index.html">Programmers Reference</a></li>
+                <li><a href="../../../ref/appweb/architecture.html">Appweb Architecture</a></li>
+                <li><a href="../../../api/native.html">Native APIs</a></li>
+                <li><a href="../../../guide/appweb/users/index.html">Users Guide</a></li>
+            </ul>
+<!-- EndDsi -->
+        </div>
+        <div class="contentLeft">
+            <h1>Creating Appweb Modules</h1>
+            <p>Appweb supports extension modules that can augment the capability of Appweb by adding new features,
+            handlers, protocols or any arbitrary code.</p>
+            <p>Appweb includes four loadable modules: CGI, ESP, PHP and SSL. The core appweb HTTP server includes
+            some basic document serving functionality, but modules are used to extend the core with loadable web 
+            frameworks and custom handlers.</p>
+            <p>This document describes the Appweb Module Interface and how to create Appweb modules. The Appweb Module
+            interface supports both dynamically loaded and statically linked modules from a single "C" code
+            base.</p><a id="overview"></a>
+            <h2>Overview</h2>
+            <p>To create an Appweb module, you must create an initialization function that is called when Appweb loads
+            your module. This must be named according to the form:</p>
+            <pre>
+ma<b>Name</b>Init(Http *http, MprModule *module)
+</pre>
+            <p>where <b>Name</b> is the name of your module. For example: <em>maCgiHandlerInit</em> is the 
+            library initialization entry point for the cgiHandler. 
+            Note: The first letter must be upper case. This function will be
+            called immediately after loading the module code.</p>
+            <p>The init function is passed a reference to the Http service object and a module object for this module.</p>
+<pre>
+int maSimpleModuleInit(Http *http, MprModule *mp)
+{
+    HttpStage   *handler;
+    if ((handler = httpCreateHandler(http, "simpleHandler", 0, mp)) == 0) {
+        return MPR_ERR_CANT_CREATE;
+    }
+    handler-&gt;open = openSimple; 
+    handler-&gt;close = closeSimple; 
+    handler-&gt;start = startSimple; 
+    return 0;
+}
+</pre>
+            <p>You can put any custom code in the initialization function. Often a module will create a request handler
+            or request pipeline filter. If you call mprSetModuleFinalizer you can register a callback to run before
+            the module is stopped or unloaded.
+            <p>Modules can be loaded at startup in response to the <a href=
+            "../users/dir/module.html#loadModule">LoadModule</a> Appweb configuration directive. You can also load
+            modules at run-time via the <b>maLoadModule</b> "C" API.</p>
+            <p>To package your module, you must create a DLL/shared library containing your module. On Windows,
+            you also must export the initialization function. If you want to statically link your module, you need to ensure
+            the main program explicitly calls your initialization function during its initialization.</p>
+            <h2>More Info</h2>
+            <p>See the <a
+                href="https://github.com/embedthis/appweb/tree/master/samples/simple-module">samples/simple-module</a> 
+                source code sample for a working module example.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../../../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2014.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+</body>
+</html>

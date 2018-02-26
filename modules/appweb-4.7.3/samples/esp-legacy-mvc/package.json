@@ -1,0 +1,42 @@
+{
+    "name": "blog",
+    "title": "blog",
+    "description": "blog",
+    "version": "0.0.0",
+    "dependencies": {
+        "esp-legacy-mvc": "~4.5"
+    },
+    "app": {
+        "esp": {
+            "generate": {
+                "appweb": "esp-legacy-mvc/generate/appweb.conf",
+                "clientEdit": "esp-legacy-mvc/generate/edit.esp",
+                "clientList": "esp-legacy-mvc/generate/list.esp",
+                "controller": "esp-legacy-mvc/generate/controller.c"
+                "controllerSingleton": "esp-legacy-mvc/generate/controller.c",
+                "migration": "esp-legacy-mvc/generate/migration.c",
+                "module": "esp-legacy-mvc/generate/src/app.c",
+            }
+        },
+        "http": {
+            "routes": "esp-server",
+            "database": "mdb://blog.mdb",
+            "serverPrefix": "/do",
+            "auth": {
+                "store": "app"
+            }
+        },
+        "mode": "debug",
+        "modes": {
+            "debug": {
+                "http": {
+                    "content": {
+                        "keep": [
+                            "c"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
